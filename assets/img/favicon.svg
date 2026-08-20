@@ -7,6 +7,6 @@
   </defs>
   <rect width="64" height="64" rx="15" fill="url(#fv)"/>
   <circle cx="32" cy="32" r="25" fill="none" stroke="#C9A46A" stroke-width="1.4" opacity=".75"/>
-  <text x="32" y="41" text-anchor="middle" font-family="Tajawal, Segoe UI, Tahoma, sans-serif"
-        font-size="24" font-weight="800" fill="#C9A46A" letter-spacing="0.5">LM</text>
+  <text x="32" y="41" text-anchor="middle" font-family="Montserrat, Segoe UI, Helvetica, sans-serif"
+        font-size="24" font-weight="600" fill="#C9A46A" letter-spacing="0.5">LM</text>
 </svg>

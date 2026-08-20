@@ -1,7 +1,7 @@
 /* ==========================================================================
    Like A Model — Landing Page
    نظام التصميم: «روز نوار» (متوافق مع DESIGN.md الخاص بالتطبيق)
-   RTL-first · Tajawal · WCAG AA
+   RTL-first · Tajawal (عربي) + Montserrat (لاتيني) · WCAG AA
    ========================================================================== */
 
 /* ---------- 1. TOKENS ---------- */
@@ -29,6 +29,16 @@
   --text-muted:#7A6058;            /*  ٤٫٨:١ */
   --border:#EEDCD4;
   --border-strong:#96837A;         /*  ٣٫٠:١ — حدّ حقول الإدخال */
+
+  /* Typefaces — معتمدة من العميل
+     عربي:  Tajawal    — عناوين ٧٠٠ · نصوص وقوائم ٥٠٠
+     لاتيني: Montserrat — Like A Model و العناوين ٦٠٠ · النصوص ٤٠٠ */
+  --font-ar:"Tajawal","Segoe UI",Tahoma,system-ui,sans-serif;
+  --font-en:"Montserrat","Segoe UI",Helvetica,Arial,sans-serif;
+  --w-head:700;   /* العنوان الرئيسي والعناوين الفرعية */
+  --w-body:500;   /* النصوص والوصف والقوائم */
+  --w-en-head:600;/* Like A Model والعناوين الإنجليزية */
+  --w-en-body:400;/* النصوص الإنجليزية */
 
   /* Spacing (4px scale) */
   --s-1:.25rem; --s-2:.5rem; --s-3:.75rem; --s-4:1rem; --s-5:1.25rem;
@@ -58,7 +68,8 @@ html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:96p
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
   margin:0;
-  font-family:"Tajawal","Segoe UI",Tahoma,system-ui,sans-serif;
+  font-family:var(--font-ar);
+  font-weight:var(--w-body);
   font-size:clamp(1rem,.96rem + .2vw,1.0625rem);
   line-height:1.85;
   color:var(--text-2);
@@ -77,9 +88,17 @@ button,input,select,textarea{font:inherit;color:inherit}
 button{background:none;border:0;cursor:pointer}
 fieldset{margin:0;padding:0;border:0;min-inline-size:0}
 legend{padding:0}
-strong,b{font-weight:800;color:var(--text)}
+strong,b{font-weight:var(--w-head);color:var(--text)}
 em{font-style:normal}
 ::selection{background:var(--primary);color:#fff}
+
+/* ---------- 2.1 النص اللاتيني ---------- */
+/* كل ما يحمل lang="en" أو dir="ltr" (أرقام وبريد) ينتقل إلى Montserrat تلقائيًا.
+   الوزن الافتراضي ٤٠٠ (النصوص الإنجليزية)؛ العلامة والعناوين تُرفع إلى ٦٠٠ أدناه. */
+:lang(en),[dir=ltr]{font-family:var(--font-en)}
+[lang=en],[dir=ltr]{font-weight:var(--w-en-body)}
+/* «Like A Model» أينما ورد — في العناوين أو داخل الفقرات العربية */
+.lam{font-weight:var(--w-en-head)}
 
 /* Focus — واضح دائمًا، لا يُزال أبدًا.
    اللون يُورَّث من الحاوية حتى تحصل البطاقات الداكنة داخل الأقسام الفاتحة
@@ -94,7 +113,7 @@ em{font-style:normal}
   position:fixed;inset-inline-start:calc(var(--s-4) + env(safe-area-inset-right));
   inset-block-start:-100px;z-index:200;
   background:var(--primary);color:#fff;padding:.75rem 1.25rem;border-radius:var(--r-md);
-  font-weight:700;transition:inset-block-start var(--t-fast) var(--ease);
+  font-weight:var(--w-head);transition:inset-block-start var(--t-fast) var(--ease);
 }
 .skip-link:focus{inset-block-start:var(--s-4)}
 .sprite{position:absolute;width:0;height:0;overflow:hidden}
@@ -112,23 +131,24 @@ em{font-style:normal}
 /* Typography */
 .h2{
   font-size:clamp(1.95rem,1.3rem + 2.7vw,3.25rem);
-  line-height:1.28;font-weight:800;color:var(--text);letter-spacing:-.01em;
+  line-height:1.28;font-weight:var(--w-head);color:var(--text);letter-spacing:-.01em;
   text-wrap:balance;
 }
 .h2 em{color:var(--primary)}
-.h3{font-size:clamp(1.3rem,1.15rem + .6vw,1.6rem);line-height:1.4;font-weight:800;color:var(--text)}
-.h4{font-size:clamp(1.125rem,1.05rem + .35vw,1.3rem);line-height:1.45;font-weight:700;color:var(--text)}
+.h3{font-size:clamp(1.3rem,1.15rem + .6vw,1.6rem);line-height:1.4;font-weight:var(--w-head);color:var(--text)}
+.h4{font-size:clamp(1.125rem,1.05rem + .35vw,1.3rem);line-height:1.45;font-weight:var(--w-head);color:var(--text)}
 .lede{font-size:clamp(1.0625rem,1rem + .35vw,1.25rem);line-height:1.8;color:var(--text-2)}
 
 /* ⚠️ لا letter-spacing على نص عربي — المسافات تكسر اتصال الحروف.
    محجوزة للنصوص اللاتينية فقط (.card-en / .brand-name). */
 .eyebrow{
   display:flex;align-items:center;gap:.6rem;
-  font-size:.8438rem;font-weight:700;letter-spacing:0;
+  font-size:.8438rem;font-weight:var(--w-head);letter-spacing:0;
   color:var(--gold-text);margin-block-end:var(--s-4);
 }
+/* الأرقام لاتينية — Montserrat بدل خط النظام أحادي المسافة */
 .eyebrow .num{
-  font-family:ui-monospace,"SF Mono",Menlo,monospace;
+  font-family:var(--font-en);font-weight:var(--w-en-head);
   font-size:.8125rem;color:var(--primary-dark);letter-spacing:.04em;
 }
 .eyebrow-line{display:block;width:40px;height:1px;background:currentColor;opacity:.5}
@@ -162,7 +182,7 @@ em{font-style:normal}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
   min-height:48px;padding:.8rem 1.6rem;border-radius:var(--r-pill);
-  font-weight:700;font-size:1rem;line-height:1.2;text-align:center;
+  font-weight:var(--w-head);font-size:1rem;line-height:1.2;text-align:center;
   border:1.5px solid transparent;cursor:pointer;
   transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
              border-color var(--t-fast) var(--ease),transform var(--t-fast) var(--ease),
@@ -227,7 +247,7 @@ em{font-style:normal}
   display:inline-flex;align-items:center;gap:.35rem;min-height:34px;
   padding:.2rem .7rem;border-radius:var(--r-pill);
   border:1px solid var(--border-strong);background:var(--surface);
-  font-size:.8125rem;font-weight:800;color:var(--text);
+  font-size:.8125rem;font-weight:var(--w-en-head);color:var(--text);
   transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease);
 }
 .lang-switch .ico{width:15px;height:15px}
@@ -239,12 +259,12 @@ em{font-style:normal}
 @media (min-width:560px){.topbar-k{display:inline}}
 @media (min-width:900px){.topbar-mail{display:inline-flex}}
 
-.brand{display:flex;align-items:center;gap:.65rem;min-height:44px;color:var(--text);font-weight:800;flex:none}
+.brand{display:flex;align-items:center;gap:.65rem;min-height:44px;color:var(--text);font-weight:var(--w-body);flex:none}
 .brand-mark{display:grid;place-items:center;color:var(--primary);flex:none}
 .brand-text{display:grid;gap:.05rem}
-.brand-name{font-size:1.0625rem;letter-spacing:.04em;white-space:nowrap}
+.brand-name{font-size:1.0625rem;font-weight:var(--w-en-head);letter-spacing:.04em;white-space:nowrap}
 .brand-tag{
-  display:none;font-size:.75rem;font-weight:500;letter-spacing:0;line-height:1.4;
+  display:none;font-size:.75rem;font-weight:var(--w-body);letter-spacing:0;line-height:1.4;
   color:var(--gold-text);white-space:nowrap;
 }
 @media (min-width:1280px){.brand-tag{display:block}}
@@ -253,11 +273,11 @@ em{font-style:normal}
 .nav-desktop ul{display:flex;gap:.1rem}
 .nav-desktop a{
   display:block;padding:.6rem .7rem;border-radius:var(--r-pill);
-  font-size:.9063rem;font-weight:500;color:var(--text-2);white-space:nowrap;
+  font-size:.9063rem;font-weight:var(--w-body);color:var(--text-2);white-space:nowrap;
   transition:color var(--t-fast) var(--ease),background var(--t-fast) var(--ease);
 }
 .nav-desktop a:hover{color:var(--primary);background:var(--primary-tint)}
-.nav-desktop a[aria-current="true"]{color:var(--primary);background:var(--primary-tint);font-weight:700}
+.nav-desktop a[aria-current="true"]{color:var(--primary);background:var(--primary-tint);font-weight:var(--w-head)}
 
 .header-cta{display:none;flex:none}
 .nav-toggle{
@@ -292,7 +312,7 @@ em{font-style:normal}
 .nav-close .ico{width:22px;height:22px}
 .nav-overlay nav ul{display:grid;gap:.15rem}
 .nav-overlay nav a{
-  display:block;padding:.85rem;font-size:1.25rem;font-weight:700;color:var(--text);
+  display:block;padding:.85rem;font-size:1.25rem;font-weight:var(--w-body);color:var(--text);
   border-radius:var(--r-lg);transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease);
 }
 .nav-overlay nav a:hover{background:var(--surface);color:var(--primary)}
@@ -323,7 +343,7 @@ body.nav-open{overflow:hidden}
 
 .hero-title{
   font-size:clamp(2.4rem,1.3rem + 4.2vw,4.25rem);
-  line-height:1.18;font-weight:900;color:var(--text);letter-spacing:-.02em;
+  line-height:1.18;font-weight:var(--w-head);color:var(--text);letter-spacing:-.02em;
   margin-block:0 var(--s-6);
 }
 /* تسطير يتبع كل سطر بدل inline-block الذي يكسر الالتفاف */
@@ -381,7 +401,7 @@ body.nav-open{overflow:hidden}
 .pillar{
   display:flex;align-items:center;gap:.7rem;padding:1.1rem 1.2rem;
   background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
-  font-weight:700;color:var(--text);
+  font-weight:var(--w-head);color:var(--text);
 }
 .pillar .ico{width:1.5rem;height:1.5rem;color:var(--primary)}
 @media (min-width:900px){
@@ -408,9 +428,11 @@ body.nav-open{overflow:hidden}
 .card-ico .ico{width:26px;height:26px}
 
 .card-en{
-  font-size:.75rem;letter-spacing:.18em;font-weight:700;color:var(--gold-text);
+  font-size:.75rem;letter-spacing:.18em;font-weight:var(--w-head);color:var(--gold-text);
   text-transform:uppercase;
 }
+/* النسخة الإنجليزية منها عنوان لاتيني — Montserrat ٦٠٠ */
+.card-en:lang(en){font-weight:var(--w-en-head)}
 
 /* Journeys */
 .card-journey::after{
@@ -440,7 +462,7 @@ body.nav-open{overflow:hidden}
 .socials a:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
 .socials .ico{width:21px;height:21px}
 
-.footer-h{font-size:.9375rem;letter-spacing:0;font-weight:800;color:var(--gold-text);
+.footer-h{font-size:.9375rem;letter-spacing:0;font-weight:var(--w-head);color:var(--gold-text);
   margin-block-end:var(--s-4)}
 .footer-col ul{display:grid;gap:.15rem}
 .footer-col li{display:flex;align-items:center;gap:.55rem;font-size:.9375rem;line-height:1.6}
@@ -463,7 +485,7 @@ body.nav-open{overflow:hidden}
   border-block-start:1px solid var(--border);
   font-size:.875rem;color:var(--text-muted);
 }
-.footer-copy{color:var(--text);font-weight:700}
+.footer-copy{color:var(--text);font-weight:var(--w-head)}
 .footer-entity{font-size:.8125rem}
 .footer-ids{
   display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1.5rem;
@@ -520,18 +542,18 @@ body.nav-open{overflow:hidden}
 .video-play .ico{width:36px;height:36px;stroke-width:1.4}
 .video-ph{
   position:absolute;inset-block-end:1.1rem;inset-inline:1.1rem;z-index:2;
-  text-align:center;font-size:.875rem;font-weight:700;color:var(--text-muted);
+  text-align:center;font-size:.875rem;font-weight:var(--w-body);color:var(--text-muted);
 }@media (min-width:900px){.video-frame{aspect-ratio:3/4}}
 
 /* ---------- 9.3 من نحن ---------- */
 .about-kicker{
-  font-size:1rem;font-weight:700;color:var(--gold-text);
+  font-size:1rem;font-weight:var(--w-head);color:var(--gold-text);
   margin-block-end:var(--s-3);
 }
 .about-decisions{display:grid;gap:.6rem;margin-block:var(--s-5)}
 .about-decisions li{
   display:flex;align-items:start;gap:.6rem;
-  font-size:1rem;font-weight:700;color:var(--text);line-height:1.7;
+  font-size:1rem;font-weight:var(--w-body);color:var(--text);line-height:1.7;
 }
 .about-decisions .ico{
   width:1.15rem;height:1.15rem;flex:none;color:var(--primary);
@@ -565,10 +587,10 @@ body.nav-open{overflow:hidden}
 }
 .stat-ico .ico{width:23px;height:23px}
 .stat-num{
-  font-size:clamp(2.1rem,1.5rem + 2.4vw,3.1rem);font-weight:900;line-height:1.1;
+  font-size:clamp(2.1rem,1.5rem + 2.4vw,3.1rem);font-weight:var(--w-head);line-height:1.1;
   color:var(--primary);font-variant-numeric:tabular-nums;
 }
-.stat-lbl{font-size:.9375rem;font-weight:700;color:var(--text-2);line-height:1.5}
+.stat-lbl{font-size:.9375rem;font-weight:var(--w-body);color:var(--text-2);line-height:1.5}
 
 /* ---------- 9.5 المنظومة ---------- */
 .eco-card{
@@ -579,7 +601,7 @@ body.nav-open{overflow:hidden}
 }
 .eco-card:hover{transform:translateY(-4px);box-shadow:var(--sh-2);border-color:var(--primary-light)}
 .eco-card .h3{margin-block-end:.15rem}
-.eco-sub{font-size:.9375rem;font-weight:700;color:var(--gold-text);margin-block-end:var(--s-4)}
+.eco-sub{font-size:.9375rem;font-weight:var(--w-head);color:var(--gold-text);margin-block-end:var(--s-4)}
 .eco-card>p:last-of-type{font-size:.9688rem;color:var(--text-2);margin-block-end:var(--s-6);flex:1}
 
 /* ---------- 9.6 شركاء النجاح ---------- */
@@ -597,14 +619,13 @@ body.nav-open{overflow:hidden}
   background:var(--surface);
 }
 .logo-ph{
-  font-size:.8125rem;font-weight:700;color:var(--text-muted);
+  font-size:.8125rem;font-weight:var(--w-body);color:var(--text-muted);
   opacity:.7;text-align:center;
 }
 .logo-strip img{max-height:44px;width:auto;object-fit:contain}
 
-/* ---------- 9.7 فريق العمل ---------- */
-/* عمود واحد: البطاقات السبع صغيرة وتتسع لصفّ واحد كامل تحت النص.
-   وضعها بجانب النص كان يترك فراغًا كبيرًا أسفله. */
+/* ---------- 9.7 رحلة التحوّل — النص ثم معرض الصور ---------- */
+/* عمود واحد: المعرض أسفل النص لا بجانبه — بجانبه كان يترك فراغًا كبيرًا. */
 .team-intro-grid{display:grid;gap:clamp(2rem,4.5vw,3rem)}
 .team-intro{
   padding-inline-start:var(--s-5);border-inline-start:3px solid var(--primary);
@@ -612,35 +633,32 @@ body.nav-open{overflow:hidden}
 }
 .team-intro p{font-size:1.0313rem;line-height:1.9;color:var(--text-2)}
 
-/* flex لا grid: العناصر سبعة (عدد فردي) — التوسيط يجعل الصفّ الأخير الناقص
-   يتمركز بدل أن يترك فجوة على اليسار. */
-.team-grid{
-  display:flex;flex-wrap:wrap;justify-content:center;
-  gap:clamp(.7rem,1.6vw,1.1rem);
+/* معرض صور رحلة التحوّل — مربّعات بديلة حتى تصل صور العميل.
+   --jg-ratio هو المقبض الوحيد للنسبة: 1 مربّع · 4/5 طولي · 4/3 عرضي. */
+.journey-gallery{
+  --jg-ratio:1;
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:clamp(.75rem,1.8vw,1.25rem);
 }
-.team-card{flex:0 1 clamp(6.5rem,14vw,8.75rem)}
-.team-card figure{display:grid;gap:.5rem}
+@media (min-width:640px){.journey-gallery{grid-template-columns:repeat(3,1fr)}}
 
-.team-ph,
-.team-card img{
-  width:100%;aspect-ratio:4/5;border-radius:var(--r-lg);
+.jg-ph,
+.jg-item img{
+  width:100%;aspect-ratio:var(--jg-ratio);border-radius:var(--r-lg);
   border:1px solid var(--border);box-shadow:var(--sh-1);
   transition:transform var(--t-med) var(--ease),box-shadow var(--t-med) var(--ease);
 }
-.team-card img{object-fit:cover}
-/* عنصر بديل مؤقّت — يُستبدل بـ <img> عند توفّر الصور */
-.team-ph{
+/* cover لا contain: يقصّ أي مقاس ترسله العميلة داخل المربّع دون تشويه */
+.jg-item img{object-fit:cover}
+/* عنصر بديل مؤقّت — يُستبدل بـ <img> عند وصول الصور */
+.jg-ph{
   display:grid;place-items:center;
   background:linear-gradient(165deg,var(--surface),var(--primary-tint));
   color:var(--primary);
 }
-.team-card:hover .team-ph,
-.team-card:hover img{transform:translateY(-3px);box-shadow:var(--sh-2)}
-.team-ph .ico{width:26px;height:26px;stroke-width:1.5;opacity:.7}
-.team-card figcaption{
-  font-size:.8125rem;font-weight:700;color:var(--text);text-align:center;
-  line-height:1.45;text-wrap:balance;
-}
+.jg-item:hover .jg-ph,
+.jg-item:hover img{transform:translateY(-3px);box-shadow:var(--sh-2)}
+.jg-ph .ico{width:32px;height:32px;stroke-width:1.5;opacity:.5}
 
 /* ---------- 9.8 وجهتك الواحدة + الخطوات ---------- */
 .journey-quote{
@@ -651,18 +669,18 @@ body.nav-open{overflow:hidden}
   border:1px solid var(--gold-soft);
   box-shadow:var(--sh-2);
 }
-.journey-kicker{font-size:.9375rem;font-weight:700;color:var(--gold-text);margin-block-end:var(--s-4)}
+.journey-kicker{font-size:.9375rem;font-weight:var(--w-head);color:var(--gold-text);margin-block-end:var(--s-4)}
 .journey-lede{
   max-width:52rem;margin-inline:auto;
   font-size:clamp(1rem,.95rem + .35vw,1.125rem);line-height:1.9;color:var(--text-2);
 }
 .journey-slogan{
   margin-block-start:var(--s-6);
-  font-size:clamp(1.25rem,1.1rem + .8vw,1.6rem);font-weight:900;color:var(--primary);
+  font-size:clamp(1.25rem,1.1rem + .8vw,1.6rem);font-weight:var(--w-head);color:var(--primary);
 }
 
 .steps-title{
-  font-size:clamp(1.5rem,1.25rem + 1.2vw,2.1rem);font-weight:900;color:var(--text);
+  font-size:clamp(1.5rem,1.25rem + 1.2vw,2.1rem);font-weight:var(--w-head);color:var(--text);
   text-align:center;margin-block-end:clamp(1.75rem,3.5vw,2.75rem);
 }
 .steps-grid{
@@ -679,8 +697,8 @@ body.nav-open{overflow:hidden}
 }
 .jstep:hover{transform:translateY(-4px);box-shadow:var(--sh-2);border-color:var(--primary-light)}
 .jstep-num{
-  display:block;font-family:ui-monospace,"SF Mono",Menlo,monospace;
-  font-size:clamp(2.4rem,2rem + 1.6vw,3.2rem);font-weight:800;line-height:1;
+  display:block;font-family:var(--font-en);
+  font-size:clamp(2.4rem,2rem + 1.6vw,3.2rem);font-weight:var(--w-en-head);line-height:1;
   color:var(--primary);opacity:.28;letter-spacing:.02em;
   margin-block-end:.35rem;
 }
@@ -704,8 +722,8 @@ body.nav-open{overflow:hidden}
 @media (min-width:560px){.field-row{grid-template-columns:repeat(2,1fr)}}
 
 .field{display:grid;gap:.45rem}
-.field-lbl{font-size:.9375rem;font-weight:800;color:var(--text);line-height:1.5}
-.field-unit{font-weight:500;color:var(--text-muted);font-size:.8438rem}
+.field-lbl{font-size:.9375rem;font-weight:var(--w-head);color:var(--text);line-height:1.5}
+.field-unit{font-weight:var(--w-body);color:var(--text-muted);font-size:.8438rem}
 .req{color:var(--primary)}
 .field-wrap{position:relative;display:block}
 /* خصائص فيزيائية لا منطقية: بعض الحقول dir="ltr" (الجوال والوزن والطول)
@@ -733,7 +751,7 @@ textarea.input{min-height:96px;resize:vertical;line-height:1.8}
 .input[type=number]::-webkit-outer-spin-button,
 .input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 
-.field-err{font-size:.8438rem;font-weight:700;color:#B3261E;line-height:1.5;min-height:0}
+.field-err{font-size:.8438rem;font-weight:var(--w-head);color:#B3261E;line-height:1.5;min-height:0}
 .field-err:empty{display:none}
 
 .field-set{display:grid;gap:.75rem}
@@ -746,7 +764,7 @@ textarea.input{min-height:96px;resize:vertical;line-height:1.8}
   display:flex;align-items:center;gap:.7rem;min-height:48px;
   padding:.65rem .9rem;border-radius:var(--r-md);
   border:1.5px solid var(--border);background:var(--bg);
-  font-size:.9375rem;font-weight:600;color:var(--text-2);line-height:1.5;
+  font-size:.9375rem;font-weight:var(--w-body);color:var(--text-2);line-height:1.5;
   transition:border-color var(--t-fast) var(--ease),background var(--t-fast) var(--ease),color var(--t-fast) var(--ease);
 }
 /* الدائرة — الإشارة البصرية للاختيار، لا تعتمد على اللون وحده */
@@ -757,7 +775,7 @@ textarea.input{min-height:96px;resize:vertical;line-height:1.8}
 }
 .optrow input:hover+.optrow-face{border-color:var(--primary-light);background:var(--primary-tint)}
 .optrow input:checked+.optrow-face{
-  border-color:var(--primary);background:var(--primary-tint);color:var(--text);font-weight:800;
+  border-color:var(--primary);background:var(--primary-tint);color:var(--text);font-weight:var(--w-head);
 }
 .optrow input:checked+.optrow-face::before{
   border-color:var(--primary);box-shadow:inset 0 0 0 4px var(--surface),inset 0 0 0 12px var(--primary);
@@ -771,7 +789,7 @@ textarea.input{min-height:96px;resize:vertical;line-height:1.8}
 
 .form-foot{display:grid;gap:.65rem;justify-items:start}
 .form-foot .btn{min-width:min(100%,16rem)}
-.form-status{font-size:.9063rem;font-weight:700;color:var(--gold-text);min-height:1.4em;line-height:1.6}
+.form-status{font-size:.9063rem;font-weight:var(--w-head);color:var(--gold-text);min-height:1.4em;line-height:1.6}
 .form-status.is-err{color:#B3261E}
 .form-status.is-ok{color:#166534}
 
@@ -795,12 +813,14 @@ textarea.input{min-height:96px;resize:vertical;line-height:1.8}
 .contact-list .ico{width:1.15rem;height:1.15rem;flex:none;color:var(--primary)}
 .contact-k{font-size:.8125rem;color:var(--text-muted);flex:none}
 .contact-list a,.contact-list span:last-child{
-  color:var(--text);font-weight:700;margin-inline-start:auto;text-align:end;
+  color:var(--text);font-weight:var(--w-head);margin-inline-start:auto;text-align:end;
 }
 .contact-list a{
   display:inline-flex;align-items:center;min-height:44px;
   transition:color var(--t-fast) var(--ease);
 }
+/* الهاتف والبريد لاتينية — ٧٠٠ غير محمّل في Montserrat فنبقى على ٦٠٠ */
+.contact-list a[dir=ltr]{font-weight:var(--w-en-head)}
 .contact-list a:hover{color:var(--primary)}
 
 .contact-social{display:flex;gap:.5rem;margin-block-start:var(--s-6);flex-wrap:wrap}
@@ -819,7 +839,7 @@ textarea.input{min-height:96px;resize:vertical;line-height:1.8}
 }
 .map-cap{
   display:flex;align-items:center;gap:.5rem;
-  padding:.95rem 1.2rem;font-size:.9375rem;font-weight:800;color:var(--text);
+  padding:.95rem 1.2rem;font-size:.9375rem;font-weight:var(--w-head);color:var(--text);
   border-block-end:1px solid var(--border);background:var(--surface-alt);
 }
 .map-cap .ico{width:1.15rem;height:1.15rem;color:var(--primary)}
