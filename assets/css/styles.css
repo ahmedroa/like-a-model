@@ -323,7 +323,7 @@ body.nav-open{overflow:hidden}
 /* ---------- 6. HERO ---------- */
 .hero{
   position:relative;isolation:isolate;color:var(--text-2);
-  padding-block:clamp(9rem,15vw,11rem) clamp(4.5rem,8vw,7rem);
+  padding-block:clamp(3.5rem,7vw,5.5rem) clamp(4.5rem,8vw,7rem);
   overflow:hidden;
 }
 .hero-bg{
@@ -340,6 +340,10 @@ body.nav-open{overflow:hidden}
   mask-image:linear-gradient(to bottom, #000, transparent 75%);
 }
 .hero-grid{display:grid;gap:clamp(2.5rem,6vw,4.5rem);align-items:center}
+/* بلا صورة جانبية يصير النص وحده في الشريحة — توسيطه يمنع فراغ نصفها */
+.hero-copy{max-width:58rem;margin-inline:auto;text-align:center}
+.hero-copy .eyebrow{justify-content:center}
+.hero-actions,.hero-chips{justify-content:center}
 
 .hero-title{
   font-size:clamp(2.4rem,1.3rem + 4.2vw,4.25rem);
@@ -355,9 +359,9 @@ body.nav-open{overflow:hidden}
   background-position:0 100%;
   padding-block-end:.05em;
 }
-.hero-lede{font-size:clamp(1.0625rem,1rem + .5vw,1.3125rem);line-height:1.8;color:var(--text-2);max-width:34rem}
+.hero-lede{font-size:clamp(1.0625rem,1rem + .5vw,1.3125rem);line-height:1.8;color:var(--text-2);max-width:44rem;margin-inline:auto}
 .hero-actions{display:flex;flex-wrap:wrap;gap:var(--s-3);margin-block-start:var(--s-8)}
-.hero-actions .btn{flex:1 1 14rem}
+.hero-actions .btn{flex:0 1 auto;min-width:14rem}
 
 .hero-chips{
   display:flex;flex-wrap:wrap;gap:var(--s-3) var(--s-6);
@@ -367,15 +371,6 @@ body.nav-open{overflow:hidden}
 .hero-chips li{display:flex;align-items:center;gap:.5rem;font-size:.9375rem;color:var(--text-muted)}
 .hero-chips .ico{width:1.15rem;height:1.15rem;color:var(--primary)}
 
-.hero-visual{position:relative}/* إطار زخرفي — يظهر فقط حيث توجد مساحة كافية */
-.hero-frame{display:none}
-@media (min-width:900px){
-  .hero-frame{
-    display:block;position:absolute;z-index:1;
-    inset-block:1.6rem -1.6rem;inset-inline:-1.6rem 1.6rem;
-    border:1px solid var(--primary-light);border-radius:var(--r-2xl);
-  }
-}
 
 .scroll-cue{
   position:absolute;inset-block-end:1.5rem;inset-inline-start:50%;transform:translateX(50%);
@@ -386,7 +381,6 @@ body.nav-open{overflow:hidden}
 @keyframes cue{0%,100%{opacity:.25;transform:scaleY(.55);transform-origin:top}50%{opacity:1;transform:scaleY(1)}}
 
 @media (min-width:900px){
-  .hero-grid{grid-template-columns:1.12fr .88fr}
   .hero-actions .btn{flex:0 0 auto}
 }
 
@@ -585,11 +579,13 @@ body.nav-open{overflow:hidden}
    إلى الرابط ويتوقف مراقب التقاطع عن تظليل الفصل. */
 .chapter{display:block}
 
-/* ---------- 9.2 الفيديو التسويقي ---------- */
+/* ---------- 9.2 الفيديو التسويقي — قسم كامل ---------- */
+/* بلا حشوة علوية: حشوة الهيرو السفلية تكفي للفصل، ومجموعهما كان يترك فجوة مضاعفة */
+.section-video{padding-block:clamp(8rem,13vw,10.5rem) clamp(3rem,5vw,4rem)}
 .video-card{position:relative;z-index:2;display:grid;gap:.75rem}
 .video-frame{
   position:relative;display:grid;place-items:center;
-  aspect-ratio:16/10;border-radius:var(--r-2xl);overflow:hidden;
+  aspect-ratio:16/9;border-radius:var(--r-2xl);overflow:hidden;
   background:
     radial-gradient(70% 70% at 50% 30%, rgba(201,164,106,.20), transparent 70%),
     var(--surface);
@@ -601,19 +597,20 @@ body.nav-open{overflow:hidden}
 }
 .video-frame.is-playing .video-play,
 .video-frame.is-playing .video-ph{display:none}
+/* الزرّ يكبر مع الإطار — 74px كان مناسبًا لعمود جانبي، ويضيع في إطار بعرض الصفحة */
 .video-play{
   position:relative;z-index:2;display:grid;place-items:center;
-  width:74px;height:74px;border-radius:var(--r-pill);
+  width:clamp(74px,7vw,104px);height:clamp(74px,7vw,104px);border-radius:var(--r-pill);
   background:var(--primary);color:#fff;
   box-shadow:0 12px 34px rgba(155,59,103,.32);
   transition:transform var(--t-fast) var(--ease),background var(--t-fast) var(--ease);
 }
 .video-play:hover{transform:scale(1.06);background:var(--primary-dark)}
-.video-play .ico{width:36px;height:36px;stroke-width:1.4}
+.video-play .ico{width:48%;height:48%;stroke-width:1.4}
 .video-ph{
   position:absolute;inset-block-end:1.1rem;inset-inline:1.1rem;z-index:2;
   text-align:center;font-size:.875rem;font-weight:var(--w-body);color:var(--text-muted);
-}@media (min-width:900px){.video-frame{aspect-ratio:3/4}}
+}
 
 /* ---------- 9.3 من نحن ---------- */
 .about-kicker{

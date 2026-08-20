@@ -177,8 +177,25 @@ window.__lamReveal = setTimeout(function () {
 
 <!-- ╔══════════ الفصل 1 · الرئيسية ══════════╗ -->
 
-<!-- ══════════ 1 · HERO ══════════ -->
-<section class="hero" id="home">
+<!-- ══════════ 1 · الفيديو التسويقي (أول قسم، بعرض الصفحة) ══════════ -->
+<!-- ✏️ ضعي الرابط في VIDEO داخل assets/js/main.js -->
+<!-- يُوسَم بـ aria-label لا بعنصر عنوان: القسم يسبق عنوان الصفحة الرئيسي،
+     فوضع عنوان من المستوى الثاني هنا يكسر ترتيب العناوين. -->
+<section class="section section-video" id="home" aria-label="فيديو تسويقي لخدمات Like A Model">
+  <div class="shell">
+    <figure class="video-card reveal" id="heroVideo">
+      <div class="video-frame" id="videoFrame">
+        <button class="video-play" id="videoPlay" type="button" aria-label="تشغيل الفيديو التسويقي">
+          <svg class="ico" aria-hidden="true"><use href="#i-play"></use></svg>
+        </button>
+        <p class="video-ph" id="videoPh">فيديو تسويقي لخدمات <bdi class="lam" lang="en">Like A Model</bdi></p>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ 2 · HERO ══════════ -->
+<section class="hero" id="hero">
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="shell hero-grid">
 
@@ -212,19 +229,6 @@ window.__lamReveal = setTimeout(function () {
         <li><svg class="ico" aria-hidden="true"><use href="#i-home"></use></svg> مدرِّبتك في راحة بيتك</li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-scan"></use></svg> تحليل <bdi lang="en">InBody</bdi> وقياسات</li>
       </ul>
-    </div>
-
-    <!-- ✏️ الفيديو التسويقي — ضعي الرابط في VIDEO داخل assets/js/main.js -->
-    <div class="hero-visual reveal" data-delay="2">
-      <figure class="video-card" id="heroVideo">
-        <div class="video-frame" id="videoFrame">
-          <button class="video-play" id="videoPlay" type="button" aria-label="تشغيل الفيديو التسويقي">
-            <svg class="ico" aria-hidden="true"><use href="#i-play"></use></svg>
-          </button>
-          <p class="video-ph" id="videoPh">فيديو تسويقي لخدمات <bdi class="lam" lang="en">Like A Model</bdi></p>
-        </div>
-      </figure>
-      <div class="hero-frame" aria-hidden="true"></div>
     </div>
 
   </div>
