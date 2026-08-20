@@ -753,27 +753,38 @@ body.nav-open{overflow:hidden}
   font-size:clamp(1.5rem,1.25rem + 1.2vw,2.1rem);font-weight:var(--w-head);color:var(--text);
   text-align:center;margin-block-end:clamp(1.75rem,3.5vw,2.75rem);
 }
+/* الخطوات بلا مربّعات (تصميم العميل): رقم كبير ثم فاصل ثم العنوان والوصف.
+   الفجوة الرأسية أوسع من الأفقية — بلا حدود تفصل البطاقات، المسافة وحدها
+   هي ما يمنع التصاق صفٍّ بالذي تحته. */
 .steps-grid{
   display:grid;grid-template-columns:1fr;
-  gap:clamp(1rem,2.2vw,1.6rem);counter-reset:none;
+  gap:clamp(2.25rem,4.5vw,3.25rem) clamp(1.5rem,3vw,2.5rem);
 }
 @media (min-width:640px){.steps-grid{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1000px){.steps-grid{grid-template-columns:repeat(3,1fr)}}
 .jstep{
-  position:relative;overflow:hidden;
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);
-  padding:clamp(1.5rem,2.8vw,2rem);
-  transition:transform var(--t-med) var(--ease),box-shadow var(--t-med) var(--ease),border-color var(--t-med) var(--ease);
+  display:grid;justify-items:center;align-content:start;
+  text-align:center;gap:.15rem;
 }
-.jstep:hover{transform:translateY(-4px);box-shadow:var(--sh-2);border-color:var(--primary-light)}
+/* الرقم بلون كامل لا باهت: كان .28 ليبقى خلف نصّ البطاقة، وبلا بطاقة
+   يصير عنصرًا رئيسيًا. #9B3B67 فوق #F8E7E0 = ٥٫٥:١ — يحقق AA. */
 .jstep-num{
   display:block;font-family:var(--font-en);
-  font-size:clamp(2.4rem,2rem + 1.6vw,3.2rem);font-weight:var(--w-en-head);line-height:1;
-  color:var(--primary);opacity:.28;letter-spacing:.02em;
-  margin-block-end:.35rem;
+  font-size:clamp(2.6rem,2rem + 2vw,3.6rem);font-weight:var(--w-en-head);line-height:1;
+  color:var(--primary);letter-spacing:.02em;
 }
-.jstep .h4{margin-block-end:.55rem}
-.jstep p{font-size:.9688rem;line-height:1.8;color:var(--text-2)}
+/* فاصل قصير يعوّض حدّ البطاقة المحذوف ويثبّت الإيقاع بين الخطوات */
+.jstep-num::after{
+  content:"";display:block;width:34px;height:2px;
+  margin:.7rem auto .8rem;border-radius:2px;
+  background:linear-gradient(90deg,var(--gold),var(--primary-light));
+}
+.jstep .h4{margin-block-end:.4rem}
+/* سقف للعرض: بلا مربّع يحدّها، الأسطر تطول على الشاشات العريضة فيتفكّك التناسق */
+.jstep p{
+  font-size:.9688rem;line-height:1.8;color:var(--text-2);
+  max-width:23rem;text-wrap:pretty;
+}
 
 /* ---------- 9.9 تواصل معنا ---------- */
 .section-contact{
