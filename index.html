@@ -428,68 +428,101 @@ window.__lamReveal = setTimeout(function () {
       </p>
     </header>
 
+    <!-- ══ ✏️ صور الخدمات — يرسلها العميل لاحقًا ══════════════════
+         لوضع صورة: استبدلي <div class="tile-ph" aria-hidden="true"></div> بـ
+           <img src="assets/img/services/xx.jpg" alt="" loading="lazy">
+         alt فارغة عمدًا: العنوان تحت الصورة يحمل المعنى، فوصفها تكرار.
+         نسبة المربّع من --tile-ratio في .journeys-grid داخل styles.css
+         ═══════════════════════════════════════════════════ -->
     <div class="grid grid-3 journeys-grid" id="journeys">
-      <article class="card card-journey reveal" data-delay="1">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-flame"></use></svg></span>
-        <p class="card-en" lang="en">Fat Loss</p>
-        <h3 class="h4">رحلة خسارة الدهون</h3>
-        <p>برنامج يجمع بين حرق فعّال وتغذية متوازنة، لخسارة دهون حقيقية دون فقدان كتلتِك العضلية.</p>
+      <article class="card-tile reveal" data-delay="1" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-flame"></use></svg></span>
+        <div class="tile-body">
+          <p class="card-en" lang="en">Fat Loss</p>
+          <h3 class="h4">رحلة خسارة الدهون</h3>
+          <div class="tile-reveal"><p>برنامج يجمع بين حرق فعّال وتغذية متوازنة، لخسارة دهون حقيقية دون فقدان كتلتِك العضلية.</p></div>
+        </div>
       </article>
 
-      <article class="card card-journey reveal" data-delay="2">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-sparkle"></use></svg></span>
-        <p class="card-en" lang="en">Body Sculpt</p>
-        <h3 class="h4">رحلة نحت وتنسيق القوام</h3>
-        <p>تركيز على المناطق التي تهمّك، لقوام متناسق وخطوط أنعم وثقة أعلى بجسمك.</p>
+      <article class="card-tile reveal" data-delay="2" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-sparkle"></use></svg></span>
+        <div class="tile-body">
+          <p class="card-en" lang="en">Body Sculpt</p>
+          <h3 class="h4">رحلة نحت وتنسيق القوام</h3>
+          <div class="tile-reveal"><p>تركيز على المناطق التي تهمّك، لقوام متناسق وخطوط أنعم وثقة أعلى بجسمك.</p></div>
+        </div>
       </article>
 
-      <article class="card card-journey reveal" data-delay="3">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-dumbbell"></use></svg></span>
-        <p class="card-en" lang="en">Strength</p>
-        <h3 class="h4">رحلة بناء العضلات والقوة</h3>
-        <p>تدرّج مدروس في الأحمال يبني قوة حقيقية، ويحسّن قوامِك وصحة عظامِك على المدى الطويل.</p>
+      <article class="card-tile reveal" data-delay="3" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-dumbbell"></use></svg></span>
+        <div class="tile-body">
+          <p class="card-en" lang="en">Strength</p>
+          <h3 class="h4">رحلة بناء العضلات والقوة</h3>
+          <div class="tile-reveal"><p>تدرّج مدروس في الأحمال يبني قوة حقيقية، ويحسّن قوامِك وصحة عظامِك على المدى الطويل.</p></div>
+        </div>
       </article>
 
-      <article class="card card-journey reveal" data-delay="1">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-leaf"></use></svg></span>
-        <p class="card-en" lang="en">Healthy Lifestyle</p>
-        <h3 class="h4">رحلة نمط الحياة الصحي</h3>
-        <p>ليست حِمية مؤقتة، بل عادات تبقى معكِ: حركة منتظمة، أكل متوازن، ونوم وطاقة أفضل.</p>
+      <article class="card-tile reveal" data-delay="1" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-leaf"></use></svg></span>
+        <div class="tile-body">
+          <p class="card-en" lang="en">Healthy Lifestyle</p>
+          <h3 class="h4">رحلة نمط الحياة الصحي</h3>
+          <div class="tile-reveal"><p>ليست حِمية مؤقتة، بل عادات تبقى معكِ: حركة منتظمة، أكل متوازن، ونوم وطاقة أفضل.</p></div>
+        </div>
       </article>
 
-      <article class="card card-journey reveal" data-delay="2">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-bloom"></use></svg></span>
-        <p class="card-en" lang="en">Pregnancy</p>
-        <h3 class="h4">رحلة الحمل الصحي</h3>
-        <p>تمارين متدرّجة حسب مرحلة حملِك، تُبنى بعد موافقة طبيبتِك المتابِعة، وتدعم راحتِك وطاقتِك.</p>
+      <article class="card-tile reveal" data-delay="2" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-bloom"></use></svg></span>
+        <div class="tile-body">
+          <p class="card-en" lang="en">Pregnancy</p>
+          <h3 class="h4">رحلة الحمل الصحي</h3>
+          <div class="tile-reveal"><p>تمارين متدرّجة حسب مرحلة حملِك، تُبنى بعد موافقة طبيبتِك المتابِعة، وتدعم راحتِك وطاقتِك.</p></div>
+        </div>
       </article>
 
-      <article class="card card-journey reveal" data-delay="3">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-baby"></use></svg></span>
-        <p class="card-en" lang="en">Postpartum</p>
-        <h3 class="h4">رحلة ما بعد الولادة</h3>
-        <p>عودة تدريجية تبدأ بإذن طبيبتِك: استعادة قوة الجذع وقاع الحوض، ثم بناء اللياقة والقوام.</p>
+      <article class="card-tile reveal" data-delay="3" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-baby"></use></svg></span>
+        <div class="tile-body">
+          <p class="card-en" lang="en">Postpartum</p>
+          <h3 class="h4">رحلة ما بعد الولادة</h3>
+          <div class="tile-reveal"><p>عودة تدريجية تبدأ بإذن طبيبتِك: استعادة قوة الجذع وقاع الحوض، ثم بناء اللياقة والقوام.</p></div>
+        </div>
       </article>
 
-      <article class="card card-journey reveal" data-delay="1">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-transform"></use></svg></span>
-        <p class="card-en" lang="en">Post Bariatric</p>
-        <h3 class="h4">رحلة التحوّل بعد التكميم</h3>
-        <p>مرافقة بعد جراحات السمنة بالتنسيق مع فريقِك الطبي: حفاظ على العضلات وتغذية تناسب مرحلتِك.</p>
+      <article class="card-tile reveal" data-delay="1" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-transform"></use></svg></span>
+        <div class="tile-body">
+          <p class="card-en" lang="en">Post Bariatric</p>
+          <h3 class="h4">رحلة التحوّل بعد التكميم</h3>
+          <div class="tile-reveal"><p>مرافقة بعد جراحات السمنة بالتنسيق مع فريقِك الطبي: حفاظ على العضلات وتغذية تناسب مرحلتِك.</p></div>
+        </div>
       </article>
 
-      <article class="card card-journey reveal" data-delay="2">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-heartbeat"></use></svg></span>
-        <p class="card-en" lang="en">Senior Wellness</p>
-        <h3 class="h4">رحلة اللياقة والصحة لكبار السن</h3>
-        <p>توازن ومرونة وقوة وظيفية، لحركة أسهل واستقلالية أطول وجودة حياة أعلى.</p>
+      <article class="card-tile reveal" data-delay="2" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-heartbeat"></use></svg></span>
+        <div class="tile-body">
+          <p class="card-en" lang="en">Senior Wellness</p>
+          <h3 class="h4">رحلة اللياقة والصحة لكبار السن</h3>
+          <div class="tile-reveal"><p>توازن ومرونة وقوة وظيفية، لحركة أسهل واستقلالية أطول وجودة حياة أعلى.</p></div>
+        </div>
       </article>
 
-      <article class="card card-journey reveal" data-delay="3">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-crown"></use></svg></span>
-        <p class="card-en" lang="en">Bridal</p>
-        <h3 class="h4">رحلة تألّق العروس</h3>
-        <p>خطة مركّزة بجدول زمني واضح حتى موعدِك، لتظهري في أفضل حالاتِك ثقةً وإطلالة.</p>
+      <article class="card-tile reveal" data-delay="3" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-crown"></use></svg></span>
+        <div class="tile-body">
+          <p class="card-en" lang="en">Bridal</p>
+          <h3 class="h4">رحلة تألّق العروس</h3>
+          <div class="tile-reveal"><p>خطة مركّزة بجدول زمني واضح حتى موعدِك، لتظهري في أفضل حالاتِك ثقةً وإطلالة.</p></div>
+        </div>
       </article>
     </div>
 
@@ -518,26 +551,44 @@ window.__lamReveal = setTimeout(function () {
       </p>
     </header>
 
+    <!-- ══ ✏️ صور شركاء النجاح — يرسلها العميل لاحقًا ══════════════════
+         لوضع صورة: استبدلي <div class="tile-ph" aria-hidden="true"></div> بـ
+           <img src="assets/img/partners/xx.jpg" alt="" loading="lazy">
+         alt فارغة عمدًا: العنوان تحت الصورة يحمل المعنى، فوصفها تكرار.
+         نسبة المربّع من --tile-ratio في .partners-grid داخل styles.css
+         ═══════════════════════════════════════════════════ -->
     <div class="grid grid-4 partners-grid">
-      <article class="card card-partner reveal" data-delay="1">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-flask"></use></svg></span>
-        <h3 class="h4">المختبرات الطبية</h3>
-        <p>تحاليل دقيقة تدعم قراءة حالتِك الصحية وبناء خطة تناسب جسمِك فعلًا.</p>
+      <article class="card-tile reveal" data-delay="1" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-flask"></use></svg></span>
+        <div class="tile-body">
+          <h3 class="h4">المختبرات الطبية</h3>
+          <div class="tile-reveal"><p>تحاليل دقيقة تدعم قراءة حالتِك الصحية وبناء خطة تناسب جسمِك فعلًا.</p></div>
+        </div>
       </article>
-      <article class="card card-partner reveal" data-delay="2">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-bowl"></use></svg></span>
-        <h3 class="h4">الوجبات الصحية</h3>
-        <p>وجبات محضَّرة بمعايير غذائية واضحة، لتلتزمي بخطتِك دون عناء التخطيط.</p>
+      <article class="card-tile reveal" data-delay="2" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-bowl"></use></svg></span>
+        <div class="tile-body">
+          <h3 class="h4">الوجبات الصحية</h3>
+          <div class="tile-reveal"><p>وجبات محضَّرة بمعايير غذائية واضحة، لتلتزمي بخطتِك دون عناء التخطيط.</p></div>
+        </div>
       </article>
-      <article class="card card-partner reveal" data-delay="3">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-box"></use></svg></span>
-        <h3 class="h4">المنتجات المختارة</h3>
-        <p>منتجات ومكمّلات مختارة بعناية من علامات موثوقة تدعم رحلتِك.</p>
+      <article class="card-tile reveal" data-delay="3" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-box"></use></svg></span>
+        <div class="tile-body">
+          <h3 class="h4">المنتجات المختارة</h3>
+          <div class="tile-reveal"><p>منتجات ومكمّلات مختارة بعناية من علامات موثوقة تدعم رحلتِك.</p></div>
+        </div>
       </article>
-      <article class="card card-partner reveal" data-delay="4">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-sparkle"></use></svg></span>
-        <h3 class="h4">الخدمات المختارة</h3>
-        <p>خدمات عناية وصحة مكمّلة، بنفس معايير الجودة التي نلتزم بها.</p>
+      <article class="card-tile reveal" data-delay="4" tabindex="0">
+        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
+        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-sparkle"></use></svg></span>
+        <div class="tile-body">
+          <h3 class="h4">الخدمات المختارة</h3>
+          <div class="tile-reveal"><p>خدمات عناية وصحة مكمّلة، بنفس معايير الجودة التي نلتزم بها.</p></div>
+        </div>
       </article>
     </div>
 
