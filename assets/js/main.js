@@ -105,10 +105,9 @@ const STATS_LATIN = false;
       else { host.hidden = true; }
     });
 
-    // روابط CTA التي تفتح واتساب برسالة جاهزة
-    const presets = {
-      '#partnerCta': 'مرحبًا، أرغب بالانضمام إلى شركاء النجاح في Like A Model.'
-    };
+    // ✏️ روابط CTA التي تفتح واتساب برسالة جاهزة — أضيفي 'معرّف#': 'الرسالة'
+    // (فرغت بعد حذف قسم شركاء النجاح؛ الآلية باقية لأي زرّ جديد)
+    const presets = {};
     Object.entries(presets).forEach(([sel, msg]) => {
       const el = $(sel);
       if (el) { el.href = waWith(msg); el.rel = 'noopener'; }

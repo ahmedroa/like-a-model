@@ -138,8 +138,6 @@ window.__lamReveal = setTimeout(function () {
       <ul>
         <li><a href="#home">الصفحة الرئيسية</a></li>
         <li><a href="#about">من نحن</a></li>
-        <li><a href="#services">خدماتنا</a></li>
-        <li><a href="#partners">شركاء النجاح</a></li>
         <li><a href="#journey">رحلة التحول</a></li>
         <li><a href="#contact">تواصل معنا</a></li>
       </ul>
@@ -162,8 +160,6 @@ window.__lamReveal = setTimeout(function () {
       <ul>
         <li><a href="#home">الصفحة الرئيسية</a></li>
         <li><a href="#about">من نحن</a></li>
-        <li><a href="#services">خدماتنا</a></li>
-        <li><a href="#partners">شركاء النجاح</a></li>
         <li><a href="#journey">رحلة التحول</a></li>
         <li><a href="#contact">تواصل معنا</a></li>
       </ul>
@@ -183,7 +179,7 @@ window.__lamReveal = setTimeout(function () {
      فوضع عنوان من المستوى الثاني هنا يكسر ترتيب العناوين. -->
 <section class="section section-video" id="home" aria-label="فيديو تسويقي لخدمات Like A Model">
   <div class="shell">
-    <figure class="video-card reveal" id="heroVideo">
+    <figure class="video-card reveal" id="promoVideo">
       <div class="video-frame" id="videoFrame">
         <button class="video-play" id="videoPlay" type="button" aria-label="تشغيل الفيديو التسويقي">
           <svg class="ico" aria-hidden="true"><use href="#i-play"></use></svg>
@@ -192,50 +188,6 @@ window.__lamReveal = setTimeout(function () {
       </div>
     </figure>
   </div>
-</section>
-
-<!-- ══════════ 2 · HERO ══════════ -->
-<section class="hero" id="hero">
-  <div class="hero-bg" aria-hidden="true"></div>
-  <div class="shell hero-grid">
-
-    <div class="hero-copy">
-      <p class="eyebrow reveal">
-        <span class="eyebrow-line" aria-hidden="true"></span>
-        تجربة تحوّل متكاملة · للنساء فقط
-      </p>
-
-      <h1 class="hero-title reveal" data-delay="1">
-        رحلتِك نحو<br>
-        <em>أفضل نسخة منكِ</em><br>
-        تبدأ هنا.
-      </h1>
-
-      <p class="hero-lede reveal" data-delay="2">
-        أكثر من تدريب... أسلوب حياة. تجربة تحوّل متكاملة مصمَّمة خصيصًا لكِ،
-        تجمع بين التدريب الشخصي، التغذية، المتابعة، وقياس النتائج.
-      </p>
-
-      <div class="hero-actions reveal" data-delay="3">
-        <a class="btn btn-primary btn-lg" href="#contact">
-          ابدئي رحلتِك الآن
-          <svg class="ico btn-ico" aria-hidden="true"><use href="#i-arrow"></use></svg>
-        </a>
-        <a class="btn btn-outline btn-lg" href="#services">اكتشفي خدماتنا</a>
-      </div>
-
-      <ul class="hero-chips reveal" data-delay="4">
-        <li><svg class="ico" aria-hidden="true"><use href="#i-medal"></use></svg> خبرة تمتد لأكثر من ٢٠ عامًا</li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-home"></use></svg> مدرِّبتك في راحة بيتك</li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-scan"></use></svg> تحليل <bdi lang="en">InBody</bdi> وقياسات</li>
-      </ul>
-    </div>
-
-  </div>
-
-  <a class="scroll-cue" href="#about" aria-label="انتقلي للأسفل">
-    <span class="scroll-cue-line" aria-hidden="true"></span>
-  </a>
 </section>
 
 <!-- ╔══════════ الفصل 2 · من نحن ══════════╗ -->
@@ -249,10 +201,12 @@ window.__lamReveal = setTimeout(function () {
       <div class="about-head">
         <p class="eyebrow reveal"><span class="num">01</span> من نحن</p>
         <p class="about-kicker reveal" data-delay="1">خبرة تمتد لأكثر من ٢٠ عامًا</p>
-        <h2 class="h2 reveal" data-delay="1">
+        <!-- h1 لا h2: صار أول عنوان في الصفحة بعد حذف قسم الواجهة.
+             class="h2" يُبقي المظهر كما هو — التغيير دلالي فقط. -->
+        <h1 class="h2 reveal" data-delay="1">
           <bdi class="lam" lang="en">Like A Model</bdi><br>
           <em>رحلة تحوّل مصمَّمة خصيصًا لكِ.</em>
-        </h2>
+        </h1>
       </div>
 
       <div class="about-body">
@@ -298,45 +252,11 @@ window.__lamReveal = setTimeout(function () {
     </div>
   </div>
 </section>
-
-<!-- ══════════ 3 · WHY LIKE A MODEL ══════════ -->
-<section class="section section-wash" id="why">
-  <div class="shell">
-    <header class="sec-head sec-head-center">
-      <p class="eyebrow reveal"><span class="num">02</span> لماذا نحن</p>
-      <h2 class="h2 reveal" data-delay="1">ليش تختارين <em class="lam" lang="en">Like A Model</em>؟</h2>
-    </header>
-
-    <div class="grid grid-3 why-grid">
-      <article class="card card-why reveal" data-delay="1">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-medal"></use></svg></span>
-        <p class="card-en">خبرة مثبتة</p>
-        <h3 class="h4">رحلة مصمَّمة خصيصًا لكِ</h3>
-        <p>نصمّم برنامجِك وفق أهدافِك ونمط حياتِك.</p>
-      </article>
-
-      <article class="card card-why reveal" data-delay="2">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-home"></use></svg></span>
-        <p class="card-en">راحة وخصوصية</p>
-        <h3 class="h4">مدرِّبتِك الخاصة في راحة بيتِك</h3>
-        <p>تجربة تدريب نسائية تجمع بين الراحة والخصوصية.</p>
-      </article>
-
-      <article class="card card-why reveal" data-delay="3">
-        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-trend"></use></svg></span>
-        <p class="card-en">نتائج تُقاس</p>
-        <h3 class="h4">متابعة تصنع الفرق</h3>
-        <p>تقييم، قياسات، تغذية، ومتابعة مستمرة لتحقيق أفضل النتائج.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
 <!-- ══════════ 4 · STATS ══════════ -->
 <section class="section section-stats" id="stats">
   <div class="shell">
     <header class="sec-head sec-head-center">
-      <p class="eyebrow reveal"><span class="num">03</span> نجاحنا بالأرقام</p>
+      <p class="eyebrow reveal"><span class="num">02</span> نجاحنا بالأرقام</p>
       <h2 class="h2 reveal" data-delay="1">نجاحنا <em>بالأرقام</em>.</h2>
       <p class="sec-sub reveal" data-delay="2">
         وراء كل رقم قصة نجاح وثقة اكتسبناها على مدار السنوات.
@@ -373,7 +293,7 @@ window.__lamReveal = setTimeout(function () {
 <section class="section" id="ecosystem">
   <div class="shell">
     <header class="sec-head sec-head-center">
-      <p class="eyebrow reveal"><span class="num">04</span> المنظومة</p>
+      <p class="eyebrow reveal"><span class="num">03</span> المنظومة</p>
       <h2 class="h2 reveal" data-delay="1">منظومة <em class="lam" lang="en">Like A Model</em></h2>
       <p class="sec-sub reveal" data-delay="2">
         لأن التحوّل الحقيقي يحتاج أكثر من مجرد تدريب، صمّمنا منظومة متكاملة تجمع بين
@@ -391,9 +311,6 @@ window.__lamReveal = setTimeout(function () {
           من المختبرات والوجبات الصحية إلى المنتجات والخدمات المختارة بعناية، نوفّر لكِ
           شبكة من الشركاء الذين يشاركوننا نفس معايير الجودة لنرافقِك نحو أفضل النتائج.
         </p>
-        <a class="btn btn-outline" href="#partners">تعرّفي على الشركاء
-          <svg class="ico btn-ico" aria-hidden="true"><use href="#i-arrow"></use></svg>
-        </a>
       </article>
 
       <article class="eco-card reveal" data-delay="2">
@@ -405,211 +322,7 @@ window.__lamReveal = setTimeout(function () {
           تجربة استثنائية ونتائج حقيقية تدوم. استكشفي الخدمات واختاري الرحلة الأقرب
           إلى أهدافِك.
         </p>
-        <a class="btn btn-outline" href="#services">استكشفي الخدمات
-          <svg class="ico btn-ico" aria-hidden="true"><use href="#i-arrow"></use></svg>
-        </a>
       </article>
-    </div>
-  </div>
-</section>
-
-</div>
-
-<!-- ╔══════════ الفصل 3 · خدماتنا ══════════╗ -->
-<div class="chapter" id="services">
-
-<!-- ══════════ 6 · SERVICES / JOURNEYS ══════════ -->
-<section class="section section-alt" id="services-journeys">
-  <div class="shell">
-    <header class="sec-head sec-head-split">
-      <div>
-        <p class="eyebrow reveal"><span class="num">05</span> خدماتنا</p>
-        <h2 class="h2 reveal" data-delay="1">ابدئي <em>رحلة التحوّل</em> التي تناسبِك.</h2>
-      </div>
-      <p class="sec-head-note reveal" data-delay="2">
-        كل رحلة لها برنامجها الخاص في التدريب والتغذية والمتابعة. اختيارِك هنا هو
-        الخطوة الأولى في بناء تجربتِك.
-      </p>
-    </header>
-
-    <!-- ══ ✏️ صور الخدمات — يرسلها العميل لاحقًا ══════════════════
-         لوضع صورة: استبدلي <div class="tile-ph" aria-hidden="true"></div> بـ
-           <img src="assets/img/services/xx.jpg" alt="" loading="lazy">
-         alt فارغة عمدًا: العنوان تحت الصورة يحمل المعنى، فوصفها تكرار.
-         نسبة المربّع من --tile-ratio في .journeys-grid داخل styles.css
-         ═══════════════════════════════════════════════════ -->
-    <div class="grid grid-3 journeys-grid" id="journeys">
-      <article class="card-tile reveal" data-delay="1" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-flame"></use></svg></span>
-        <div class="tile-body">
-          <p class="card-en" lang="en">Fat Loss</p>
-          <h3 class="h4">رحلة خسارة الدهون</h3>
-          <div class="tile-reveal"><p>برنامج يجمع بين حرق فعّال وتغذية متوازنة، لخسارة دهون حقيقية دون فقدان كتلتِك العضلية.</p></div>
-        </div>
-      </article>
-
-      <article class="card-tile reveal" data-delay="2" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-sparkle"></use></svg></span>
-        <div class="tile-body">
-          <p class="card-en" lang="en">Body Sculpt</p>
-          <h3 class="h4">رحلة نحت وتنسيق القوام</h3>
-          <div class="tile-reveal"><p>تركيز على المناطق التي تهمّك، لقوام متناسق وخطوط أنعم وثقة أعلى بجسمك.</p></div>
-        </div>
-      </article>
-
-      <article class="card-tile reveal" data-delay="3" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-dumbbell"></use></svg></span>
-        <div class="tile-body">
-          <p class="card-en" lang="en">Strength</p>
-          <h3 class="h4">رحلة بناء العضلات والقوة</h3>
-          <div class="tile-reveal"><p>تدرّج مدروس في الأحمال يبني قوة حقيقية، ويحسّن قوامِك وصحة عظامِك على المدى الطويل.</p></div>
-        </div>
-      </article>
-
-      <article class="card-tile reveal" data-delay="1" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-leaf"></use></svg></span>
-        <div class="tile-body">
-          <p class="card-en" lang="en">Healthy Lifestyle</p>
-          <h3 class="h4">رحلة نمط الحياة الصحي</h3>
-          <div class="tile-reveal"><p>ليست حِمية مؤقتة، بل عادات تبقى معكِ: حركة منتظمة، أكل متوازن، ونوم وطاقة أفضل.</p></div>
-        </div>
-      </article>
-
-      <article class="card-tile reveal" data-delay="2" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-bloom"></use></svg></span>
-        <div class="tile-body">
-          <p class="card-en" lang="en">Pregnancy</p>
-          <h3 class="h4">رحلة الحمل الصحي</h3>
-          <div class="tile-reveal"><p>تمارين متدرّجة حسب مرحلة حملِك، تُبنى بعد موافقة طبيبتِك المتابِعة، وتدعم راحتِك وطاقتِك.</p></div>
-        </div>
-      </article>
-
-      <article class="card-tile reveal" data-delay="3" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-baby"></use></svg></span>
-        <div class="tile-body">
-          <p class="card-en" lang="en">Postpartum</p>
-          <h3 class="h4">رحلة ما بعد الولادة</h3>
-          <div class="tile-reveal"><p>عودة تدريجية تبدأ بإذن طبيبتِك: استعادة قوة الجذع وقاع الحوض، ثم بناء اللياقة والقوام.</p></div>
-        </div>
-      </article>
-
-      <article class="card-tile reveal" data-delay="1" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-transform"></use></svg></span>
-        <div class="tile-body">
-          <p class="card-en" lang="en">Post Bariatric</p>
-          <h3 class="h4">رحلة التحوّل بعد التكميم</h3>
-          <div class="tile-reveal"><p>مرافقة بعد جراحات السمنة بالتنسيق مع فريقِك الطبي: حفاظ على العضلات وتغذية تناسب مرحلتِك.</p></div>
-        </div>
-      </article>
-
-      <article class="card-tile reveal" data-delay="2" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-heartbeat"></use></svg></span>
-        <div class="tile-body">
-          <p class="card-en" lang="en">Senior Wellness</p>
-          <h3 class="h4">رحلة اللياقة والصحة لكبار السن</h3>
-          <div class="tile-reveal"><p>توازن ومرونة وقوة وظيفية، لحركة أسهل واستقلالية أطول وجودة حياة أعلى.</p></div>
-        </div>
-      </article>
-
-      <article class="card-tile reveal" data-delay="3" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-crown"></use></svg></span>
-        <div class="tile-body">
-          <p class="card-en" lang="en">Bridal</p>
-          <h3 class="h4">رحلة تألّق العروس</h3>
-          <div class="tile-reveal"><p>خطة مركّزة بجدول زمني واضح حتى موعدِك، لتظهري في أفضل حالاتِك ثقةً وإطلالة.</p></div>
-        </div>
-      </article>
-    </div>
-
-    <div class="sec-foot reveal">
-      <a class="btn btn-outline" href="#contact">ابدئي رحلتِك الآن
-        <svg class="ico btn-ico" aria-hidden="true"><use href="#i-arrow"></use></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-</div>
-
-<!-- ╔══════════ الفصل 4 · شركاء النجاح ══════════╗ -->
-<div class="chapter" id="partners">
-
-<!-- ══════════ 7 · PARTNERS ══════════ -->
-<section class="section" id="partners-network">
-  <div class="shell">
-    <header class="sec-head sec-head-center">
-      <p class="eyebrow reveal"><span class="num">06</span> شركاء النجاح</p>
-      <h2 class="h2 reveal" data-delay="1">اكتشفي منظومة متكاملة <em>تدعم نجاحِك</em>.</h2>
-      <p class="sec-sub reveal" data-delay="2">
-        من المختبرات والوجبات الصحية إلى المنتجات والخدمات المختارة بعناية، نوفّر لكِ
-        شبكة من الشركاء الذين يشاركوننا نفس معايير الجودة لنرافقِك نحو أفضل النتائج.
-      </p>
-    </header>
-
-    <!-- ══ ✏️ صور شركاء النجاح — يرسلها العميل لاحقًا ══════════════════
-         لوضع صورة: استبدلي <div class="tile-ph" aria-hidden="true"></div> بـ
-           <img src="assets/img/partners/xx.jpg" alt="" loading="lazy">
-         alt فارغة عمدًا: العنوان تحت الصورة يحمل المعنى، فوصفها تكرار.
-         نسبة المربّع من --tile-ratio في .partners-grid داخل styles.css
-         ═══════════════════════════════════════════════════ -->
-    <div class="grid grid-4 partners-grid">
-      <article class="card-tile reveal" data-delay="1" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-flask"></use></svg></span>
-        <div class="tile-body">
-          <h3 class="h4">المختبرات الطبية</h3>
-          <div class="tile-reveal"><p>تحاليل دقيقة تدعم قراءة حالتِك الصحية وبناء خطة تناسب جسمِك فعلًا.</p></div>
-        </div>
-      </article>
-      <article class="card-tile reveal" data-delay="2" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-bowl"></use></svg></span>
-        <div class="tile-body">
-          <h3 class="h4">الوجبات الصحية</h3>
-          <div class="tile-reveal"><p>وجبات محضَّرة بمعايير غذائية واضحة، لتلتزمي بخطتِك دون عناء التخطيط.</p></div>
-        </div>
-      </article>
-      <article class="card-tile reveal" data-delay="3" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-box"></use></svg></span>
-        <div class="tile-body">
-          <h3 class="h4">المنتجات المختارة</h3>
-          <div class="tile-reveal"><p>منتجات ومكمّلات مختارة بعناية من علامات موثوقة تدعم رحلتِك.</p></div>
-        </div>
-      </article>
-      <article class="card-tile reveal" data-delay="4" tabindex="0">
-        <div class="tile-media"><div class="tile-ph" aria-hidden="true"></div></div>
-        <span class="tile-ico"><svg class="ico" aria-hidden="true"><use href="#i-sparkle"></use></svg></span>
-        <div class="tile-body">
-          <h3 class="h4">الخدمات المختارة</h3>
-          <div class="tile-reveal"><p>خدمات عناية وصحة مكمّلة، بنفس معايير الجودة التي نلتزم بها.</p></div>
-        </div>
-      </article>
-    </div>
-
-    <!-- ✏️ شعارات الشركاء — استبدلي كل عنصر بـ <img src="assets/img/partners/xx.svg" alt="اسم الشريك"> -->
-    <ul class="logo-strip reveal" data-delay="2" aria-label="شعارات شركاء النجاح">
-      <li class="logo-ph">شعار شريك</li>
-      <li class="logo-ph">شعار شريك</li>
-      <li class="logo-ph">شعار شريك</li>
-      <li class="logo-ph">شعار شريك</li>
-      <li class="logo-ph">شعار شريك</li>
-      <li class="logo-ph">شعار شريك</li>
-    </ul>
-
-    <div class="sec-foot reveal">
-      <a class="btn btn-outline" id="partnerCta" href="#contact">انضمّي إلى شركاء النجاح
-        <svg class="ico btn-ico" aria-hidden="true"><use href="#i-arrow"></use></svg>
-      </a>
     </div>
   </div>
 </section>
@@ -623,7 +336,7 @@ window.__lamReveal = setTimeout(function () {
 <section class="section section-alt" id="journey-guide">
   <div class="shell">
     <header class="sec-head sec-head-center">
-      <p class="eyebrow reveal"><span class="num">07</span> رحلة التحوّل</p>
+      <p class="eyebrow reveal"><span class="num">04</span> رحلة التحوّل</p>
       <h2 class="h2 reveal" data-delay="1">رحلة التحوّل في <em class="nowrap lam" lang="en">Like A Model</em> بمفهوم مختلف.</h2>
     </header>
 
@@ -727,7 +440,7 @@ window.__lamReveal = setTimeout(function () {
 <section class="section section-contact" id="contact-form">
   <div class="shell">
     <header class="sec-head sec-head-center">
-      <p class="eyebrow reveal"><span class="num">08</span> تواصل معنا</p>
+      <p class="eyebrow reveal"><span class="num">05</span> تواصل معنا</p>
       <h2 class="h2 reveal" data-delay="1">تواصلي <em>معنا</em>.</h2>
       <p class="sec-sub reveal" data-delay="2">تفضّلي بتعبئة النموذج أدناه وسنعاود التواصل معكِ في أقرب وقت.</p>
     </header>
@@ -882,6 +595,42 @@ window.__lamReveal = setTimeout(function () {
 
 </div>
 
+
+<!-- ╔══════════ الفصل 5 · لماذا نحن ══════════╗ -->
+
+<!-- ══════════ 3 · WHY LIKE A MODEL ══════════ -->
+<section class="section section-wash" id="why">
+  <div class="shell">
+    <header class="sec-head sec-head-center">
+      <p class="eyebrow reveal"><span class="num">06</span> لماذا نحن</p>
+      <h2 class="h2 reveal" data-delay="1">ليش تختارين <em class="lam" lang="en">Like A Model</em>؟</h2>
+    </header>
+
+    <div class="grid grid-3 why-grid">
+      <article class="card card-why reveal" data-delay="1">
+        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-medal"></use></svg></span>
+        <p class="card-en">خبرة مثبتة</p>
+        <h3 class="h4">رحلة مصمَّمة خصيصًا لكِ</h3>
+        <p>نصمّم برنامجِك وفق أهدافِك ونمط حياتِك.</p>
+      </article>
+
+      <article class="card card-why reveal" data-delay="2">
+        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-home"></use></svg></span>
+        <p class="card-en">راحة وخصوصية</p>
+        <h3 class="h4">مدرِّبتِك الخاصة في راحة بيتِك</h3>
+        <p>تجربة تدريب نسائية تجمع بين الراحة والخصوصية.</p>
+      </article>
+
+      <article class="card card-why reveal" data-delay="3">
+        <span class="card-ico"><svg class="ico" aria-hidden="true"><use href="#i-trend"></use></svg></span>
+        <p class="card-en">نتائج تُقاس</p>
+        <h3 class="h4">متابعة تصنع الفرق</h3>
+        <p>تقييم، قياسات، تغذية، ومتابعة مستمرة لتحقيق أفضل النتائج.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 </main>
 
 
@@ -923,8 +672,6 @@ window.__lamReveal = setTimeout(function () {
       <h2 class="footer-h">خريطة الموقع</h2>
       <ul>
         <li><a href="#home">الصفحة الرئيسية</a></li>
-        <li><a href="#services">خدماتنا</a></li>
-        <li><a href="#partners">شركاء النجاح</a></li>
         <li><a href="#journey">رحلة التحول</a></li>
         <li><a href="#contact">تواصل معنا</a></li>
       </ul>
