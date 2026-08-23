@@ -440,18 +440,24 @@ body.nav-open{overflow:hidden}
 /* ---------- 9.2 الفيديو التسويقي — قسم كامل ---------- */
 /* بلا حشوة علوية: حشوة الهيرو السفلية تكفي للفصل، ومجموعهما كان يترك فجوة مضاعفة */
 .section-video{padding-block:clamp(8rem,13vw,10.5rem) clamp(3rem,5vw,4rem)}
+/* الفيديو يمتدّ على عرض الشاشة كاملًا: نُلغي سقف العرض والحشوة الجانبية
+   للغلاف هنا وحده — بقيّة الأقسام تحتفظ بغلافها المحدود */
+.section-video .shell{max-width:none;padding-inline:0}
 .video-card{position:relative;z-index:2;display:grid;gap:.75rem}
 .video-frame{
   position:relative;display:grid;place-items:center;
-  aspect-ratio:16/9;border-radius:var(--r-2xl);overflow:hidden;
+  /* ارتفاع أقلّ بـ30% من نسبة 16:9 — القصّ من الأسفل عبر object-position */
+  aspect-ratio:16/6.3;overflow:hidden;
   background:
     radial-gradient(70% 70% at 50% 30%, rgba(201,164,106,.20), transparent 70%),
     var(--surface);
-  border:1px solid var(--border);
+  /* بلا حدّ جانبيّ ولا زوايا مستديرة: الإطار يلامس حافّتَي الشاشة */
+  border-block:1px solid var(--border);
   box-shadow:var(--sh-3);
 }
 .video-frame iframe,.video-frame video{
-  position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover;
+  position:absolute;inset:0;width:100%;height:100%;border:0;
+  object-fit:cover;object-position:center top;
 }
 .video-frame.is-playing .video-play,
 .video-frame.is-playing .video-ph{display:none}
