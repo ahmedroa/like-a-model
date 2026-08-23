@@ -24,16 +24,18 @@ const CONTACT = {
   }
 };
 
-/* ✏️ ③  الفيديو التسويقي — ضعي رابط يوتيوب / فيديو / MP4.
-   اتركيه فارغًا ليبقى المكان محجوزًا بنصّ توضيحي حتى يجهز الفيديو. */
+/* ✏️ ③  فيديو الهيرو — خلفية سينمائية (أول ٣ ثوانٍ حلقيًا). */
 const VIDEO = {
-  url   : '',                                // مثال: 'https://www.youtube.com/watch?v=XXXXXXXX'
-  poster: ''                                 // مثال: 'assets/img/video-poster.jpg'
+  url   : 'https://www.youtube.com/watch?v=nuvMkMLdQqc',
+  poster: 'https://i.ytimg.com/vi/nuvMkMLdQqc/maxresdefault.jpg',
+  start : 0,
+  end   : 3
 };
 
-/* ✏️ ④  خريطة موقع الشركة — انسخي رابط «تضمين خريطة» من خرائط جوجل (قيمة src فقط) */
+/* ✏️ ④  خريطة موقع الشركة — غيّري الرابطين معًا عند اعتماد الموقع النهائي */
 const MAP = {
-  embed: ''                                  // مثال: 'https://www.google.com/maps/embed?pb=...'
+  embed: 'https://www.google.com/maps?q=حي%20الورود%2C%20الرياض%2C%20المملكة%20العربية%20السعودية&output=embed',
+  open:  'https://www.google.com/maps?q=حي%20الورود%2C%20الرياض%2C%20المملكة%20العربية%20السعودية'
 };
 
 /* ✏️ ⑤  وجهة نموذج «تواصل معنا»
@@ -77,17 +79,15 @@ const STATS_LATIN = false;
 
     // روابط الهاتف والبريد
     const tel = 'tel:' + CONTACT.phoneTel.replace(/[^\d+]/g, '');
-    ['#topPhone', '#phoneLink', '#cPhoneLink'].forEach((sel) => {
+    ['#phoneLink', '#cPhoneLink'].forEach((sel) => {
       const el = $(sel); if (el) el.href = tel;
     });
-    ['#topMail', '#emailLink', '#cMailLink'].forEach((sel) => {
+    ['#emailLink', '#cMailLink'].forEach((sel) => {
       const el = $(sel); if (el) el.href = 'mailto:' + CONTACT.email;
     });
 
     // النصوص المعروضة
     const setText = (sel, txt) => { const el = $(sel); if (el) el.textContent = txt; };
-    setText('#topPhoneText', CONTACT.phoneText);
-    setText('#topMailText',  CONTACT.email);
     setText('#phoneLink',    CONTACT.phoneText);
     setText('#cPhoneLink',   CONTACT.phoneText);
     setText('#waLink',       CONTACT.whatsappText);
@@ -133,52 +133,120 @@ const STATS_LATIN = false;
   }
 
 
-  /* ══════════ 3. الفيديو التسويقي ══════════ */
-  function initVideo() {
-    const frame = $('#videoFrame');
-    const btn   = $('#videoPlay');
-    const ph    = $('#videoPh');
-    if (!frame || !btn) return;
+  /* ══════════ 3. فيديو الهيرو (خلفية غير تفاعلية) ══════════ */
+  function initHeroVideo() {
+    const media = $('#heroMedia');
+    if (!media) return;
 
     const url = (VIDEO.url || '').trim();
-
-    if (VIDEO.poster) {
-      frame.style.backgroundImage = 'url("' + VIDEO.poster.replace(/"/g, '%22') + '")';
-      frame.style.backgroundSize = 'cover';
-      frame.style.backgroundPosition = 'center';
+    const poster = (VIDEO.poster || '').trim();
+    if (poster) {
+      media.style.backgroundImage = 'url("' + poster.replace(/"/g, '%22') + '")';
     }
 
-    if (!url) {                                   // الفيديو لم يجهز بعد
-      btn.disabled = true;
-      btn.setAttribute('aria-disabled', 'true');
-      btn.title = 'الفيديو قيد الإعداد';
+    if (reduceMotion || !url) return;
+
+    const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+    if (!yt) return;
+
+    const id = yt[1];
+    const start = Number.isFinite(VIDEO.start) ? VIDEO.start : 0;
+    const end = Number.isFinite(VIDEO.end) ? VIDEO.end : 3;
+    const src = 'https://www.youtube-nocookie.com/embed/' + id +
+      '?autoplay=1&mute=1&loop=1&playlist=' + encodeURIComponent(id) +
+      '&start=' + start + '&end=' + end +
+      '&controls=0&playsinline=1&rel=0&modestbranding=1';
+
+    const f = iframeEl(src);
+    f.title = '';
+    f.tabIndex = -1;
+    f.setAttribute('aria-hidden', 'true');
+    f.allow = 'autoplay; encrypted-media';
+    f.allowFullscreen = false;
+    f.removeAttribute('loading');
+    f.style.pointerEvents = 'none';
+    media.appendChild(f);
+  }
+
+
+  /* ══════════ 3ب. كتابة الهيرو — حلقة مستمرة ══════════ */
+  function initHeroType() {
+    const hero = $('#home');
+    if (hero?.dataset.typed === '1') return;
+    if (hero) hero.dataset.typed = '1';
+
+    const live = $('.hero-title .hero-type-live');
+    const cta = $('.hero-content .btn-hero');
+    const scroll = $('.hero-scroll');
+    const FIRST = 'أهلًا بكِ في Like A Model';
+    const PHRASES = [FIRST, 'أكثر من تدريب… أسلوب حياة'];
+
+    const setTyped = (el, text) => {
+      const latin = text.match(/[A-Za-z].*$/);
+      if (!latin) { el.textContent = text; return; }
+      el.replaceChildren();
+      const ar = text.slice(0, latin.index);
+      if (ar) el.append(document.createTextNode(ar));
+      const en = document.createElement('bdi');
+      en.className = 'lam';
+      en.lang = 'en';
+      en.textContent = latin[0];
+      el.append(en);
+    };
+
+    const showStatic = () => {
+      if (live) {
+        setTyped(live, FIRST);
+        live.classList.add('is-done');
+      }
+      cta?.classList.add('is-in');
+      scroll?.classList.add('is-in');
+    };
+
+    if (reduceMotion || !live) {
+      showStatic();
       return;
     }
 
-    if (ph) ph.hidden = true;
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    btn.addEventListener('click', () => {
-      const node = buildPlayer(url);
-      if (!node) return;
-      frame.appendChild(node);
-      frame.classList.add('is-playing');
-      frame.style.backgroundImage = '';
-    }, { once: true });
-  }
+    const typeInto = async (text, delay) => {
+      live.classList.remove('is-hold', 'is-done', 'is-fade');
+      live.classList.add('is-typing');
+      const chars = Array.from(text);
+      for (let i = 1; i <= chars.length; i++) {
+        setTyped(live, chars.slice(0, i).join(''));
+        await wait(delay);
+      }
+    };
 
-  function buildPlayer(url) {
-    const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
-    const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    const fadeOut = async () => {
+      live.classList.remove('is-typing', 'is-hold');
+      live.classList.add('is-fade');
+      await wait(reduceMotion ? 0 : 560);
+      live.textContent = '';
+      live.classList.remove('is-fade');
+    };
 
-    if (yt) return iframeEl('https://www.youtube-nocookie.com/embed/' + yt[1] + '?autoplay=1&rel=0&playsinline=1');
-    if (vm) return iframeEl('https://player.vimeo.com/video/' + vm[1] + '?autoplay=1');
+    live.textContent = '';
+    cta?.classList.add('is-in');
+    scroll?.classList.add('is-in');
 
-    if (/\.(mp4|webm|ogv|ogg)(\?|#|$)/i.test(url)) {
-      const v = document.createElement('video');
-      v.src = url; v.controls = true; v.autoplay = true; v.playsInline = true;
-      return v;
-    }
-    return iframeEl(url);                          // رابط تضمين جاهز
+    (async () => {
+      if (document.fonts && document.fonts.ready) {
+        await Promise.race([document.fonts.ready, wait(800)]);
+      }
+      await wait(280);
+      for (;;) {
+        for (const phrase of PHRASES) {
+          await typeInto(phrase, 68);
+          live.classList.remove('is-typing');
+          live.classList.add('is-hold');
+          await wait(1500);
+          await fadeOut();
+        }
+      }
+    })();
   }
 
   function iframeEl(src) {
@@ -195,18 +263,21 @@ const STATS_LATIN = false;
   /* ══════════ 4. خريطة موقع الشركة ══════════ */
   function initMap() {
     const frame = $('#mapFrame');
-    if (!frame) return;
+    const open = $('#mapOpen');
     const src = (MAP.embed || '').trim();
-    if (!src) return;                              // يبقى النص البديل ظاهرًا
+    const href = (MAP.open || src.replace(/&output=embed$/, '')).trim();
+
+    if (open && href) open.href = href;
+    if (!frame || !src) return;
 
     const f = document.createElement('iframe');
     f.src = src;
-    f.title = 'موقع شركة Like A Model على الخريطة';
+    f.title = 'موقع شركة Like A Model — حي الورود، الرياض';
     f.loading = 'lazy';
     f.referrerPolicy = 'no-referrer-when-downgrade';
+    f.setAttribute('scrolling', 'no');
     f.allowFullscreen = true;
-    frame.textContent = '';
-    frame.appendChild(f);
+    frame.replaceChildren(f);
   }
 
 
@@ -266,62 +337,107 @@ const STATS_LATIN = false;
     if (!header) return;
     let ticking = false;
 
+    const syncOffset = () => {
+      document.documentElement.style.setProperty(
+        '--header-measured',
+        `${Math.round(header.getBoundingClientRect().height)}px`
+      );
+    };
+
     const update = () => {
-      header.classList.toggle('is-stuck', window.scrollY > 24);
+      const pinned = document.body.classList.contains('page-syj');
+      header.classList.toggle('is-scrolled', pinned || window.scrollY > 40);
       ticking = false;
     };
+    syncOffset();
     update();
+    window.addEventListener('resize', syncOffset);
     window.addEventListener('scroll', () => {
       if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
     }, { passive: true });
   }
 
 
-  /* ══════════ 7. قائمة الجوال ══════════ */
-  function initMobileNav() {
-    const toggle  = $('#navToggle');
-    const overlay = $('#mobileNav');
-    const close   = $('#navClose');
-    if (!toggle || !overlay) return;
+  /* ══════════ 7. القائمة الموسَّعة ══════════ */
+  function initNav() {
+    const header = $('#siteHeader');
+    const toggle = $('#navToggle');
+    const nav = $('#siteNav');
+    if (!header || !toggle || !nav) return;
 
     const FOCUSABLE = 'a[href], button:not([disabled])';
+    const mobileMq = window.matchMedia('(max-width: 1079px)');
     let lastFocus = null;
 
-    const open = () => {
-      lastFocus = document.activeElement;
-      overlay.hidden = false;
-      document.body.classList.add('nav-open');
-      toggle.setAttribute('aria-expanded', 'true');
-      (close || overlay.querySelector(FOCUSABLE))?.focus();
-      document.addEventListener('keydown', onKey);
+    const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
+    const isMobile = () => mobileMq.matches;
+    const isDesktopInline = () => !isMobile() && header.classList.contains('is-scrolled');
+
+    const setExpanded = (open) => {
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'إغلاق القائمة' : 'فتح القائمة');
+      header.classList.toggle('is-nav-open', open);
+      document.body.classList.toggle('nav-open', open && isMobile());
+      const exposed = open || isDesktopInline();
+      nav.setAttribute('aria-hidden', exposed ? 'false' : 'true');
+      if ('inert' in nav) nav.inert = !exposed;
     };
 
-    const shut = () => {
-      overlay.hidden = true;
-      document.body.classList.remove('nav-open');
-      toggle.setAttribute('aria-expanded', 'false');
+    const open = () => {
+      if (isOpen() || isDesktopInline()) return;
+      lastFocus = document.activeElement;
+      setExpanded(true);
+      document.addEventListener('keydown', onKey);
+      document.addEventListener('pointerdown', onOutside, true);
+      if (isMobile()) nav.querySelector(FOCUSABLE)?.focus();
+    };
+
+    const shut = ({ restoreFocus = true } = {}) => {
+      if (!isOpen()) return;
+      setExpanded(false);
       document.removeEventListener('keydown', onKey);
-      // نعيد التركيز إلى الزر إن لم يكن هناك عنصر سابق صالح
+      document.removeEventListener('pointerdown', onOutside, true);
+      if (!restoreFocus) return;
       const back = (lastFocus && lastFocus !== document.body && document.contains(lastFocus))
         ? lastFocus : toggle;
       back.focus();
     };
 
+    let wasInline = false;
+    const syncDesktopInline = () => {
+      const inline = isDesktopInline();
+      if (inline === wasInline && !(inline && isOpen())) return;
+      wasInline = inline;
+      if (inline && isOpen()) shut({ restoreFocus: false });
+      setExpanded(isOpen());
+    };
+
     function onKey(e) {
       if (e.key === 'Escape') { e.preventDefault(); shut(); return; }
-      if (e.key !== 'Tab') return;
-      // حصر التركيز داخل القائمة
-      const items = $$(FOCUSABLE, overlay).filter((el) => el.offsetParent !== null);
+      if (e.key !== 'Tab' || !isMobile()) return;
+      const items = $$(FOCUSABLE, header).filter((el) => el.offsetParent !== null);
       if (!items.length) return;
       const first = items[0], last = items[items.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
 
-    toggle.addEventListener('click', open);
-    close?.addEventListener('click', shut);
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) shut(); });
-    $$('a[href^="#"]', overlay).forEach((a) => a.addEventListener('click', shut));
+    function onOutside(e) {
+      if (header.contains(e.target)) return;
+      shut();
+    }
+
+    toggle.addEventListener('click', () => { isOpen() ? shut() : open(); });
+    $$('a[href^="#"]', nav).forEach((a) => a.addEventListener('click', () => shut()));
+
+    mobileMq.addEventListener('change', () => {
+      if (isOpen()) shut({ restoreFocus: false });
+      syncDesktopInline();
+    });
+
+    window.addEventListener('scroll', syncDesktopInline, { passive: true });
+    setExpanded(false);
+    syncDesktopInline();
   }
 
 
@@ -336,30 +452,116 @@ const STATS_LATIN = false;
       return;
     }
 
+    const aboutPending = [];
+    let aboutFlush = false;
+    const show = (el) => {
+      if (el.closest('.section-about')) {
+        aboutPending.push(el);
+        if (!aboutFlush) {
+          aboutFlush = true;
+          requestAnimationFrame(() => {
+            aboutPending.forEach((node, i) => {
+              node.style.setProperty('--reveal-delay', `${i * 130}ms`);
+              node.classList.add('is-in');
+            });
+            aboutPending.length = 0;
+            aboutFlush = false;
+          });
+        }
+        return;
+      }
+      el.classList.add('is-in');
+    };
+
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-in');
+          show(entry.target);
           io.unobserve(entry.target);
         }
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
 
-    items.forEach((el) => io.observe(el));
+    const aboutIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          show(entry.target);
+          aboutIo.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.12 });
+
+    items.forEach((el) => {
+      if (el.classList.contains('about-coda')) return;
+      if (el.closest('.section-about')) aboutIo.observe(el);
+      else io.observe(el);
+    });
 
     // شبكة أمان: لا يجوز أن يبقى أي محتوى مخفيًا إذا تعطّل المراقب
     setTimeout(() => {
       items.forEach((el) => {
+        if (el.classList.contains('is-in') || el.closest('.section-about')) return;
         const r = el.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('is-in');
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          show(el);
+          io.unobserve(el);
+        }
       });
     }, 1200);
   }
 
 
+  /* ══════════ 8ب. مسار «من نحن» حسب التمرير ══════════ */
+  function initAboutTimeline() {
+    const blocks = $$('[data-timeline]');
+    const coda = $('.about-coda');
+    if (!blocks.length) return;
+
+    const setProgress = (block, p) => {
+      block.style.setProperty('--about-tl', p.toFixed(4));
+      if (p >= 1 && block.classList.contains('about-editorial')) coda?.classList.add('is-in');
+    };
+
+    if (reduceMotion) {
+      blocks.forEach((block) => setProgress(block, 1));
+      return;
+    }
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const headerH = parseFloat(getComputedStyle(document.documentElement)
+        .getPropertyValue('--header-measured')) || 72;
+      const line = headerH + window.innerHeight * 0.28;
+      blocks.forEach((block) => {
+        const rect = block.getBoundingClientRect();
+        const span = rect.bottom - rect.top;
+        let p = 0;
+        if (span > 0) {
+          if (line <= rect.top) p = 0;
+          else if (line >= rect.bottom) p = 1;
+          else p = (line - rect.top) / span;
+        }
+        setProgress(block, Math.min(1, Math.max(0, p)));
+      });
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+
+
   /* ══════════ 9. تظليل رابط القسم الحالي ══════════ */
   function initScrollSpy() {
-    const links = $$('.nav-desktop a[href^="#"]');
+    const links = $$('.site-nav a[href^="#"]');
     if (!links.length || !('IntersectionObserver' in window)) return;
 
     const map = new Map();
@@ -529,19 +731,269 @@ const STATS_LATIN = false;
   }
 
 
-  /* ══════════ 11. زر العودة للأعلى ══════════ */
+  /* ══════════ 10ب. نموذج «ابدئي رحلتكِ» ══════════ */
+  function initStartJourney() {
+    const form = $('#syjForm');
+    const card = $('#syjCard');
+    if (!form || !card) return;
+
+    const KEY = 'lamStartJourney';
+    const stepAr = (n) => toAr(n);
+    const panels = $$('[data-syj-step]', form);
+    const backBtn = $('#syjBack');
+    const nextBtn = $('#syjNext');
+    const sendBtn = $('#syjSend');
+    const stepLbl = $('#syjStepLbl');
+    const bar = $('#syjBarFill');
+    const live = $('#syjLive');
+    const countEl = $('#syjCount');
+    let step = 1;
+    let timer = 0;
+
+    const isSaudiPhone = (raw) => {
+      const d = String(raw || '').replace(/\D/g, '');
+      return /^05\d{8}$/.test(d) || /^5\d{8}$/.test(d) || /^9665\d{8}$/.test(d);
+    };
+
+    const say = (msg) => { if (live) live.textContent = msg || ''; };
+
+    const setErr = (key, msg) => {
+      const box = form.querySelector('[data-err-for="' + key + '"]');
+      if (box) box.textContent = msg || '';
+    };
+
+    const mark = (el, bad) => {
+      if (!el) return;
+      if (bad) el.setAttribute('aria-invalid', 'true');
+      else el.removeAttribute('aria-invalid');
+    };
+
+    const read = () => ({
+      name: ($('#syjName')?.value || '').trim(),
+      phone: ($('#syjPhone')?.value || '').trim(),
+      goal: (form.querySelector('input[name="goal"]:checked') || {}).value || '',
+      support: (form.querySelector('input[name="support"]:checked') || {}).value || '',
+      time: ($('#syjTime')?.value || '').trim(),
+      source: ($('#syjSource')?.value || '').trim(),
+      message: ($('#syjMessage')?.value || '').trim(),
+      consent: $('#syjConsent')?.checked === true
+    });
+
+    const persist = () => {
+      try { sessionStorage.setItem(KEY, JSON.stringify({ step, ...read() })); }
+      catch (e) { /* تجاهل وضع التصفح الخاص */ }
+    };
+
+    const restore = () => {
+      let saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { saved = null; }
+      if (!saved) return;
+      if (saved.name) $('#syjName').value = saved.name;
+      if (saved.phone) $('#syjPhone').value = saved.phone;
+      if (saved.goal) {
+        const g = form.querySelector('input[name="goal"][value="' + saved.goal + '"]');
+        if (g) g.checked = true;
+      }
+      if (saved.support) {
+        const s = form.querySelector('input[name="support"][value="' + saved.support + '"]');
+        if (s) s.checked = true;
+      }
+      if (saved.time) $('#syjTime').value = saved.time;
+      if (saved.source) $('#syjSource').value = saved.source;
+      if (saved.message) $('#syjMessage').value = saved.message;
+      if (saved.consent) $('#syjConsent').checked = true;
+      if (saved.step >= 1 && saved.step <= 4) step = saved.step;
+    };
+
+    const validate = (n) => {
+      const d = read();
+      let first = null;
+      if (n === 1) {
+        const nameEl = $('#syjName');
+        const phoneEl = $('#syjPhone');
+        if (d.name.length < 2) {
+          setErr('name', 'الرجاء كتابة الاسم الكامل.'); mark(nameEl, true); first ||= nameEl;
+        } else { setErr('name', ''); mark(nameEl, false); }
+        if (!isSaudiPhone(d.phone)) {
+          setErr('phone', 'الرجاء إدخال رقم جوال سعودي صحيح.'); mark(phoneEl, true); first ||= phoneEl;
+        } else { setErr('phone', ''); mark(phoneEl, false); }
+      }
+      if (n === 2) {
+        if (!d.goal) { setErr('goal', 'الرجاء اختيار هدف واحد.'); first ||= form.querySelector('input[name="goal"]'); }
+        else setErr('goal', '');
+      }
+      if (n === 3) {
+        if (!d.support) { setErr('support', 'الرجاء اختيار نوع الدعم.'); first ||= form.querySelector('input[name="support"]'); }
+        else setErr('support', '');
+        const timeEl = $('#syjTime');
+        if (!d.time) { setErr('time', 'الرجاء اختيار وقت التواصل المفضّل.'); mark(timeEl, true); first ||= timeEl; }
+        else { setErr('time', ''); mark(timeEl, false); }
+      }
+      if (n === 4) {
+        const c = $('#syjConsent');
+        if (!d.consent) { setErr('consent', 'يلزم الموافقة على التواصل للمتابعة.'); first ||= c; }
+        else setErr('consent', '');
+      }
+      return first;
+    };
+
+    const show = () => {
+      panels.forEach((p) => p.classList.toggle('is-on', +p.dataset.syjStep === step));
+      if (stepLbl) stepLbl.textContent = stepAr(step) + ' من ٤';
+      if (bar) bar.style.setProperty('--syj-p', String((step / 4) * 100));
+      card.classList.toggle('is-final', step === 4);
+      if (backBtn) backBtn.hidden = step === 1;
+      if (nextBtn) nextBtn.hidden = step === 4;
+      syncSend({ instant: true });
+      const heading = form.querySelector('[data-syj-step="' + step + '"] h1');
+      if (heading && !reduceMotion) heading.focus({ preventScroll: true });
+      persist();
+    };
+
+    const hideSend = () => {
+      if (!sendBtn) return;
+      sendBtn.classList.remove('is-in');
+      sendBtn.hidden = true;
+      sendBtn.disabled = true;
+      sendBtn.setAttribute('aria-hidden', 'true');
+      sendBtn.setAttribute('aria-disabled', 'true');
+    };
+
+    const syncSend = (opts) => {
+      if (!sendBtn) return;
+      const instant = opts && opts.instant;
+      const ok = step === 4 && $('#syjConsent')?.checked === true;
+      if (!ok) {
+        if (sendBtn.hidden || instant || reduceMotion) {
+          hideSend();
+          return;
+        }
+        sendBtn.classList.remove('is-in');
+        sendBtn.disabled = true;
+        sendBtn.setAttribute('aria-disabled', 'true');
+        const finish = () => {
+          if (step === 4 && $('#syjConsent')?.checked) return;
+          hideSend();
+        };
+        sendBtn.addEventListener('transitionend', finish, { once: true });
+        window.setTimeout(finish, 400);
+        return;
+      }
+      sendBtn.disabled = false;
+      sendBtn.removeAttribute('aria-hidden');
+      sendBtn.setAttribute('aria-disabled', 'false');
+      setErr('consent', '');
+      if (!sendBtn.hidden && sendBtn.classList.contains('is-in')) return;
+      sendBtn.hidden = false;
+      if (instant || reduceMotion) {
+        sendBtn.classList.add('is-in');
+        return;
+      }
+      sendBtn.classList.remove('is-in');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => sendBtn.classList.add('is-in'));
+      });
+    };
+
+    const buildMessage = (d) => {
+      const line = (k, v) => v ? '• ' + k + ': ' + v + '\n' : '';
+      return 'مرحبًا Like A Model\n' +
+        'أرغب ببدء رحلتي عبر نموذج الموقع:\n\n' +
+        line('الاسم', d.name) +
+        line('رقم الجوال', d.phone) +
+        line('الهدف', d.goal) +
+        line('نوع الدعم', d.support) +
+        line('وقت التواصل', d.time) +
+        line('كيف تعرّفتُ عليكم', d.source) +
+        (d.message ? '\n' + d.message + '\n' : '') +
+        '\nأوافق على تواصل الفريق معي بشأن طلبي.';
+    };
+
+    restore();
+    show();
+
+    form.addEventListener('input', persist);
+    form.addEventListener('change', (e) => {
+      persist();
+      if (e.target.id === 'syjConsent') {
+        syncSend();
+        if (e.target.checked) say('');
+      }
+    });
+
+    backBtn?.addEventListener('click', () => {
+      say('');
+      if (step > 1) { step -= 1; show(); }
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      const bad = validate(step);
+      if (bad) {
+        say('الرجاء إكمال هذه الخطوة قبل المتابعة.');
+        bad.focus();
+        return;
+      }
+      say('');
+      if (step < 4) { step += 1; show(); }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const bad = validate(4);
+      if (bad) {
+        say('الرجاء الموافقة على التواصل لإرسال الطلب.');
+        bad.focus();
+        return;
+      }
+      const data = read();
+      const url = waWith(buildMessage(data));
+      try { sessionStorage.removeItem(KEY); } catch (err) { /* */ }
+
+      const win = window.open(url, '_blank', 'noopener');
+      if (!win) window.location.href = url;
+
+      card.classList.add('is-done');
+      say('تم استلام طلبكِ. سيتواصل معكِ الفريق قريبًا.');
+      $('#syjDoneTitle')?.focus();
+
+      let left = 8;
+      if (countEl) countEl.textContent = toAr(left);
+      timer = window.setInterval(() => {
+        left -= 1;
+        if (left <= 0) {
+          window.clearInterval(timer);
+          window.location.href = 'index.html';
+          return;
+        }
+        if (countEl) countEl.textContent = toAr(left);
+      }, 1000);
+    });
+
+    $('#syjHome')?.addEventListener('click', () => {
+      window.clearInterval(timer);
+    });
+  }
+
+
+  /* ══════════ 11. الأزرار العائمة ══════════ */
   function initToTop() {
-    const btn = $('#toTop');
-    if (!btn) return;
+    const topBtn = $('#toTop');
+    const waBtn = $('#fabWhatsapp');
+    if (!topBtn && !waBtn) return;
     let ticking = false;
 
-    const update = () => { btn.hidden = window.scrollY < 700; ticking = false; };
+    const update = () => {
+      const y = window.scrollY;
+      if (topBtn) topBtn.hidden = y < 700;
+      if (waBtn) waBtn.hidden = document.body.classList.contains('page-syj') ? false : y < 40;
+      ticking = false;
+    };
     update();
     window.addEventListener('scroll', () => {
       if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
     }, { passive: true });
 
-    btn.addEventListener('click', () => {
+    topBtn?.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
       $('.brand')?.focus();
     });
@@ -552,14 +1004,17 @@ const STATS_LATIN = false;
   function boot() {
     applyContact();
     initLang();
-    initVideo();
+    initHeroType();
+    initHeroVideo();
     initMap();
     initCounters();
     initHeader();
-    initMobileNav();
+    initNav();
     initReveal();
+    initAboutTimeline();
     initScrollSpy();
     initContactForm();
+    initStartJourney();
     initToTop();
   }
 
