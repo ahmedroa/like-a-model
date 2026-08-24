@@ -840,10 +840,10 @@ body.nav-open .fab{visibility:hidden}
   border-block:0;
 }
 .stats-parallax-bg{
-  position:absolute;inset:-180px 0;z-index:0;pointer-events:none;
+  position:absolute;inset:-300px 0;z-index:0;pointer-events:none;
   background:url("../img/riyadh-skyline.jpg") center / cover no-repeat;
-  transform:translate3d(0,var(--stats-parallax-y,0px),0) scale(1.16);
-  will-change:transform;
+  transform:translate3d(0,var(--stats-parallax-y,0px),0) scale(1.22);
+  will-change:transform;transition:none;
 }
 .stats-overlay {
   position: absolute;

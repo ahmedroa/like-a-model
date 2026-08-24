@@ -357,8 +357,8 @@ const STATS_LATIN = false;
       const progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
       const clamped = Math.max(0, Math.min(1, progress));
 
-      // حركة واضحة بمقدار 240px من أعلى إلى أسفل
-      const offsetY = -120 + (clamped * 240);
+      // حركة أوضح بمقدار 640px من أعلى إلى أسفل أثناء مرور القسم
+      const offsetY = -320 + (clamped * 640);
 
       statsBg.style.setProperty('--stats-parallax-y', `${offsetY.toFixed(1)}px`);
     };
