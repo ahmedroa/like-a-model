@@ -73,9 +73,11 @@ const STATS_LATIN = false;
   /* ══════════ 1. بيانات التواصل ══════════ */
   function applyContact() {
     // روابط واتساب المباشرة
-    ['#waLink', '#fabWhatsapp', '#cWaLink'].forEach((sel) => {
-      const el = $(sel); if (el) { el.href = WA; el.rel = 'noopener'; }
+    ['#waLink', '#fabWhatsapp', '#cWaLink', '#headerWhatsapp'].forEach((sel) => {
+      const el = $(sel); if (el) { el.href = WA; el.rel = 'noopener noreferrer'; }
     });
+    const headerWa = $('#headerWhatsapp');
+    if (headerWa) headerWa.target = '_blank';
 
     // روابط الهاتف والبريد
     const tel = 'tel:' + CONTACT.phoneTel.replace(/[^\d+]/g, '');
@@ -176,7 +178,7 @@ const STATS_LATIN = false;
     if (hero) hero.dataset.typed = '1';
 
     const live = $('.hero-title .hero-type-live');
-    const cta = $('.hero-content .btn-hero');
+    const cta = $('.hero-content .btn');
     const scroll = $('.hero-scroll');
     const FIRST = 'أهلًا بكِ في Like A Model';
     const PHRASES = [FIRST, 'أكثر من تدريب… أسلوب حياة'];
@@ -331,6 +333,49 @@ const STATS_LATIN = false;
   }
 
 
+  /* ══════════ 5b. Parallax خلفية «نجاحنا بالأرقام» ══════════ */
+  function initStatsParallax() {
+    const statsSection = document.querySelector('.stats-section');
+    const statsBg = document.querySelector('.stats-parallax-bg');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!statsSection || !statsBg) return;
+
+    let statsParallaxFrame = null;
+
+    const updateStatsParallax = () => {
+      statsParallaxFrame = null;
+
+      if (reduceMotion.matches || window.innerWidth < 768) {
+        statsBg.style.setProperty('--stats-parallax-y', '0px');
+        return;
+      }
+
+      const rect = statsSection.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      // يبدأ قبل دخول القسم وينتهي بعد خروجه
+      const progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+      const clamped = Math.max(0, Math.min(1, progress));
+
+      // حركة واضحة بمقدار 240px من أعلى إلى أسفل
+      const offsetY = -120 + (clamped * 240);
+
+      statsBg.style.setProperty('--stats-parallax-y', `${offsetY.toFixed(1)}px`);
+    };
+
+    const requestStatsParallax = () => {
+      if (!statsParallaxFrame) {
+        statsParallaxFrame = requestAnimationFrame(updateStatsParallax);
+      }
+    };
+
+    window.addEventListener('scroll', requestStatsParallax, { passive: true });
+    window.addEventListener('resize', requestStatsParallax);
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', requestStatsParallax);
+    requestStatsParallax();
+  }
+
+
   /* ══════════ 6. الهيدر ══════════ */
   function initHeader() {
     const header = $('#siteHeader');
@@ -347,6 +392,7 @@ const STATS_LATIN = false;
     const update = () => {
       const pinned = document.body.classList.contains('page-syj');
       header.classList.toggle('is-scrolled', pinned || window.scrollY > 40);
+      syncOffset();
       ticking = false;
     };
     syncOffset();
@@ -452,58 +498,24 @@ const STATS_LATIN = false;
       return;
     }
 
-    const aboutPending = [];
-    let aboutFlush = false;
-    const show = (el) => {
-      if (el.closest('.section-about')) {
-        aboutPending.push(el);
-        if (!aboutFlush) {
-          aboutFlush = true;
-          requestAnimationFrame(() => {
-            aboutPending.forEach((node, i) => {
-              node.style.setProperty('--reveal-delay', `${i * 130}ms`);
-              node.classList.add('is-in');
-            });
-            aboutPending.length = 0;
-            aboutFlush = false;
-          });
-        }
-        return;
-      }
-      el.classList.add('is-in');
-    };
-
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          show(entry.target);
+          entry.target.classList.add('is-in');
           io.unobserve(entry.target);
         }
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
 
-    const aboutIo = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          show(entry.target);
-          aboutIo.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.12 });
-
-    items.forEach((el) => {
-      if (el.classList.contains('about-coda')) return;
-      if (el.closest('.section-about')) aboutIo.observe(el);
-      else io.observe(el);
-    });
+    items.forEach((el) => io.observe(el));
 
     // شبكة أمان: لا يجوز أن يبقى أي محتوى مخفيًا إذا تعطّل المراقب
     setTimeout(() => {
       items.forEach((el) => {
-        if (el.classList.contains('is-in') || el.closest('.section-about')) return;
+        if (el.classList.contains('is-in')) return;
         const r = el.getBoundingClientRect();
         if (r.top < window.innerHeight && r.bottom > 0) {
-          show(el);
+          el.classList.add('is-in');
           io.unobserve(el);
         }
       });
@@ -511,39 +523,59 @@ const STATS_LATIN = false;
   }
 
 
-  /* ══════════ 8ب. مسار «من نحن» حسب التمرير ══════════ */
+  /* ══════════ 8ب. مسار «من نحن» — الخط والنص معًا ══════════ */
   function initAboutTimeline() {
-    const blocks = $$('[data-timeline]');
-    const coda = $('.about-coda');
-    if (!blocks.length) return;
+    const section = $('#about-intro') || $('#about');
+    const block = section ? $('[data-timeline]', section) : $('[data-timeline]');
+    if (!section || !block) return;
 
-    const setProgress = (block, p) => {
-      block.style.setProperty('--about-tl', p.toFixed(4));
-      if (p >= 1 && block.classList.contains('about-editorial')) coda?.classList.add('is-in');
+    const lines = $$('.about-story-line', section);
+
+    const revealAll = () => {
+      block.style.setProperty('--about-tl', '1');
+      lines.forEach((el) => el.classList.add('is-revealed'));
     };
 
-    if (reduceMotion) {
-      blocks.forEach((block) => setProgress(block, 1));
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      revealAll();
       return;
     }
 
+    const fromOf = (el) => {
+      const v = parseFloat(el.getAttribute('data-about-from'));
+      return Number.isFinite(v) ? v : 0;
+    };
+
+    const progressOf = () => {
+      const headerH = parseFloat(getComputedStyle(document.documentElement)
+        .getPropertyValue('--header-measured')) || 72;
+      const rect = section.getBoundingClientRect();
+      const needle = headerH + window.innerHeight * 0.22;
+      const span = rect.height;
+      if (span <= 0) return 0;
+      if (needle <= rect.top) return 0;
+      if (needle >= rect.bottom) return 1;
+      return (needle - rect.top) / span;
+    };
+
+    const apply = (p) => {
+      const clamped = Math.min(1, Math.max(0, p));
+      block.style.setProperty('--about-tl', clamped.toFixed(4));
+      lines.forEach((el) => {
+        if (clamped >= fromOf(el)) el.classList.add('is-revealed');
+      });
+    };
+
+    let inView = false;
     let ticking = false;
     const update = () => {
       ticking = false;
-      const headerH = parseFloat(getComputedStyle(document.documentElement)
-        .getPropertyValue('--header-measured')) || 72;
-      const line = headerH + window.innerHeight * 0.28;
-      blocks.forEach((block) => {
-        const rect = block.getBoundingClientRect();
-        const span = rect.bottom - rect.top;
-        let p = 0;
-        if (span > 0) {
-          if (line <= rect.top) p = 0;
-          else if (line >= rect.bottom) p = 1;
-          else p = (line - rect.top) / span;
-        }
-        setProgress(block, Math.min(1, Math.max(0, p)));
-      });
+      const p = progressOf();
+      if (!inView && p <= 0) {
+        block.style.setProperty('--about-tl', '0');
+        return;
+      }
+      apply(p);
     };
 
     const onScroll = () => {
@@ -553,9 +585,116 @@ const STATS_LATIN = false;
       }
     };
 
+    const io = new IntersectionObserver((entries) => {
+      inView = entries.some((entry) => entry.isIntersecting);
+      update();
+    }, {
+      rootMargin: '0px 0px -10% 0px',
+      threshold: [0, 0.08, 0.2, 0.45, 0.75, 1]
+    });
+
+    io.observe(section);
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     update();
+  }
+
+
+  /* ══════════ 8.5 مسار ندعمكِ الدائري مع التمرير ══════════ */
+  function initSupportOrbit() {
+    const section = $('#support');
+    if (!section) return;
+
+    const progressEl = $('.support-arc-progress', section);
+    const arrow = $('.support-arc-arrow', section);
+    const halo = $('.support-halo', section);
+    const figure = $('.support-figure', section);
+    const steps = [1, 2, 3, 4].map((n) => section.querySelector('[data-support-step="' + n + '"]'));
+    const desktopMq = window.matchMedia('(min-width: 960px)');
+
+    const THRESH = { 1: 0.04, 2: 0.28, 3: 0.52, 4: 0.76 };
+    const DRAW_START = 0.008;
+    const CX = 200, CY = 200, RADIUS = 168;
+
+    const placeArrow = (p) => {
+      if (!arrow) return;
+      if (p < 0.012) {
+        arrow.setAttribute('opacity', '0');
+        return;
+      }
+      const a = -Math.PI / 4 + p * Math.PI * 2;
+      const x = CX + RADIUS * Math.cos(a);
+      const y = CY + RADIUS * Math.sin(a);
+      const deg = Math.atan2(Math.cos(a), -Math.sin(a)) * (180 / Math.PI);
+      arrow.setAttribute('transform', 'translate(' + x.toFixed(2) + ' ' + y.toFixed(2) + ') rotate(' + deg.toFixed(2) + ')');
+      arrow.setAttribute('opacity', '1');
+    };
+
+    const apply = (p, headed) => {
+      const drawn = Math.min(1, Math.max(0, p));
+      if (progressEl) {
+        progressEl.style.strokeDasharray = '1';
+        progressEl.style.strokeDashoffset = String(1 - drawn);
+      }
+      placeArrow(drawn);
+      section.classList.toggle('is-headed', headed);
+      const showCenter = drawn >= DRAW_START;
+      halo?.classList.toggle('is-on', showCenter);
+      figure?.classList.toggle('is-on', showCenter);
+
+      steps.forEach((el, i) => {
+        if (!el) return;
+        const on = drawn >= THRESH[i + 1];
+        el.classList.toggle('is-on', on);
+        if (on) el.removeAttribute('aria-hidden');
+        else el.setAttribute('aria-hidden', 'true');
+      });
+    };
+
+    const measure = () => {
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const headed = rect.bottom > 64 && rect.top < vh * 0.9;
+      let p = 0;
+
+      if (desktopMq.matches) {
+        const travel = section.offsetHeight - vh;
+        p = travel > 0 ? -rect.top / travel : (rect.top < vh ? 1 : 0);
+      } else {
+        const visual = $('.support-orbit__center', section) || section;
+        const y = visual.getBoundingClientRect().top;
+        const headerH = parseFloat(getComputedStyle(document.documentElement)
+          .getPropertyValue('--header-measured')) || 72;
+        const start = vh * 0.82;
+        const end = headerH + vh * 0.22;
+        if (y <= end) p = 1;
+        else if (y >= start) p = 0;
+        else p = (start - y) / (start - end);
+      }
+
+      apply(p, headed);
+    };
+
+    if (reduceMotion) {
+      section.classList.add('is-static');
+      apply(1, true);
+      return;
+    }
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        measure();
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    desktopMq.addEventListener?.('change', onScroll);
+    measure();
   }
 
 
@@ -594,17 +733,25 @@ const STATS_LATIN = false;
     const submit  = $('#contactSubmit');
     const otherIn = $('#cSourceOther');
     const otherFd = $('#sourceOtherField');
+    const sourceEl = $('#cSource', form);
+    const consentEl = $('#cConsent', form);
 
-    /* إظهار حقل «أخرى» عند اختيارها فقط */
+    const isOther = () => val('#cSource') === 'أخرى';
+
     const syncOther = () => {
-      const on = $('#srcOther')?.checked === true;
+      const on = isOther();
       if (otherFd) otherFd.hidden = !on;
-      if (on) otherIn?.focus();
+      if (otherIn) {
+        otherIn.disabled = !on;
+        otherIn.required = on;
+        if (!on) {
+          otherIn.value = '';
+          otherIn.removeAttribute('aria-invalid');
+          setErr('cSourceOther', '');
+        }
+      }
     };
-    $$('input[name="source"]', form).forEach((r) => r.addEventListener('change', syncOther));
-    syncOther();
 
-    /* أدوات التحقّق */
     const setErr = (key, msg) => {
       const box = form.querySelector('[data-err-for="' + key + '"]');
       if (box) box.textContent = msg || '';
@@ -622,45 +769,92 @@ const STATS_LATIN = false;
     };
 
     const val = (sel) => ($(sel, form)?.value || '').trim();
-    const picked = (name) => form.querySelector('input[name="' + name + '"]:checked');
 
-    function validate() {
-      let firstBad = null;
+    const phoneOk = (raw) => {
+      const digits = String(raw || '').replace(/\D/g, '');
+      return digits.length >= 9 && digits.length <= 15;
+    };
+    const numIn = (raw, min, max) => {
+      if (raw === '') return false;
+      const n = Number(raw);
+      return Number.isFinite(n) && n >= min && n <= max;
+    };
 
+    function inspect() {
       const nameEl = $('#cName', form);
       const phoneEl = $('#cPhone', form);
-      const name = val('#cName');
-      const phone = val('#cPhone');
-      const digits = phone.replace(/\D/g, '');
-      const goal = picked('goal');
+      const weightEl = $('#cWeight', form);
+      const heightEl = $('#cHeight', form);
+      const goalEl = $('#cGoal', form);
+      const issues = [];
 
-      if (name.length < 2) {
-        setErr('cName', 'الرجاء كتابة الاسم.'); mark(nameEl, true); firstBad ||= nameEl;
-      } else { setErr('cName', ''); mark(nameEl, false); }
+      if (val('#cName').length < 2) {
+        issues.push({ el: nameEl, key: 'cName', msg: 'الرجاء كتابة الاسم الكامل.' });
+      }
+      if (!phoneOk(val('#cPhone'))) {
+        issues.push({ el: phoneEl, key: 'cPhone', msg: 'الرجاء كتابة رقم جوال صحيح.' });
+      }
+      if (!numIn(val('#cWeight'), 30, 250)) {
+        issues.push({ el: weightEl, key: 'cWeight', msg: 'الرجاء إدخال الوزن بالكيلوجرام.' });
+      }
+      if (!numIn(val('#cHeight'), 100, 220)) {
+        issues.push({ el: heightEl, key: 'cHeight', msg: 'الرجاء إدخال الطول بالسنتيمتر.' });
+      }
+      if (!val('#cGoal')) {
+        issues.push({ el: goalEl, key: 'goal', msg: 'الرجاء اختيار هدف الرحلة.' });
+      }
+      if (!val('#cSource')) {
+        issues.push({ el: sourceEl, key: 'source', msg: 'الرجاء اختيار كيف تعرّفتِ علينا.' });
+      }
+      if (isOther() && val('#cSourceOther').length < 2) {
+        issues.push({ el: otherIn, key: 'cSourceOther', msg: 'الرجاء توضيح كيف تعرّفتِ علينا.' });
+      }
+      if (!consentEl?.checked) {
+        issues.push({ el: consentEl, key: 'consent', msg: 'يلزم الموافقة على التواصل لإرسال الطلب.' });
+      }
+      return issues;
+    }
 
-      if (digits.length < 9 || digits.length > 15) {
-        setErr('cPhone', 'الرجاء كتابة رقم جوال صحيح.'); mark(phoneEl, true); firstBad ||= phoneEl;
-      } else { setErr('cPhone', ''); mark(phoneEl, false); }
+    const ERR_KEYS = ['cName','cPhone','cWeight','cHeight','goal','source','cSourceOther','consent'];
+    const FIELD_IDS = {
+      cName: '#cName', cPhone: '#cPhone', cWeight: '#cWeight', cHeight: '#cHeight',
+      goal: '#cGoal', source: '#cSource', cSourceOther: '#cSourceOther', consent: '#cConsent'
+    };
 
-      if (!goal) {
-        setErr('goal', 'الرجاء اختيار الهدف.');
-        firstBad ||= form.querySelector('input[name="goal"]');
-      } else { setErr('goal', ''); }
+    function paintErrors(issues) {
+      const bad = new Map(issues.map((i) => [i.key, i]));
+      ERR_KEYS.forEach((key) => {
+        const hit = bad.get(key);
+        setErr(key, hit ? hit.msg : '');
+        mark($(FIELD_IDS[key], form), Boolean(hit));
+      });
+    }
 
-      return firstBad;
+    function validate() {
+      const issues = inspect();
+      paintErrors(issues);
+      return issues[0]?.el || null;
+    }
+
+    function syncSubmit() {
+      if (!submit) return;
+      const ready = inspect().length === 0;
+      submit.disabled = !ready;
+      submit.setAttribute('aria-disabled', ready ? 'false' : 'true');
     }
 
     function collect() {
-      const src = picked('source');
+      const src = val('#cSource');
       const other = val('#cSourceOther');
       return {
         name    : val('#cName'),
         phone   : val('#cPhone'),
         weight  : val('#cWeight'),
         height  : val('#cHeight'),
-        goal    : picked('goal')?.value || '',
-        source  : !src ? '' : (src.value === 'أخرى' && other) ? 'أخرى — ' + other : src.value,
-        message : val('#cMessage')
+        goal    : val('#cGoal'),
+        source  : src === 'أخرى' && other ? 'أخرى — ' + other : src,
+        message : val('#cMessage'),
+        consent : consentEl?.checked === true
       };
     }
 
@@ -680,27 +874,28 @@ const STATS_LATIN = false;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      syncOther();
 
       const bad = validate();
       if (bad) {
-        say('الرجاء تعبئة الحقول المطلوبة.', 'err');
+        say('الرجاء إكمال جميع الحقول المطلوبة قبل الإرسال.', 'err');
         bad.focus({ preventScroll: false });
+        syncSubmit();
         return;
       }
 
       const data = collect();
 
-      /* (أ) لا يوجد خادم — نفتح واتساب برسالة جاهزة */
       if (!FORM.endpoint) {
         const url = waWith(buildMessage(data));
         say('جارٍ فتح واتساب لإرسال طلبِك…', 'ok');
         const win = window.open(url, '_blank', 'noopener');
-        if (!win) window.location.href = url;      // المتصفح منع النافذة المنبثقة
+        if (!win) window.location.href = url;
         return;
       }
 
-      /* (ب) يوجد endpoint — نرسل الطلب مباشرة */
       submit.disabled = true;
+      submit.setAttribute('aria-disabled', 'true');
       say('جارٍ الإرسال…');
       try {
         const res = await fetch(FORM.endpoint, {
@@ -711,23 +906,40 @@ const STATS_LATIN = false;
         if (!res.ok) throw new Error('HTTP ' + res.status);
         form.reset();
         syncOther();
+        paintErrors([]);
         say('تم استلام طلبِك ✓ سنتواصل معكِ قريبًا.', 'ok');
       } catch (err) {
         say('تعذّر الإرسال. تواصلي معنا عبر واتساب أو الهاتف.', 'err');
       } finally {
-        submit.disabled = false;
+        syncSubmit();
       }
     });
 
-    // مسح رسالة الخطأ بمجرد بدء التصحيح
     form.addEventListener('input', (e) => {
-      const el = e.target;
-      if (el.id === 'cName')  { setErr('cName', '');  mark(el, false); }
-      if (el.id === 'cPhone') { setErr('cPhone', ''); mark(el, false); }
+      const map = {
+        cName: 'cName', cPhone: 'cPhone', cWeight: 'cWeight', cHeight: 'cHeight',
+        cSourceOther: 'cSourceOther'
+      };
+      const key = e.target && map[e.target.id];
+      if (key) { setErr(key, ''); mark(e.target, false); }
+      syncOther();
+      syncSubmit();
     });
     form.addEventListener('change', (e) => {
-      if (e.target.name === 'goal') setErr('goal', '');
+      syncOther();
+      if (e.target && e.target.id) {
+        const map = {
+          cName: 'cName', cPhone: 'cPhone', cWeight: 'cWeight', cHeight: 'cHeight',
+          cGoal: 'goal', cSource: 'source', cSourceOther: 'cSourceOther', cConsent: 'consent'
+        };
+        const key = map[e.target.id];
+        if (key) { setErr(key, ''); mark(e.target, false); }
+      }
+      syncSubmit();
     });
+
+    syncOther();
+    syncSubmit();
   }
 
 
@@ -1008,10 +1220,12 @@ const STATS_LATIN = false;
     initHeroVideo();
     initMap();
     initCounters();
+    initStatsParallax();
     initHeader();
     initNav();
     initReveal();
     initAboutTimeline();
+    initSupportOrbit();
     initScrollSpy();
     initContactForm();
     initStartJourney();
