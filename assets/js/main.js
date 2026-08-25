@@ -89,7 +89,12 @@ const STATS_LATIN = false;
     });
 
     // النصوص المعروضة
-    const setText = (sel, txt) => { const el = $(sel); if (el) el.textContent = txt; };
+    const setText = (sel, txt) => {
+      const el = $(sel);
+      if (!el) return;
+      const slot = el.querySelector('[data-contact-text]');
+      (slot || el).textContent = txt;
+    };
     setText('#phoneLink',    CONTACT.phoneText);
     setText('#cPhoneLink',   CONTACT.phoneText);
     setText('#waLink',       CONTACT.whatsappText);
@@ -170,87 +175,6 @@ const STATS_LATIN = false;
     media.appendChild(f);
   }
 
-
-  /* ══════════ 3ب. كتابة الهيرو — حلقة مستمرة ══════════ */
-  function initHeroType() {
-    const hero = $('#home');
-    if (hero?.dataset.typed === '1') return;
-    if (hero) hero.dataset.typed = '1';
-
-    const live = $('.hero-title .hero-type-live');
-    const cta = $('.hero-content .btn');
-    const scroll = $('.hero-scroll');
-    const FIRST = 'أهلًا بكِ في Like A Model';
-    const PHRASES = [FIRST, 'أكثر من تدريب… أسلوب حياة'];
-
-    const setTyped = (el, text) => {
-      const latin = text.match(/[A-Za-z].*$/);
-      if (!latin) { el.textContent = text; return; }
-      el.replaceChildren();
-      const ar = text.slice(0, latin.index);
-      if (ar) el.append(document.createTextNode(ar));
-      const en = document.createElement('bdi');
-      en.className = 'lam';
-      en.lang = 'en';
-      en.textContent = latin[0];
-      el.append(en);
-    };
-
-    const showStatic = () => {
-      if (live) {
-        setTyped(live, FIRST);
-        live.classList.add('is-done');
-      }
-      cta?.classList.add('is-in');
-      scroll?.classList.add('is-in');
-    };
-
-    if (reduceMotion || !live) {
-      showStatic();
-      return;
-    }
-
-    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-    const typeInto = async (text, delay) => {
-      live.classList.remove('is-hold', 'is-done', 'is-fade');
-      live.classList.add('is-typing');
-      const chars = Array.from(text);
-      for (let i = 1; i <= chars.length; i++) {
-        setTyped(live, chars.slice(0, i).join(''));
-        await wait(delay);
-      }
-    };
-
-    const fadeOut = async () => {
-      live.classList.remove('is-typing', 'is-hold');
-      live.classList.add('is-fade');
-      await wait(reduceMotion ? 0 : 560);
-      live.textContent = '';
-      live.classList.remove('is-fade');
-    };
-
-    live.textContent = '';
-    cta?.classList.add('is-in');
-    scroll?.classList.add('is-in');
-
-    (async () => {
-      if (document.fonts && document.fonts.ready) {
-        await Promise.race([document.fonts.ready, wait(800)]);
-      }
-      await wait(280);
-      for (;;) {
-        for (const phrase of PHRASES) {
-          await typeInto(phrase, 68);
-          live.classList.remove('is-typing');
-          live.classList.add('is-hold');
-          await wait(1500);
-          await fadeOut();
-        }
-      }
-    })();
-  }
-
   function iframeEl(src) {
     const f = document.createElement('iframe');
     f.src = src;
@@ -279,6 +203,9 @@ const STATS_LATIN = false;
     f.referrerPolicy = 'no-referrer-when-downgrade';
     f.setAttribute('scrolling', 'no');
     f.allowFullscreen = true;
+    f.style.width = '100%';
+    f.style.height = '100%';
+    f.style.border = '0';
     frame.replaceChildren(f);
   }
 
@@ -288,7 +215,7 @@ const STATS_LATIN = false;
     const nums = $$('.stat-num[data-count]');
     if (!nums.length) return;
 
-    const fmt = (n) => '+' + (STATS_LATIN ? String(n) : toAr(n));
+    const fmt = (n) => (STATS_LATIN ? String(n) : toAr(n)) + '+';
 
     if (reduceMotion || !('IntersectionObserver' in window)) {
       nums.forEach((el) => { el.textContent = fmt(+el.dataset.count || 0); });
@@ -336,7 +263,7 @@ const STATS_LATIN = false;
   /* ══════════ 5b. Parallax خلفية «نجاحنا بالأرقام» ══════════ */
   function initStatsParallax() {
     const statsSection = document.querySelector('.stats-section');
-    const statsBg = document.querySelector('.stats-parallax-bg');
+    const statsBg = document.querySelector('.stats-section .stats-parallax-bg');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (!statsSection || !statsBg) return;
 
@@ -373,6 +300,48 @@ const STATS_LATIN = false;
     window.addEventListener('resize', requestStatsParallax);
     if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', requestStatsParallax);
     requestStatsParallax();
+  }
+
+
+  /* ══════════ 5c. Parallax خلفية قسم «تواصلي معنا» ══════════ */
+  function initContactParallax() {
+    const media = document.querySelector('.contact-parallax-media');
+    const img = document.querySelector('.contact-parallax-img');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!media || !img) return;
+
+    let frame = null;
+
+    const apply = (y) => {
+      img.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0) scale(1.12)`;
+    };
+
+    const update = () => {
+      frame = null;
+
+      if (reduceMotion.matches) {
+        apply(0);
+        return;
+      }
+
+      const rect = media.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+      const clamped = Math.max(0, Math.min(1, progress));
+      const max = window.innerWidth < 768 ? 30 : 70;
+      const offsetY = -max + (clamped * max * 2);
+
+      apply(offsetY);
+    };
+
+    const requestUpdate = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', requestUpdate);
+    requestUpdate();
   }
 
 
@@ -614,6 +583,8 @@ const STATS_LATIN = false;
 
     const THRESH = { 1: 0.04, 2: 0.28, 3: 0.52, 4: 0.76 };
     const DRAW_START = 0.008;
+    const DRAW_AT_VH = 0.72;
+    const DONE_AT_VH = 0.5;
     const CX = 200, CY = 200, RADIUS = 168;
 
     const placeArrow = (p) => {
@@ -655,22 +626,17 @@ const STATS_LATIN = false;
       const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
       const headed = rect.bottom > 64 && rect.top < vh * 0.9;
-      let p = 0;
 
-      if (desktopMq.matches) {
-        const travel = section.offsetHeight - vh;
-        p = travel > 0 ? -rect.top / travel : (rect.top < vh ? 1 : 0);
-      } else {
-        const visual = $('.support-orbit__center', section) || section;
-        const y = visual.getBoundingClientRect().top;
-        const headerH = parseFloat(getComputedStyle(document.documentElement)
-          .getPropertyValue('--header-measured')) || 72;
-        const start = vh * 0.82;
-        const end = headerH + vh * 0.22;
-        if (y <= end) p = 1;
-        else if (y >= start) p = 0;
-        else p = (start - y) / (start - end);
-      }
+      const visual = $('.support-orbit__center', section) || $('.support-arc', section) || section;
+      const box = visual.getBoundingClientRect();
+      const cy = box.top + box.height / 2;
+      const startY = vh * DRAW_AT_VH;
+      const endY = vh * DONE_AT_VH;
+      const span = Math.max(1, startY - endY);
+
+      let p = 0;
+      if (cy <= endY) p = 1;
+      else if (cy < startY) p = (startY - cy) / span;
 
       apply(p, headed);
     };
@@ -1017,6 +983,26 @@ const STATS_LATIN = false;
       if (saved.step >= 1 && saved.step <= 4) step = saved.step;
     };
 
+    const GOAL_SLUGS = {
+      'fat-loss': 'رحلة خسارة الدهون',
+      'body-sculpt': 'رحلة نحت وتنسيق القوام',
+      'muscle-building': 'رحلة بناء العضلات والقوة',
+      'bride': 'رحلة تألق العروس',
+      'postpartum': 'رحلة ما بعد الولادة',
+      'pregnancy': 'رحلة الحمل الصحي',
+      'lifestyle': 'رحلة نمط الحياة الصحي',
+      'bariatric': 'رحلة التحوّل بعد التكميم'
+    };
+
+    const applyGoalFromQuery = () => {
+      const slug = new URLSearchParams(location.search).get('goal');
+      if (!slug) return;
+      const value = GOAL_SLUGS[slug];
+      if (!value) return;
+      const g = form.querySelector('input[name="goal"][value="' + value + '"]');
+      if (g) g.checked = true;
+    };
+
     const validate = (n) => {
       const d = read();
       let first = null;
@@ -1122,6 +1108,7 @@ const STATS_LATIN = false;
     };
 
     restore();
+    applyGoalFromQuery();
     show();
 
     form.addEventListener('input', persist);
@@ -1216,11 +1203,11 @@ const STATS_LATIN = false;
   function boot() {
     applyContact();
     initLang();
-    initHeroType();
     initHeroVideo();
     initMap();
     initCounters();
     initStatsParallax();
+    initContactParallax();
     initHeader();
     initNav();
     initReveal();
