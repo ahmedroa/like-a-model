@@ -168,6 +168,8 @@ em{font-style:normal}
 .section-stats > .shell,
 #ecosystem > .shell,
 #journey-guide > .shell,
+#journey-guide > .journey-main,
+#journey-guide > .journey-gallery,
 .section-stories > .shell{position:relative;z-index:1}
 
 /* من نحن — دائرة LM خافتة جدًا */
@@ -1461,7 +1463,14 @@ body.nav-open .fab{visibility:hidden}
   line-height:1.4;white-space:nowrap;
 }
 .journey-main,
-.journey-gallery{display:grid;gap:clamp(1.15rem,2.2vw,1.6rem)}
+.journey-gallery{
+  display:grid;
+  gap:clamp(1.15rem,2.2vw,1.6rem);
+  width:100%;
+  max-width:var(--shell);
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+}
 .journey-gallery{margin-block-start:clamp(1.15rem,2.2vw,1.6rem)}
 
 .journey-copy{
@@ -1551,8 +1560,16 @@ body.nav-open .fab{visibility:hidden}
 }
 
 @media (min-width:900px){
-  .journey-main{grid-template-columns:1fr 1fr;align-items:center}
-  .journey-gallery{grid-template-columns:1fr 1fr}
+  .journey-main,
+  .journey-gallery{
+    width:min(1720px,88vw);
+    max-width:none;
+    margin-inline:auto;
+    padding-inline:0;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  .journey-main{align-items:center}
 }
 
 /* ---------- 9.85 قصص بدأت بقرار ---------- */
