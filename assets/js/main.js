@@ -11,7 +11,7 @@ const CONTACT = {
   phoneTel    : '+966920031018',             // ما يُتصل به فعليًا عند الضغط
   phoneText   : '920031018',                 // الرقم الموحّد كما يُعرض
   email       : 'info@likeamodel.com.sa',
-  address     : 'الرياض — المملكة العربية السعودية',
+  address     : 'الرياض – المملكة العربية السعودية',
 
   /* ✏️ روابط الحسابات — ضعي رابط الحساب الكامل لكل منصّة.
      اتركي القيمة فارغة '' لإخفاء أيقونة المنصّة من الموقع بالكامل. */
@@ -52,6 +52,82 @@ const LANG = {
 
 /* ✏️ ⑦  شكل أرقام «نجاحنا بالأرقام»: false = ٣٥+ عربية · true = 35+ لاتينية */
 const STATS_LATIN = false;
+
+/* ✏️ ⑧  أسئلة وإجابات الشات بوت (ثابتة — بدون API) */
+const CHAT_FAQ = [
+  {
+    q: 'ما هو Like A Model؟',
+    a: 'Like A Model هي رحلة تحوّل متكاملة صُممت خصيصًا لكِ، تجمع التدريب الشخصي والتغذية والمتابعة وقياس النتائج؛ لبناء أسلوب حياة متوازن ونتائج تدوم.'
+  },
+  {
+    q: 'كيف أبدأ رحلتي؟',
+    a: 'ابدئي بجلسة تقييم مجانية، ثم نحدد هدفكِ ومستوى تجربتكِ وأسلوب التدريب الأنسب لكِ، وبعدها نصمّم رحلتكِ الخاصة.'
+  },
+  {
+    q: 'هل البرنامج الغذائي مشمول ضمن الاشتراك؟',
+    a: 'نعم، يتضمن البرنامج توجيهًا غذائيًا مصممًا ليتناسب مع أهدافكِ واحتياجاتكِ ونمط حياتكِ.'
+  },
+  {
+    q: 'ماذا يشمل الاشتراك؟',
+    a: 'يشمل جلسة تقييم، تحليل تكوين الجسم InBody، قياسات دورية، جلسات تدريب شخصية، برنامجًا غذائيًا، ومتابعة مستمرة بحسب الباقة المناسبة لكِ.'
+  },
+  {
+    q: 'ما الفرق بين EMS Training وPersonal Training وReformer Pilates؟',
+    a: 'EMS Training يعتمد على التحفيز الكهربائي للعضلات، ومدة الجلسة 20 دقيقة.\nPersonal Training تدريب شخصي مصمم وفق أهدافكِ، ومدة الجلسة 60 دقيقة.\nReformer Pilates تمارين على جهاز الريفورمر لتحسين المرونة والتوازن والقوة، ومدة الجلسة 60 دقيقة.'
+  },
+  {
+    q: 'ما الفرق بين Private وElite وSignature؟',
+    a: 'Signature Experience هي البداية المتكاملة التي تجمع الخدمات الأساسية لرحلتكِ.\nElite Experience تمنحكِ مزايا إضافية وتوجيهًا أوسع.\nPrivate Experience هي أعلى مستوى من الخصوصية والعناية، بخدمات وتجربة مصممة بالكامل لكِ.'
+  },
+  {
+    q: 'هل يمكنني حجز جلسات؟',
+    a: 'نعم، يمكنكِ حجز جلساتكِ واختيار الوقت المتاح المناسب لكِ.'
+  },
+  {
+    q: 'هل يمكنني الاشتراك مع صديقتي أو أحد أفراد أسرتي؟',
+    a: 'نعم، نوفر باقات للتدريب المشترك مع الصديقات أو أفراد الأسرة، لتجعل الرحلة أكثر تحفيزًا والتزامًا.'
+  },
+  {
+    q: 'متى أبدأ بملاحظة النتائج؟',
+    a: 'تختلف النتائج حسب الهدف والالتزام، لكن كثيرًا من العميلات يبدأن بملاحظة فرق خلال الأسابيع الأولى من البرنامج.'
+  },
+  {
+    q: 'كيف تتم متابعة تقدمي؟',
+    a: 'نتابع تقدمكِ عبر القياسات الدورية، مراجعة التمارين والتغذية، تقييم مستوى الالتزام، ومتابعة النتائج والتطور بشكل مستمر.'
+  },
+  {
+    q: 'ماذا لو لدي إصابة أو حالة صحية خاصة؟',
+    a: 'نبدأ بجلسة تقييم للتأكد من أن رحلتكِ مناسبة وآمنة ومتوافقة مع احتياجاتكِ الصحية.'
+  },
+  {
+    q: 'هل يمكن تغيير المدربة؟',
+    a: 'نعم، يمكن تغيير المدربة عند الحاجة بما يضمن راحتكِ واستمراريتكِ في الرحلة.'
+  },
+  {
+    q: 'هل يمكن إعادة جدولة الجلسات؟',
+    a: 'نعم، يمكنكِ إعادة جدولة الجلسة عند إبلاغ المدربة قبل الموعد بوقت كافٍ.'
+  },
+  {
+    q: 'ماذا لو كنت مسافرة أو لدي ظرف شخصي؟',
+    a: 'البرنامج مرن، ويمكننا مساعدتكِ في تنظيم الجلسات المتبقية أو إعادة جدولتها بما يناسب ظرفكِ.'
+  },
+  {
+    q: 'هل يوجد تجديد للاشتراك؟',
+    a: 'نعم، يمكنكِ تجديد اشتراككِ والاستمرار في رحلتكِ مع تطوير الخطة حسب تقدمكِ وأهدافكِ الجديدة.'
+  },
+  {
+    q: 'هل يوجد برنامج إحالة؟',
+    a: 'نعم، يمكنكِ دعوة صديقاتكِ والاستفادة من رصيد أو مزايا خاصة وفق برنامج الإحالة المتاح.'
+  },
+  {
+    q: 'ما الذي يميز Like A Model؟',
+    a: 'لأننا لا نقدم تدريبًا فقط؛ نصمم لكِ رحلة متكاملة تجمع التدريب والتغذية والمتابعة وقياس النتائج والدعم المستمر، لتصلي إلى أسلوب حياة صحي يدوم.'
+  },
+  {
+    q: 'لم أجد سؤالي، ماذا أفعل؟',
+    a: 'يسعدنا تواصلكِ معنا، وسيتواصل فريقنا معكِ لفهم احتياجكِ وتقديم الحل الأنسب لكِ.'
+  }
+];
 
 /* ────────────────────────────────────────────────────────────────────────── */
 
@@ -194,6 +270,12 @@ const STATS_LATIN = false;
     const href = (MAP.open || src.replace(/&output=embed$/, '')).trim();
 
     if (open && href) open.href = href;
+    const addr = $('#addrText');
+    if (addr && href && addr.tagName === 'A') {
+      addr.href = href;
+      addr.target = '_blank';
+      addr.rel = 'noopener noreferrer';
+    }
     if (!frame || !src) return;
 
     const f = document.createElement('iframe');
@@ -303,45 +385,45 @@ const STATS_LATIN = false;
   }
 
 
-  /* ══════════ 5c. Parallax خلفية قسم «تواصلي معنا» ══════════ */
+  /* ══════════ 5c. Parallax شريط صورة التواصل العلوي ══════════ */
   function initContactParallax() {
-    const media = document.querySelector('.contact-parallax-media');
-    const img = document.querySelector('.contact-parallax-img');
+    const banner = document.querySelector('.section-contact .contact-banner');
+    const contactBg = document.querySelector('.section-contact .contact-parallax-bg');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!media || !img) return;
+    if (!banner || !contactBg) return;
 
-    let frame = null;
+    let contactParallaxFrame = null;
 
-    const apply = (y) => {
-      img.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0) scale(1.12)`;
-    };
-
-    const update = () => {
-      frame = null;
+    const updateContactParallax = () => {
+      contactParallaxFrame = null;
 
       if (reduceMotion.matches) {
-        apply(0);
+        contactBg.style.setProperty('--contact-parallax-y', '0px');
         return;
       }
 
-      const rect = media.getBoundingClientRect();
+      // تقدّم مرور الشريط داخل نافذة العرض: 0 عند الدخول → 1 عند الخروج
+      const rect = banner.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
       const clamped = Math.max(0, Math.min(1, progress));
-      const max = window.innerWidth < 768 ? 30 : 70;
-      const offsetY = -max + (clamped * max * 2);
 
-      apply(offsetY);
+      // مدى أوضح ±220px أثناء مرور الشريط
+      const offsetY = -220 + (clamped * 440);
+
+      contactBg.style.setProperty('--contact-parallax-y', `${offsetY.toFixed(1)}px`);
     };
 
-    const requestUpdate = () => {
-      if (!frame) frame = requestAnimationFrame(update);
+    const requestContactParallax = () => {
+      if (!contactParallaxFrame) {
+        contactParallaxFrame = requestAnimationFrame(updateContactParallax);
+      }
     };
 
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', requestUpdate);
-    requestUpdate();
+    window.addEventListener('scroll', requestContactParallax, { passive: true });
+    window.addEventListener('resize', requestContactParallax);
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', requestContactParallax);
+    requestContactParallax();
   }
 
 
@@ -700,6 +782,7 @@ const STATS_LATIN = false;
     const otherIn = $('#cSourceOther');
     const otherFd = $('#sourceOtherField');
     const sourceEl = $('#cSource', form);
+    const timeEl = $('#cTime', form);
     const consentEl = $('#cConsent', form);
 
     const isOther = () => val('#cSource') === 'أخرى';
@@ -715,6 +798,7 @@ const STATS_LATIN = false;
           otherIn.removeAttribute('aria-invalid');
           setErr('cSourceOther', '');
         }
+        syncFilled(otherIn);
       }
     };
 
@@ -735,6 +819,26 @@ const STATS_LATIN = false;
     };
 
     const val = (sel) => ($(sel, form)?.value || '').trim();
+
+    function isFilledControl(el) {
+      if (!el || el.type === 'checkbox' || el.type === 'radio') return false;
+      if (!el.classList.contains('input')) return false;
+      if (el.tagName === 'SELECT') return Boolean((el.value || '').trim());
+      return String(el.value || '').trim() !== '';
+    }
+
+    function syncFilled(el) {
+      if (!el || !el.classList || el.type === 'checkbox' || el.type === 'radio') return;
+      if (!el.classList.contains('input')) return;
+      const on = isFilledControl(el);
+      el.classList.toggle('is-filled', on);
+      const wrap = el.closest('.field-wrap');
+      if (wrap) wrap.classList.toggle('is-filled', on);
+    }
+
+    function syncFilledAll() {
+      form.querySelectorAll('.input').forEach(syncFilled);
+    }
 
     const phoneOk = (raw) => {
       const digits = String(raw || '').replace(/\D/g, '');
@@ -775,16 +879,20 @@ const STATS_LATIN = false;
       if (isOther() && val('#cSourceOther').length < 2) {
         issues.push({ el: otherIn, key: 'cSourceOther', msg: 'الرجاء توضيح كيف تعرّفتِ علينا.' });
       }
+      if (!val('#cTime')) {
+        issues.push({ el: timeEl, key: 'time', msg: 'الرجاء اختيار الوقت المناسب للتواصل.' });
+      }
       if (!consentEl?.checked) {
         issues.push({ el: consentEl, key: 'consent', msg: 'يلزم الموافقة على التواصل لإرسال الطلب.' });
       }
       return issues;
     }
 
-    const ERR_KEYS = ['cName','cPhone','cWeight','cHeight','goal','source','cSourceOther','consent'];
+    const ERR_KEYS = ['cName','cPhone','cWeight','cHeight','goal','source','cSourceOther','time','consent'];
     const FIELD_IDS = {
       cName: '#cName', cPhone: '#cPhone', cWeight: '#cWeight', cHeight: '#cHeight',
-      goal: '#cGoal', source: '#cSource', cSourceOther: '#cSourceOther', consent: '#cConsent'
+      goal: '#cGoal', source: '#cSource', cSourceOther: '#cSourceOther',
+      time: '#cTime', consent: '#cConsent'
     };
 
     function paintErrors(issues) {
@@ -819,6 +927,7 @@ const STATS_LATIN = false;
         height  : val('#cHeight'),
         goal    : val('#cGoal'),
         source  : src === 'أخرى' && other ? 'أخرى — ' + other : src,
+        time    : val('#cTime'),
         message : val('#cMessage'),
         consent : consentEl?.checked === true
       };
@@ -834,6 +943,7 @@ const STATS_LATIN = false;
              line('الطول', d.height, ' سم') +
              line('الهدف', d.goal) +
              line('كيف تعرّفتُ عليكم', d.source) +
+             line('وقت التواصل المناسب', d.time) +
              (d.message ? '\n' + d.message + '\n' : '') +
              '\nأتطلع لردّكم.';
     }
@@ -872,6 +982,7 @@ const STATS_LATIN = false;
         if (!res.ok) throw new Error('HTTP ' + res.status);
         form.reset();
         syncOther();
+        syncFilledAll();
         paintErrors([]);
         say('تم استلام طلبِك ✓ سنتواصل معكِ قريبًا.', 'ok');
       } catch (err) {
@@ -888,6 +999,7 @@ const STATS_LATIN = false;
       };
       const key = e.target && map[e.target.id];
       if (key) { setErr(key, ''); mark(e.target, false); }
+      if (e.target && e.target.matches('input.input, textarea.input')) syncFilled(e.target);
       syncOther();
       syncSubmit();
     });
@@ -896,15 +1008,20 @@ const STATS_LATIN = false;
       if (e.target && e.target.id) {
         const map = {
           cName: 'cName', cPhone: 'cPhone', cWeight: 'cWeight', cHeight: 'cHeight',
-          cGoal: 'goal', cSource: 'source', cSourceOther: 'cSourceOther', cConsent: 'consent'
+          cGoal: 'goal', cSource: 'source', cSourceOther: 'cSourceOther',
+          cTime: 'time', cConsent: 'consent'
         };
         const key = map[e.target.id];
         if (key) { setErr(key, ''); mark(e.target, false); }
+      }
+      if (e.target && e.target.matches('select.input, input.input, textarea.input')) {
+        syncFilled(e.target);
       }
       syncSubmit();
     });
 
     syncOther();
+    syncFilledAll();
     syncSubmit();
   }
 
@@ -1178,13 +1295,22 @@ const STATS_LATIN = false;
   function initToTop() {
     const topBtn = $('#toTop');
     const waBtn = $('#fabWhatsapp');
-    if (!topBtn && !waBtn) return;
+    const chatBtn = $('#chatbotOpen');
+    if (!topBtn && !waBtn && !chatBtn) return;
     let ticking = false;
 
     const update = () => {
       const y = window.scrollY;
+      const hideNearHero = document.body.classList.contains('page-syj') ? false : y < 40;
       if (topBtn) topBtn.hidden = y < 700;
-      if (waBtn) waBtn.hidden = document.body.classList.contains('page-syj') ? false : y < 40;
+      if (waBtn) waBtn.hidden = hideNearHero;
+      if (chatBtn) {
+        const wasVisible = !chatBtn.hidden;
+        chatBtn.hidden = hideNearHero;
+        if (hideNearHero && wasVisible) {
+          window.dispatchEvent(new Event('lam:close-chatbot'));
+        }
+      }
       ticking = false;
     };
     update();
@@ -1196,6 +1322,756 @@ const STATS_LATIN = false;
       window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
       $('.brand')?.focus();
     });
+  }
+
+
+  /* ══════════ 11ب. Chatbot FAQ (أسئلة ثابتة) ══════════ */
+  function initChatbot() {
+    const root = $('#chatbot');
+    const openBtn = $('#chatbotOpen');
+    const thread = $('#chatbotThread');
+    const panel = root && $('.chatbot-panel', root);
+    if (!root || !openBtn || !thread || !panel) return;
+    if (!Array.isArray(CHAT_FAQ) || !CHAT_FAQ.length) {
+      openBtn.hidden = true;
+      return;
+    }
+
+    let open = false;
+    let busy = false;
+    let lastFocus = null;
+    let answerTimer = 0;
+
+    const WELCOME = 'أهلًا بكِ 🤍 كيف يمكنني مساعدتكِ اليوم؟';
+
+    const scrollEnd = () => {
+      thread.scrollTop = thread.scrollHeight;
+    };
+
+    const addBubble = (text, kind) => {
+      const el = document.createElement('div');
+      el.className = 'chat-bubble chat-bubble--' + kind;
+      el.textContent = text;
+      thread.appendChild(el);
+      scrollEnd();
+      return el;
+    };
+
+    const clearReplies = () => {
+      $$('.chat-replies, .chat-again', thread).forEach((n) => n.remove());
+    };
+
+    const showQuestions = () => {
+      clearReplies();
+      const wrap = document.createElement('div');
+      wrap.className = 'chat-replies';
+      wrap.setAttribute('role', 'group');
+      wrap.setAttribute('aria-label', 'أسئلة شائعة');
+
+      CHAT_FAQ.forEach((item, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chat-reply';
+        btn.textContent = item.q;
+        btn.dataset.faq = String(idx);
+        btn.addEventListener('click', () => onAsk(item, btn));
+        wrap.appendChild(btn);
+      });
+
+      thread.appendChild(wrap);
+      scrollEnd();
+    };
+
+    const showAgain = () => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'chat-again';
+      btn.textContent = 'سؤال آخر';
+      btn.addEventListener('click', () => {
+        btn.remove();
+        showQuestions();
+      });
+      thread.appendChild(btn);
+      scrollEnd();
+    };
+
+    const onAsk = (item, btn) => {
+      if (busy) return;
+      busy = true;
+      $$('.chat-reply', thread).forEach((b) => { b.disabled = true; });
+      clearReplies();
+      addBubble(item.q, 'user');
+
+      window.clearTimeout(answerTimer);
+      const delay = reduceMotion ? 0 : 300;
+      answerTimer = window.setTimeout(() => {
+        addBubble(item.a, 'bot');
+        showAgain();
+        busy = false;
+      }, delay);
+    };
+
+    const resetThread = () => {
+      window.clearTimeout(answerTimer);
+      busy = false;
+      thread.replaceChildren();
+      addBubble(WELCOME, 'bot');
+      showQuestions();
+    };
+
+    const setOpen = (next) => {
+      if (next === open) return;
+      if (next && document.body.classList.contains('is-bk-open')) return;
+      open = next;
+      openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.classList.toggle('is-chat-open', open);
+
+      if (open) {
+        lastFocus = document.activeElement;
+        resetThread();
+        root.hidden = false;
+        root.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(() => {
+          root.classList.add('is-open');
+          panel.focus({ preventScroll: true });
+        });
+      } else {
+        root.classList.remove('is-open');
+        const finish = () => {
+          if (open) return;
+          root.hidden = true;
+          root.setAttribute('aria-hidden', 'true');
+          if (lastFocus && typeof lastFocus.focus === 'function') {
+            lastFocus.focus({ preventScroll: true });
+          }
+        };
+        if (reduceMotion) finish();
+        else window.setTimeout(finish, 280);
+      }
+    };
+
+    openBtn.addEventListener('click', () => setOpen(!open));
+    root.addEventListener('click', (e) => {
+      if (e.target && e.target.closest('[data-chat-close]')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && open && !document.body.classList.contains('is-bk-open')) {
+        e.preventDefault();
+        setOpen(false);
+      }
+    });
+
+    window.addEventListener('lam:close-chatbot', () => setOpen(false));
+  }
+
+
+  /* ══════════ 10ج. Modal حجز جلسة التقييم (متعدد الخطوات) ══════════ */
+  function initBookingModal() {
+    const modal = $('#bookingModal');
+    const openBtns = $$('[data-bk-open]');
+    const form = $('#bookingForm');
+    if (!modal || !form || !openBtns.length) return;
+
+    const TOTAL = 5;
+    const RIYADH = { lat: 24.7136, lng: 46.6753 };
+    const MONTHS_AR = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    const SLOT_LABELS = { '10:00': '10:00 ص', '12:00': '12:00 م', '16:00': '4:00 م', '18:00': '6:00 م' };
+
+    const dialog = $('.bk-modal-dialog', modal);
+    const panels = $$('[data-bk-step]', form);
+    const backBtn = $('#bkBack');
+    const nextBtn = $('#bkNext');
+    const sendBtn = $('#bkSend');
+    const stepLbl = $('#bkStepLbl');
+    const bar = $('#bkBarFill');
+    const status = $('#bkStatus');
+    const review = $('#bkReview');
+    const consentEl = $('#bkConsent', form);
+    const locateOpen = $('#bkLocateOpen', form);
+    const mapPanel = $('#bkMapPanel', form);
+    const mapEl = $('#bkMap', form);
+    const useMyLoc = $('#bkUseMyLoc', form);
+    const locateDone = $('#bkLocateDone', form);
+    const locateEdit = $('#bkLocateEdit', form);
+    const locateAddr = $('#bkLocateAddr', form);
+    const latEl = $('#bkLat', form);
+    const lngEl = $('#bkLng', form);
+    const addressEl = $('#bkAddress', form);
+    const calMonthEl = $('#bkCalMonth', form);
+    const calGrid = $('#bkCalGrid', form);
+    const calPrev = $('#bkCalPrev', form);
+    const calNext = $('#bkCalNext', form);
+    const slotsWrap = $('#bkSlots', form);
+    const slotsList = $('#bkSlotsList', form);
+    const dateEl = $('#bkDate', form);
+    const slotEl = $('#bkSlot', form);
+
+    let step = 1;
+    let lastFocus = null;
+    let open = false;
+    let map = null;
+    let marker = null;
+    let pendingLatLng = null;
+    let calCursor = new Date();
+    calCursor.setDate(1);
+    calCursor.setHours(0, 0, 0, 0);
+
+    const val = (sel) => ($(sel, form)?.value || '').trim();
+
+    const phoneOk = (raw) => {
+      const digits = String(raw || '').replace(/\D/g, '');
+      return digits.length >= 9 && digits.length <= 15;
+    };
+    const numIn = (raw, min, max) => {
+      if (raw === '') return false;
+      const n = Number(raw);
+      return Number.isFinite(n) && n >= min && n <= max;
+    };
+    const setErr = (key, msg) => {
+      const box = form.querySelector('[data-err-for="' + key + '"]');
+      if (box) box.textContent = msg || '';
+    };
+    const mark = (el, bad) => {
+      if (!el) return;
+      if (bad) el.setAttribute('aria-invalid', 'true');
+      else el.removeAttribute('aria-invalid');
+    };
+    const say = (msg, kind) => {
+      if (!status) return;
+      status.textContent = msg || '';
+      status.classList.toggle('is-err', kind === 'err');
+      status.classList.toggle('is-ok', kind === 'ok');
+    };
+
+    function isFilledControl(el) {
+      if (!el || el.type === 'checkbox' || el.type === 'radio' || el.type === 'hidden') return false;
+      if (!el.classList.contains('input')) return false;
+      if (el.tagName === 'SELECT') return Boolean((el.value || '').trim());
+      return String(el.value || '').trim() !== '';
+    }
+    function syncFilled(el) {
+      if (!el || !el.classList || el.type === 'checkbox' || el.type === 'radio') return;
+      if (!el.classList.contains('input')) return;
+      const on = isFilledControl(el);
+      el.classList.toggle('is-filled', on);
+      const wrap = el.closest('.field-wrap');
+      if (wrap) wrap.classList.toggle('is-filled', on);
+    }
+    function syncFilledAll() {
+      form.querySelectorAll('.input').forEach(syncFilled);
+    }
+
+    function loadLeaflet() {
+      if (window.L) return Promise.resolve(window.L);
+      return new Promise((resolve, reject) => {
+        const cssId = 'lam-leaflet-css';
+        if (!document.getElementById(cssId)) {
+          const link = document.createElement('link');
+          link.id = cssId;
+          link.rel = 'stylesheet';
+          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+          document.head.appendChild(link);
+        }
+        const existing = document.getElementById('lam-leaflet-js');
+        if (existing) {
+          existing.addEventListener('load', () => resolve(window.L));
+          existing.addEventListener('error', reject);
+          return;
+        }
+        const script = document.createElement('script');
+        script.id = 'lam-leaflet-js';
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.onload = () => resolve(window.L);
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    async function reverseGeocode(lat, lng) {
+      try {
+        const url = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' +
+          encodeURIComponent(lat) + '&lon=' + encodeURIComponent(lng) + '&accept-language=ar';
+        const res = await fetch(url, { headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error('geo');
+        const data = await res.json();
+        const a = data.address || {};
+        const short = [a.suburb || a.neighbourhood || a.quarter, a.city || a.town || a.state || 'الرياض']
+          .filter(Boolean).join(' — ');
+        return short || data.display_name || 'موقع محدد على الخريطة';
+      } catch (e) {
+        return 'موقع محدد على الخريطة';
+      }
+    }
+
+    function setPending(lat, lng) {
+      pendingLatLng = { lat, lng };
+      if (marker && map) marker.setLatLng([lat, lng]);
+      saveLocation(lat, lng);
+    }
+
+    async function saveLocation(lat, lng) {
+      if (latEl) latEl.value = String(lat);
+      if (lngEl) lngEl.value = String(lng);
+      const addr = await reverseGeocode(lat, lng);
+      if (addressEl) addressEl.value = addr;
+      setErr('bkLocation', '');
+      showLocateDone();
+    }
+
+    async function ensureMap() {
+      const L = await loadLeaflet();
+      if (!mapEl) return;
+      if (L.Icon && L.Icon.Default) {
+        delete L.Icon.Default.prototype._getIconUrl;
+        L.Icon.Default.mergeOptions({
+          iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+          iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+          shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png'
+        });
+      }
+      const startLat = Number(latEl?.value) || RIYADH.lat;
+      const startLng = Number(lngEl?.value) || RIYADH.lng;
+      if (!map) {
+        map = L.map(mapEl, { scrollWheelZoom: false, attributionControl: true });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+        marker = L.marker([startLat, startLng], { draggable: true }).addTo(map);
+        marker.on('dragend', () => {
+          const p = marker.getLatLng();
+          setPending(p.lat, p.lng);
+        });
+        map.on('click', (e) => setPending(e.latlng.lat, e.latlng.lng));
+      }
+      map.setView([startLat, startLng], 13);
+      marker.setLatLng([startLat, startLng]);
+      pendingLatLng = { lat: startLat, lng: startLng };
+      requestAnimationFrame(() => map.invalidateSize());
+      setTimeout(() => map && map.invalidateSize(), 180);
+    }
+
+    function showLocateIdle() {
+      if (locateOpen) locateOpen.hidden = false;
+      if (mapPanel) mapPanel.hidden = true;
+      if (locateDone) locateDone.hidden = true;
+      if (locateAddr) { locateAddr.hidden = true; locateAddr.textContent = ''; }
+    }
+    function showLocateMap() {
+      if (locateOpen) locateOpen.hidden = true;
+      if (mapPanel) mapPanel.hidden = false;
+      if (locateDone) locateDone.hidden = true;
+      ensureMap();
+    }
+    function showLocateDone() {
+      if (locateOpen) locateOpen.hidden = true;
+      if (mapPanel) mapPanel.hidden = true;
+      if (locateDone) locateDone.hidden = false;
+      const addr = val('#bkAddress');
+      if (locateAddr) {
+        locateAddr.hidden = !addr;
+        locateAddr.textContent = addr;
+      }
+    }
+    function syncLocateUi() {
+      if (val('#bkLat') && val('#bkLng')) showLocateDone();
+      else showLocateIdle();
+    }
+    function clearLocation() {
+      if (latEl) latEl.value = '';
+      if (lngEl) lngEl.value = '';
+      if (addressEl) addressEl.value = '';
+      pendingLatLng = null;
+      showLocateIdle();
+    }
+
+    function todayStart() {
+      const t = new Date();
+      t.setHours(0, 0, 0, 0);
+      return t;
+    }
+    function ymd(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + day;
+    }
+    function formatDateAr(iso) {
+      if (!iso) return '';
+      const [y, m, d] = iso.split('-').map(Number);
+      return toAr(d) + ' ' + MONTHS_AR[m - 1] + ' ' + toAr(y);
+    }
+
+    function paintCalendar() {
+      if (!calGrid || !calMonthEl) return;
+      const year = calCursor.getFullYear();
+      const month = calCursor.getMonth();
+      calMonthEl.textContent = MONTHS_AR[month] + ' ' + toAr(year);
+      const firstDow = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const selected = val('#bkDate');
+      const today = todayStart();
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < firstDow; i++) {
+        const empty = document.createElement('button');
+        empty.type = 'button';
+        empty.className = 'bk-cal-day is-empty';
+        empty.tabIndex = -1;
+        empty.setAttribute('aria-hidden', 'true');
+        frag.appendChild(empty);
+      }
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const iso = ymd(date);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'bk-cal-day';
+        btn.textContent = toAr(day);
+        btn.dataset.date = iso;
+        if (date < today) btn.disabled = true;
+        if (ymd(today) === iso) btn.classList.add('is-today');
+        if (selected === iso) btn.classList.add('is-on');
+        btn.addEventListener('click', () => selectDate(iso));
+        frag.appendChild(btn);
+      }
+      calGrid.replaceChildren(frag);
+      if (calPrev) {
+        const prevMonthEnd = new Date(year, month, 0);
+        calPrev.disabled = prevMonthEnd < today;
+      }
+    }
+
+    function selectDate(iso) {
+      if (dateEl) dateEl.value = iso;
+      if (slotEl) slotEl.value = '';
+      $$('.bk-slot', form).forEach((b) => b.classList.remove('is-on'));
+      if (slotsWrap) slotsWrap.hidden = false;
+      setErr('bkAppt', '');
+      paintCalendar();
+    }
+
+    function selectSlot(value) {
+      if (slotEl) slotEl.value = value;
+      $$('.bk-slot', form).forEach((b) => b.classList.toggle('is-on', b.dataset.slot === value));
+      setErr('bkAppt', '');
+    }
+
+    function collect() {
+      return {
+        name: val('#bkName'),
+        phone: val('#bkPhone'),
+        weight: val('#bkWeight'),
+        height: val('#bkHeight'),
+        goal: val('#bkGoal'),
+        lat: val('#bkLat'),
+        lng: val('#bkLng'),
+        address: val('#bkAddress'),
+        date: val('#bkDate'),
+        slot: val('#bkSlot'),
+        slotLabel: SLOT_LABELS[val('#bkSlot')] || val('#bkSlot'),
+        consent: consentEl?.checked === true
+      };
+    }
+
+    function paintReview() {
+      if (!review) return;
+      const d = collect();
+      const esc = (s) => String(s || '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const row = (k, v) => v
+        ? '<div class="bk-review-row"><span class="bk-review-k">' + esc(k) + '</span><span class="bk-review-v">' + esc(v) + '</span></div>'
+        : '';
+      review.innerHTML =
+        row('الاسم', d.name) +
+        row('رقم الجوال', d.phone) +
+        row('الوزن', d.weight ? d.weight + ' كجم' : '') +
+        row('الطول', d.height ? d.height + ' سم' : '') +
+        row('الهدف', d.goal) +
+        row('موقع الجلسة', d.address || (d.lat && d.lng ? 'موقع محدد على الخريطة' : '')) +
+        row('موعد الجلسة', d.date ? (formatDateAr(d.date) + (d.slotLabel ? ' — ' + d.slotLabel : '')) : '');
+    }
+
+    function validateStep(n) {
+      let first = null;
+      const fail = (el, key, msg) => { setErr(key, msg); if (el) mark(el, true); first ||= el; };
+      const ok = (el, key) => { setErr(key, ''); if (el) mark(el, false); };
+
+      if (n === 1) {
+        const nameEl = $('#bkName', form);
+        const phoneEl = $('#bkPhone', form);
+        const name = val('#bkName');
+        if (name.length < 2) fail(nameEl, 'bkName', 'الرجاء كتابة الاسم الكامل.');
+        else ok(nameEl, 'bkName');
+        if (!phoneOk(val('#bkPhone'))) fail(phoneEl, 'bkPhone', 'الرجاء كتابة رقم جوال صحيح.');
+        else ok(phoneEl, 'bkPhone');
+      }
+      if (n === 2) {
+        const weightEl = $('#bkWeight', form);
+        const heightEl = $('#bkHeight', form);
+        const goalEl = $('#bkGoal', form);
+        if (!numIn(val('#bkWeight'), 30, 250)) fail(weightEl, 'bkWeight', 'الرجاء إدخال الوزن بالكيلوجرام.');
+        else ok(weightEl, 'bkWeight');
+        if (!numIn(val('#bkHeight'), 100, 220)) fail(heightEl, 'bkHeight', 'الرجاء إدخال الطول بالسنتيمتر.');
+        else ok(heightEl, 'bkHeight');
+        if (!val('#bkGoal')) fail(goalEl, 'bkGoal', 'الرجاء اختيار هدف الرحلة.');
+        else ok(goalEl, 'bkGoal');
+      }
+      if (n === 3) {
+        // موقع الجلسة اختياري — يمكن المتابعة بدون تحديد
+        setErr('bkLocation', '');
+      }
+      if (n === 4) {
+        if (!val('#bkDate') || !val('#bkSlot')) {
+          fail(calGrid, 'bkAppt', 'الرجاء اختيار التاريخ والوقت المناسبين.');
+        } else ok(null, 'bkAppt');
+      }
+      if (n === 5) {
+        if (!consentEl?.checked) fail(consentEl, 'bkConsent', 'يلزم الموافقة على التواصل لإرسال الطلب.');
+        else ok(consentEl, 'bkConsent');
+      }
+      return first;
+    }
+
+    function syncSend() {
+      if (!sendBtn) return;
+      const ready = step === TOTAL && consentEl?.checked === true;
+      sendBtn.hidden = step !== TOTAL;
+      sendBtn.disabled = !ready;
+      sendBtn.setAttribute('aria-disabled', ready ? 'false' : 'true');
+    }
+
+    function paintHello() {
+      const nameSlot = $('#bkHelloName');
+      if (nameSlot) nameSlot.textContent = val('#bkName');
+    }
+    function playHelloEnter() {
+      const hello = $('#bkHello');
+      if (!hello) return;
+      hello.classList.remove('is-in');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        hello.classList.add('is-in');
+        return;
+      }
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => hello.classList.add('is-in'));
+      });
+    }
+
+    function showStep() {
+      panels.forEach((p) => {
+        const on = +p.dataset.bkStep === step;
+        p.classList.toggle('is-on', on);
+        p.hidden = !on;
+      });
+      if (stepLbl) stepLbl.textContent = toAr(step) + ' من ' + toAr(TOTAL);
+      if (bar) bar.style.setProperty('--bk-p', String((step / TOTAL) * 100));
+      if (backBtn) backBtn.hidden = step === 1;
+      if (nextBtn) nextBtn.hidden = step === TOTAL;
+      if (step === 2) { paintHello(); playHelloEnter(); }
+      if (step === 3) syncLocateUi();
+      if (step === 4) {
+        paintCalendar();
+        if (slotsWrap) slotsWrap.hidden = !val('#bkDate');
+        $$('.bk-slot', form).forEach((b) => b.classList.toggle('is-on', b.dataset.slot === val('#bkSlot')));
+      }
+      if (step === 5) paintReview();
+      syncSend();
+      say('');
+      if (open && step <= 2) {
+        const firstInput = form.querySelector('[data-bk-step="' + step + '"] .input');
+        if (firstInput) requestAnimationFrame(() => firstInput.focus({ preventScroll: true }));
+      }
+    }
+
+    function buildMessage(d) {
+      const line = (k, v, suffix) => v ? '• ' + k + ': ' + v + (suffix || '') + '\n' : '';
+      return 'مرحبًا Like A Model 👋\n' +
+        'أرغب بحجز جلسة تقييم مجانية عبر الموقع:\n\n' +
+        line('الاسم', d.name) +
+        line('رقم الجوال', d.phone) +
+        line('الوزن', d.weight, ' كجم') +
+        line('الطول', d.height, ' سم') +
+        line('الهدف', d.goal) +
+        line('موقع الجلسة', d.address) +
+        (d.lat && d.lng ? line('الإحداثيات', d.lat + ', ' + d.lng) : '') +
+        line('موعد الجلسة', d.date ? (formatDateAr(d.date) + (d.slotLabel ? ' — ' + d.slotLabel : '')) : '') +
+        '\nأتطلع لردّكم.';
+    }
+
+    function resetBookingExtras() {
+      clearLocation();
+      if (dateEl) dateEl.value = '';
+      if (slotEl) slotEl.value = '';
+      if (slotsWrap) slotsWrap.hidden = true;
+      $$('.bk-slot', form).forEach((b) => b.classList.remove('is-on'));
+      calCursor = new Date();
+      calCursor.setDate(1);
+      calCursor.setHours(0, 0, 0, 0);
+    }
+
+    function openModal() {
+      if (open) return;
+      open = true;
+      window.dispatchEvent(new Event('lam:close-chatbot'));
+      lastFocus = document.activeElement;
+      step = 1;
+      showStep();
+      syncFilledAll();
+      modal.hidden = false;
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('is-bk-open');
+      requestAnimationFrame(() => {
+        (dialog || modal).focus({ preventScroll: true });
+        $('#bkName', form)?.focus({ preventScroll: true });
+      });
+    }
+
+    function closeModal() {
+      if (!open) return;
+      open = false;
+      modal.hidden = true;
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('is-bk-open');
+      say('');
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus({ preventScroll: true });
+    }
+
+    openBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+    });
+    modal.addEventListener('click', (e) => {
+      if (e.target && e.target.closest('[data-bk-close]')) closeModal();
+    });
+
+    locateOpen?.addEventListener('click', () => {
+      setErr('bkLocation', '');
+      showLocateMap();
+    });
+    locateEdit?.addEventListener('click', () => showLocateMap());
+    useMyLoc?.addEventListener('click', () => {
+      if (!navigator.geolocation) return;
+      useMyLoc.disabled = true;
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          useMyLoc.disabled = false;
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          if (map) map.setView([lat, lng], 15);
+          if (marker && map) marker.setLatLng([lat, lng]);
+          setPending(lat, lng);
+        },
+        () => { useMyLoc.disabled = false; },
+        { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
+      );
+    });
+
+    calPrev?.addEventListener('click', () => {
+      calCursor.setMonth(calCursor.getMonth() - 1);
+      paintCalendar();
+    });
+    calNext?.addEventListener('click', () => {
+      calCursor.setMonth(calCursor.getMonth() + 1);
+      paintCalendar();
+    });
+    slotsList?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.bk-slot');
+      if (!btn || !btn.dataset.slot) return;
+      selectSlot(btn.dataset.slot);
+    });
+
+    backBtn?.addEventListener('click', () => {
+      if (step <= 1) return;
+      step -= 1;
+      showStep();
+    });
+    nextBtn?.addEventListener('click', () => {
+      const bad = validateStep(step);
+      if (bad) {
+        if (typeof bad.focus === 'function') bad.focus({ preventScroll: false });
+        return;
+      }
+      if (step >= TOTAL) return;
+      step += 1;
+      showStep();
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (step !== TOTAL) return;
+      const bad = validateStep(TOTAL);
+      if (bad) {
+        say('يلزم الموافقة على التواصل قبل إرسال الطلب.', 'err');
+        if (typeof bad.focus === 'function') bad.focus({ preventScroll: false });
+        syncSend();
+        return;
+      }
+      const data = collect();
+      if (!FORM.endpoint) {
+        const url = waWith(buildMessage(data));
+        say('جارٍ فتح واتساب لإرسال طلبِك…', 'ok');
+        const win = window.open(url, '_blank', 'noopener');
+        if (!win) window.location.href = url;
+        return;
+      }
+      sendBtn.disabled = true;
+      sendBtn.setAttribute('aria-disabled', 'true');
+      say('جارٍ الإرسال…');
+      try {
+        const res = await fetch(FORM.endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ ...data, origin: 'booking-modal' })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        form.reset();
+        resetBookingExtras();
+        step = 1;
+        syncFilledAll();
+        showStep();
+        say('تم استلام طلبِك ✓ سنتواصل معكِ قريبًا.', 'ok');
+      } catch (err) {
+        say('تعذّر الإرسال. تواصلي معنا عبر واتساب أو الهاتف.', 'err');
+      } finally {
+        syncSend();
+      }
+    });
+
+    form.addEventListener('input', (e) => {
+      const t = e.target;
+      if (!t || !t.id) return;
+      if (['bkName', 'bkPhone', 'bkWeight', 'bkHeight'].includes(t.id)) {
+        setErr(t.id, ''); mark(t, false);
+      }
+      if (t.matches('input.input, textarea.input')) syncFilled(t);
+      syncSend();
+    });
+    form.addEventListener('change', (e) => {
+      const t = e.target;
+      if (t && t.id) {
+        const mapIds = { bkName: 'bkName', bkPhone: 'bkPhone', bkWeight: 'bkWeight', bkHeight: 'bkHeight', bkGoal: 'bkGoal', bkConsent: 'bkConsent' };
+        const key = mapIds[t.id];
+        if (key) { setErr(key, ''); mark(t, false); }
+      }
+      if (t && t.matches('select.input, input.input, textarea.input')) syncFilled(t);
+      if (step === TOTAL) paintReview();
+      syncSend();
+    });
+
+    modal.addEventListener('keydown', (e) => {
+      if (!open || e.key !== 'Tab') return;
+      const focusables = $$('button:not([hidden]):not([disabled]), [href], input:not([disabled]):not([hidden]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])', modal)
+        .filter((el) => el.offsetParent !== null || el === document.activeElement);
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    showStep();
+    syncFilledAll();
   }
 
 
@@ -1215,8 +2091,10 @@ const STATS_LATIN = false;
     initSupportOrbit();
     initScrollSpy();
     initContactForm();
+    initBookingModal();
     initStartJourney();
     initToTop();
+    initChatbot();
   }
 
   if (document.readyState === 'loading') {
