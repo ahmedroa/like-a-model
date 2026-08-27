@@ -1,3 +1,5 @@
+import { assetUrl } from '../lib/asset.js';
+
 export default function Ecosystem() {
   return (
     <>
@@ -20,7 +22,7 @@ export default function Ecosystem() {
           <div className="grid grid-2 eco-grid">
             <article className="eco-card" tabIndex="0">
               <div className="eco-media">
-                <img src="/assets/img/success-partners.jpg" alt="استشارة تغذية ونمط حياة صحي بين مختصة وعميلة في جلسة هادئة" width="1024" height="768" loading="lazy" />
+                <img src={assetUrl('/assets/img/success-partners.jpg')} alt="استشارة تغذية ونمط حياة صحي بين مختصة وعميلة في جلسة هادئة" width="1024" height="768" loading="lazy" />
               </div>
               <div className="eco-body">
                 <h3 className="h3">شركاء النجاح</h3>
@@ -40,7 +42,7 @@ export default function Ecosystem() {
 
             <article className="eco-card" tabIndex="0">
               <div className="eco-media">
-                <img src="/assets/img/services-training.jpg" alt="مدربة تساعد متدربة على أداء تمرين في استوديو نسائي حديث وهادئ" width="1024" height="768" loading="lazy" />
+                <img src={assetUrl('/assets/img/services-training.jpg')} alt="مدربة تساعد متدربة على أداء تمرين في استوديو نسائي حديث وهادئ" width="1024" height="768" loading="lazy" />
               </div>
               <div className="eco-body">
                 <h3 className="h3">خدماتنا</h3>

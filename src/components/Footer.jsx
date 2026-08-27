@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { assetUrl } from '../lib/asset.js';
 
 export default function Footer() {
   return (
@@ -29,7 +30,7 @@ export default function Footer() {
             <Link className="brand brand-footer" to={{ pathname: '/', hash: '#home' }} aria-label="Like A Model — الصفحة الرئيسية">
               <span className="brand-name" lang="en">Like A Model</span>
               <span className="brand-mark" aria-hidden="true">
-                <img className="brand-logo" src="/assets/img/logo.svg" alt="" width="48" height="48" />
+                <img className="brand-logo" src={assetUrl('/assets/img/logo.svg')} alt="" width="48" height="48" />
               </span>
             </Link>
             <p className="brand-tag">أكثر من تدريب ... أسلوب حياة</p>

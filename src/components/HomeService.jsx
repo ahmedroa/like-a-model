@@ -1,8 +1,10 @@
+import { assetUrl } from '../lib/asset.js';
+
 export default function HomeService({ onOpenBooking }) {
   return (
     <div className="home-train-banner" id="home-training" aria-labelledby="homeCtaTitle">
       <div className="home-train-bg" aria-hidden="true">
-        <img src="/assets/img/home-training.jpg?v=20260827-1149" alt="" width="1536" height="1024" decoding="async" />
+        <img src={assetUrl('/assets/img/home-training.jpg?v=20260827-1149')} alt="" width="1536" height="1024" decoding="async" />
       </div>
       <div className="home-train-overlay" aria-hidden="true"></div>
       <div className="shell home-train-content">

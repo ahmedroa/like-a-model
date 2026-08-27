@@ -1609,7 +1609,7 @@ export function bootPageEffects() {
         left -= 1;
         if (left <= 0) {
           window.clearInterval(timer);
-          window.location.href = '/';
+          window.location.href = import.meta.env.BASE_URL || '/';
           return;
         }
         if (countEl) countEl.textContent = toAr(left);

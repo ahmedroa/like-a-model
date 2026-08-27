@@ -1,3 +1,5 @@
+import { assetUrl } from '../lib/asset.js';
+
 export default function Team() {
   return (
     <>
@@ -29,7 +31,7 @@ export default function Team() {
             {/* TEMP: journey-preview.jpg اختبار بصري مؤقت — استبدليه لاحقًا بصور Like A Model النهائية لكل بطاقة. */}
             <figure className="journey-frame reveal" data-delay="2" tabIndex="0">
               <div className="journey-media">
-                <img src="/assets/img/journey-preview.jpg" alt="خدمة العملاء" width="1024" height="682" loading="lazy" />
+                <img src={assetUrl('/assets/img/journey-preview.jpg')} alt="خدمة العملاء" width="1024" height="682" loading="lazy" />
                 <span className="journey-veil" aria-hidden="true"></span>
               </div>
               <figcaption className="journey-cap">
@@ -42,7 +44,7 @@ export default function Team() {
           <div className="journey-gallery">
             <figure className="journey-frame reveal" tabIndex="0">
               <div className="journey-media">
-                <img src="/assets/img/journey-preview.jpg" alt="مديرة التقييم" width="1024" height="682" loading="lazy" />
+                <img src={assetUrl('/assets/img/journey-preview.jpg')} alt="مديرة التقييم" width="1024" height="682" loading="lazy" />
                 <span className="journey-veil" aria-hidden="true"></span>
               </div>
               <figcaption className="journey-cap">
@@ -52,7 +54,7 @@ export default function Team() {
             </figure>
             <figure className="journey-frame reveal" data-delay="1" tabIndex="0">
               <div className="journey-media">
-                <img src="/assets/img/journey-preview.jpg" alt="أخصائية التغذية" width="1024" height="682" loading="lazy" />
+                <img src={assetUrl('/assets/img/journey-preview.jpg')} alt="أخصائية التغذية" width="1024" height="682" loading="lazy" />
                 <span className="journey-veil" aria-hidden="true"></span>
               </div>
               <figcaption className="journey-cap">
@@ -62,7 +64,7 @@ export default function Team() {
             </figure>
             <figure className="journey-frame reveal" tabIndex="0">
               <div className="journey-media">
-                <img src="/assets/img/journey-preview.jpg" alt="فيديو تدريبات" width="1024" height="682" loading="lazy" />
+                <img src={assetUrl('/assets/img/journey-preview.jpg')} alt="فيديو تدريبات" width="1024" height="682" loading="lazy" />
                 <span className="journey-veil" aria-hidden="true"></span>
               </div>
               <figcaption className="journey-cap">
@@ -72,7 +74,7 @@ export default function Team() {
             </figure>
             <figure className="journey-frame reveal" data-delay="1" tabIndex="0">
               <div className="journey-media">
-                <img src="/assets/img/journey-preview.jpg" alt="جماعية التدريب" width="1024" height="682" loading="lazy" />
+                <img src={assetUrl('/assets/img/journey-preview.jpg')} alt="جماعية التدريب" width="1024" height="682" loading="lazy" />
                 <span className="journey-veil" aria-hidden="true"></span>
               </div>
               <figcaption className="journey-cap">
@@ -82,7 +84,7 @@ export default function Team() {
             </figure>
             <figure className="journey-frame reveal" tabIndex="0">
               <div className="journey-media">
-                <img src="/assets/img/journey-preview.jpg" alt="المتابعة" width="1024" height="682" loading="lazy" />
+                <img src={assetUrl('/assets/img/journey-preview.jpg')} alt="المتابعة" width="1024" height="682" loading="lazy" />
                 <span className="journey-veil" aria-hidden="true"></span>
               </div>
               <figcaption className="journey-cap">
@@ -92,7 +94,7 @@ export default function Team() {
             </figure>
             <figure className="journey-frame reveal" data-delay="1" tabIndex="0">
               <div className="journey-media">
-                <img src="/assets/img/journey-preview.jpg" alt="العمليات" width="1024" height="682" loading="lazy" />
+                <img src={assetUrl('/assets/img/journey-preview.jpg')} alt="العمليات" width="1024" height="682" loading="lazy" />
                 <span className="journey-veil" aria-hidden="true"></span>
               </div>
               <figcaption className="journey-cap">

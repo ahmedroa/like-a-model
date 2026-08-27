@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MobileMenu from './MobileMenu.jsx';
 import { navScrollOffset, scrollToNavTarget } from '../lib/navScroll.js';
+import { assetUrl } from '../lib/asset.js';
 
 const NAV = [
   { id: 'home', label: 'الرئيسية' },
@@ -131,7 +132,7 @@ export default function Header({ pinned }) {
         <div className="header-inner">
           <Link className="brand" to={{ pathname: '/', hash: '#home' }} aria-label="Like A Model — الصفحة الرئيسية" onClick={goSection('home')}>
             <span className="brand-mark" aria-hidden="true">
-              <img className="brand-logo" src="/assets/img/logo.svg" alt="" width="48" height="48" />
+              <img className="brand-logo" src={assetUrl('/assets/img/logo.svg')} alt="" width="48" height="48" />
             </span>
             <span className="brand-text">
               <span className="brand-name" lang="en">Like A Model</span>

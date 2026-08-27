@@ -1,5 +1,6 @@
 import HomeService from './HomeService.jsx';
 import WhyChooseUs from './WhyChooseUs.jsx';
+import { assetUrl } from '../lib/asset.js';
 
 export default function SupportJourney({ onOpenBooking }) {
   return (
@@ -36,7 +37,7 @@ export default function SupportJourney({ onOpenBooking }) {
               </svg>
               <div className="support-halo" aria-hidden="true"></div>
               <div className="support-figure">
-                <img src="/assets/img/support-woman.png" alt="" width="1024" height="1536" loading="eager" decoding="async" />
+                <img src={assetUrl('/assets/img/support-woman.png')} alt="" width="1024" height="1536" loading="eager" decoding="async" />
               </div>
             </div>
 
