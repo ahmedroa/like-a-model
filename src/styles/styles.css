@@ -976,8 +976,8 @@ nav.footer-col ul{gap:13px} /* روابط سريعة: 12–14px */
   width:clamp(260px,20vw,340px);max-width:46%;max-height:72%;
   height:auto;aspect-ratio:178/451;object-fit:contain;
   background-color:var(--color-brown);
-  -webkit-mask:url("../img/logo.svg") center / contain no-repeat;
-          mask:url("../img/logo.svg") center / contain no-repeat;
+  -webkit-mask:url("/assets/img/logo.svg") center / contain no-repeat;
+          mask:url("/assets/img/logo.svg") center / contain no-repeat;
   opacity:.075;
   inset-inline-start:auto!important;inset-inline-end:auto!important;
   right:auto!important;left:8%!important;
@@ -1074,7 +1074,7 @@ nav.footer-col ul{gap:13px} /* روابط سريعة: 12–14px */
 }
 .stats-parallax-bg{
   position:absolute;inset:-300px 0;z-index:0;pointer-events:none;
-  background:url("../img/stats-riyadh-new.jpg") center / cover no-repeat;
+  background:url("/assets/img/stats-riyadh-new.jpg") center / cover no-repeat;
   transform:translate3d(0,var(--stats-parallax-y,0px),0) scale(1.22);
   will-change:transform;transition:none;
 }
@@ -2615,7 +2615,7 @@ nav.footer-col ul{gap:13px} /* روابط سريعة: 12–14px */
   position:absolute;
   top:-220px;right:0;bottom:-220px;left:0;
   z-index:0;
-  background-image:url("../img/riyadh-skyline.jpg");
+  background-image:url("/assets/img/riyadh-skyline.jpg");
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
