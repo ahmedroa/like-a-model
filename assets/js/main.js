@@ -17,6 +17,7 @@ const CONTACT = {
      اتركي القيمة فارغة '' لإخفاء أيقونة المنصّة من الموقع بالكامل. */
   social: {
     tiktok   : 'https://www.tiktok.com/',
+    youtube  : 'https://www.youtube.com/',
     instagram: 'https://www.instagram.com/',
     facebook : 'https://www.facebook.com/',
     x        : 'https://x.com/',
@@ -427,6 +428,24 @@ const CHAT_FAQ = [
   }
 
 
+  /* إزاحة الهيدر الثابت + فراغ --scroll-gap (1.25rem) حتى لا يُغطّى عنوان القسم */
+  function navScrollOffset() {
+    const header = $('#siteHeader');
+    const h = header ? Math.round(header.getBoundingClientRect().height) : 72;
+    const fs = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    return h + 1.25 * fs;
+  }
+
+  function scrollToNavTarget(el, instant) {
+    const behavior = instant || reduceMotion ? 'auto' : 'smooth';
+    if (!el || el.id === 'home') {
+      window.scrollTo({ top: 0, behavior });
+      return;
+    }
+    const y = Math.max(0, window.scrollY + el.getBoundingClientRect().top - navScrollOffset());
+    window.scrollTo({ top: y, behavior });
+  }
+
   /* ══════════ 6. الهيدر ══════════ */
   function initHeader() {
     const header = $('#siteHeader');
@@ -441,7 +460,8 @@ const CHAT_FAQ = [
     };
 
     const update = () => {
-      const pinned = document.body.classList.contains('page-syj');
+      const pinned = document.body.classList.contains('page-syj')
+        || document.body.classList.contains('page-stories');
       header.classList.toggle('is-scrolled', pinned || window.scrollY > 40);
       syncOffset();
       ticking = false;
@@ -525,7 +545,19 @@ const CHAT_FAQ = [
     }
 
     toggle.addEventListener('click', () => { isOpen() ? shut() : open(); });
-    $$('a[href^="#"]', nav).forEach((a) => a.addEventListener('click', () => shut()));
+    $$('a[href^="#"]', header).forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const id = (a.hash || '').replace(/^#/, '');
+        if (!id) return;
+        const target = document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+        shut();
+        if (history.replaceState) history.replaceState(null, '', '#' + id);
+        else location.hash = id;
+        scrollToNavTarget(target, false);
+      });
+    });
 
     mobileMq.addEventListener('change', () => {
       if (isOpen()) shut({ restoreFocus: false });
@@ -540,37 +572,86 @@ const CHAT_FAQ = [
 
   /* ══════════ 8. ظهور العناصر عند التمرير ══════════ */
   function initReveal() {
-    clearTimeout(window.__lamReveal);          // المراقب يعمل — لا حاجة لشبكة الأمان
-    const items = $$('.reveal');
+    clearTimeout(window.__lamReveal);
+    const items = $$('.reveal').filter((el) => !el.classList.contains('eco-card') && !el.closest('#ecosystem .eco-grid'));
     if (!items.length) return;
 
+    const skipExit = (el) => !!el.closest(
+      '#stats, .stats-section, #about, #about-intro, #support, .hero, #home, #bookingModal, .bk-modal, #chatbot, .chatbot'
+    );
+    const onceItems = items.filter(skipExit);
+    const exitItems = items.filter((el) => !skipExit(el));
+
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      items.forEach((el) => el.classList.add('is-in'));
+      items.forEach((el) => {
+        el.classList.add('is-in');
+        el.classList.remove('is-leaving-up', 'is-leaving-down');
+      });
       return;
     }
 
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-in');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    const markIn = (el) => {
+      el.classList.add('is-in');
+      el.classList.remove('is-leaving-up', 'is-leaving-down');
+    };
 
-    items.forEach((el) => io.observe(el));
+    const markOut = (el, entry) => {
+      if (!el.classList.contains('is-in') &&
+          !el.classList.contains('is-leaving-up') &&
+          !el.classList.contains('is-leaving-down')) {
+        return;
+      }
+      const rect = entry.boundingClientRect;
+      const vh = (entry.rootBounds && entry.rootBounds.height) || window.innerHeight;
+      el.classList.remove('is-in');
+      if (rect.bottom < vh * 0.45) {
+        el.classList.add('is-leaving-up');
+        el.classList.remove('is-leaving-down');
+      } else {
+        el.classList.add('is-leaving-down');
+        el.classList.remove('is-leaving-up');
+      }
+    };
 
-    // شبكة أمان: لا يجوز أن يبقى أي محتوى مخفيًا إذا تعطّل المراقب
-    setTimeout(() => {
-      items.forEach((el) => {
-        if (el.classList.contains('is-in')) return;
-        const r = el.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) {
-          el.classList.add('is-in');
-          io.unobserve(el);
-        }
-      });
-    }, 1200);
+    if (onceItems.length) {
+      const onceIo = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          markIn(entry.target);
+          onceIo.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      onceItems.forEach((el) => onceIo.observe(el));
+
+      setTimeout(() => {
+        onceItems.forEach((el) => {
+          if (el.classList.contains('is-in')) return;
+          const r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight && r.bottom > 0) {
+            markIn(el);
+            onceIo.unobserve(el);
+          }
+        });
+      }, 1200);
+    }
+
+    if (exitItems.length) {
+      const exitIo = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) markIn(entry.target);
+          else markOut(entry.target, entry);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      exitItems.forEach((el) => exitIo.observe(el));
+
+      setTimeout(() => {
+        exitItems.forEach((el) => {
+          if (el.classList.contains('is-in')) return;
+          const r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight && r.bottom > 0) markIn(el);
+        });
+      }, 1200);
+    }
   }
 
 
@@ -580,7 +661,7 @@ const CHAT_FAQ = [
     const block = section ? $('[data-timeline]', section) : $('[data-timeline]');
     if (!section || !block) return;
 
-    const lines = $$('.about-story-line', section);
+    const lines = $$('.about-story-line', section).filter((el) => !el.closest('.about-coda'));
 
     const revealAll = () => {
       block.style.setProperty('--about-tl', '1');
@@ -651,6 +732,34 @@ const CHAT_FAQ = [
   }
 
 
+  /* ══════════ 8ت. دخول كتلة «شريككِ في رحلة التحوّل» عند ظهورها ══════════ */
+  function initAboutCoda() {
+    const coda = $('.about-coda');
+    if (!coda) return;
+
+    const show = () => coda.classList.add('is-in');
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      show();
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      show();
+      io.disconnect();
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.2 });
+
+    io.observe(coda);
+
+    setTimeout(() => {
+      if (coda.classList.contains('is-in')) return;
+      const r = coda.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) show();
+    }, 1200);
+  }
+
+
   /* ══════════ 8.5 مسار ندعمكِ الدائري مع التمرير ══════════ */
   function initSupportOrbit() {
     const section = $('#support');
@@ -658,13 +767,11 @@ const CHAT_FAQ = [
 
     const progressEl = $('.support-arc-progress', section);
     const arrow = $('.support-arc-arrow', section);
-    const halo = $('.support-halo', section);
-    const figure = $('.support-figure', section);
+    const center = $('.support-orbit__center', section);
     const steps = [1, 2, 3, 4].map((n) => section.querySelector('[data-support-step="' + n + '"]'));
     const desktopMq = window.matchMedia('(min-width: 960px)');
 
     const THRESH = { 1: 0.04, 2: 0.28, 3: 0.52, 4: 0.76 };
-    const DRAW_START = 0.008;
     const DRAW_AT_VH = 0.72;
     const DONE_AT_VH = 0.5;
     const CX = 200, CY = 200, RADIUS = 168;
@@ -683,34 +790,46 @@ const CHAT_FAQ = [
       arrow.setAttribute('opacity', '1');
     };
 
-    const apply = (p, headed) => {
+    const apply = (p) => {
       const drawn = Math.min(1, Math.max(0, p));
       if (progressEl) {
         progressEl.style.strokeDasharray = '1';
         progressEl.style.strokeDashoffset = String(1 - drawn);
       }
       placeArrow(drawn);
-      section.classList.toggle('is-headed', headed);
-      const showCenter = drawn >= DRAW_START;
-      halo?.classList.toggle('is-on', showCenter);
-      figure?.classList.toggle('is-on', showCenter);
 
+      let highest = 0;
       steps.forEach((el, i) => {
         if (!el) return;
         const on = drawn >= THRESH[i + 1];
         el.classList.toggle('is-on', on);
-        if (on) el.removeAttribute('aria-hidden');
-        else el.setAttribute('aria-hidden', 'true');
+        if (on) {
+          highest = i + 1;
+          el.removeAttribute('aria-hidden');
+        } else {
+          el.setAttribute('aria-hidden', 'true');
+        }
+      });
+      steps.forEach((el, i) => {
+        if (!el) return;
+        el.classList.toggle('is-current', highest > 0 && (i + 1) === highest);
       });
     };
 
     const measure = () => {
-      const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
-      const headed = rect.bottom > 64 && rect.top < vh * 0.9;
-
-      const visual = $('.support-orbit__center', section) || $('.support-arc', section) || section;
+      const visual = center || $('.support-arc', section) || section;
       const box = visual.getBoundingClientRect();
+
+      /* خارج الشاشة بالكامل → إعادة للحالة الابتدائية لإعادة الحركة عند الدخول */
+      if (box.bottom <= 0 || box.top >= vh) {
+        center?.classList.remove('is-in');
+        apply(0);
+        return;
+      }
+
+      center?.classList.add('is-in');
+
       const cy = box.top + box.height / 2;
       const startY = vh * DRAW_AT_VH;
       const endY = vh * DONE_AT_VH;
@@ -720,13 +839,50 @@ const CHAT_FAQ = [
       if (cy <= endY) p = 1;
       else if (cy < startY) p = (startY - cy) / span;
 
-      apply(p, headed);
+      apply(p);
+    };
+
+    const head = $('.support-head', section);
+    const revealHead = () => {
+      section.classList.add('is-headed');
+      section.classList.remove('is-head-leaving-up', 'is-head-leaving-down');
+    };
+    const leaveHead = (entry) => {
+      if (!section.classList.contains('is-headed') &&
+          !section.classList.contains('is-head-leaving-up') &&
+          !section.classList.contains('is-head-leaving-down')) {
+        return;
+      }
+      const rect = entry.boundingClientRect;
+      const vh = (entry.rootBounds && entry.rootBounds.height) || window.innerHeight;
+      section.classList.remove('is-headed');
+      if (rect.bottom < vh * 0.45) {
+        section.classList.add('is-head-leaving-up');
+        section.classList.remove('is-head-leaving-down');
+      } else {
+        section.classList.add('is-head-leaving-down');
+        section.classList.remove('is-head-leaving-up');
+      }
     };
 
     if (reduceMotion) {
       section.classList.add('is-static');
-      apply(1, true);
+      center?.classList.add('is-in');
+      revealHead();
+      apply(1);
       return;
+    }
+
+    if (head && 'IntersectionObserver' in window) {
+      const headIo = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) revealHead();
+          else leaveHead(e);
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+      headIo.observe(head);
+    } else {
+      revealHead();
     }
 
     let ticking = false;
@@ -746,29 +902,177 @@ const CHAT_FAQ = [
   }
 
 
+  /* ══════════ 8.6 بانر التدريب المنزلي — دخول/خروج المحتوى ══════════ */
+  function initHomeTrainingMotion() {
+    const banner = $('#home-training');
+    const points = $('.home-train-points');
+    if (!banner && !points) return;
+
+    const showAll = () => {
+      banner?.classList.add('is-in-view');
+      banner?.classList.remove('is-leaving');
+      points?.classList.add('is-in-view');
+      points?.classList.remove('is-leaving-up', 'is-leaving-down');
+    };
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      showAll();
+      return;
+    }
+
+    if (banner) {
+      const io = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        const rect = entry.boundingClientRect;
+        const vh = window.innerHeight;
+
+        if (entry.isIntersecting) {
+          banner.classList.add('is-in-view');
+          banner.classList.remove('is-leaving');
+          return;
+        }
+
+        if (rect.bottom < vh * 0.28) {
+          banner.classList.remove('is-in-view');
+          banner.classList.add('is-leaving');
+        } else if (rect.top > vh * 0.72) {
+          banner.classList.remove('is-in-view', 'is-leaving');
+        }
+      }, {
+        root: null,
+        rootMargin: '-32% 0px -32% 0px',
+        threshold: [0, 0.12, 0.28, 0.45, 0.6, 0.8, 1]
+      });
+      io.observe(banner);
+    }
+
+    if (points) {
+      const io = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        const rect = entry.boundingClientRect;
+        const vh = window.innerHeight;
+
+        if (entry.isIntersecting) {
+          points.classList.add('is-in-view');
+          points.classList.remove('is-leaving-up', 'is-leaving-down');
+          return;
+        }
+
+        if (!points.classList.contains('is-in-view') &&
+            !points.classList.contains('is-leaving-up') &&
+            !points.classList.contains('is-leaving-down')) {
+          return;
+        }
+
+        points.classList.remove('is-in-view');
+        if (rect.bottom < vh * 0.28) {
+          points.classList.add('is-leaving-up');
+          points.classList.remove('is-leaving-down');
+        } else if (rect.top > vh * 0.72) {
+          points.classList.add('is-leaving-down');
+          points.classList.remove('is-leaving-up');
+        }
+      }, {
+        root: null,
+        rootMargin: '0px 0px -10% 0px',
+        threshold: [0, 0.12, 0.28, 0.45, 0.7, 1]
+      });
+      io.observe(points);
+    }
+  }
+
+
+  /* ══════════ 8.7 منظومة الكاردين — دخول من الجانبين وخروج هادئ ══════════ */
+  function initEcosystemMotion() {
+    const grid = $('#ecosystem .eco-grid');
+    if (!grid) return;
+
+    const show = () => {
+      grid.classList.add('is-in-view');
+      grid.classList.remove('is-leaving');
+    };
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      show();
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      const rect = entry.boundingClientRect;
+      const vh = window.innerHeight;
+
+      if (entry.isIntersecting) {
+        show();
+        return;
+      }
+
+      if (rect.bottom < vh * 0.22) {
+        grid.classList.remove('is-in-view');
+        grid.classList.add('is-leaving');
+      } else if (rect.top > vh * 0.78) {
+        grid.classList.remove('is-in-view', 'is-leaving');
+      }
+    }, {
+      root: null,
+      rootMargin: '0px 0px -16% 0px',
+      threshold: [0, 0.12, 0.28, 0.45, 0.7, 1]
+    });
+
+    io.observe(grid);
+  }
+
+
   /* ══════════ 9. تظليل رابط القسم الحالي ══════════ */
   function initScrollSpy() {
     const links = $$('.site-nav a[href^="#"]');
-    if (!links.length || !('IntersectionObserver' in window)) return;
+    if (!links.length) return;
 
-    const map = new Map();
-    links.forEach((a) => {
-      const sec = document.getElementById(a.getAttribute('href').slice(1));
-      if (sec) map.set(sec, a);
-    });
-    if (!map.size) return;
+    const items = links.map((a) => {
+      const id = (a.hash || '').replace(/^#/, '');
+      const sec = id ? document.getElementById(id) : null;
+      return sec ? { a, sec } : null;
+    }).filter(Boolean);
+    if (!items.length) return;
 
-    const visible = new Set();
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => e.isIntersecting ? visible.add(e.target) : visible.delete(e.target));
-      // نخرج قبل المسح، وإلا اختفى التظليل كلما عبر الشريط فجوة غير مراقَبة
-      if (!visible.size) return;
+    let ticking = false;
+    const apply = () => {
+      ticking = false;
+      const line = navScrollOffset();
+      const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      let current = items[0];
+      if (atEnd) {
+        current = items[items.length - 1];
+      } else {
+        for (const item of items) {
+          if (item.sec.getBoundingClientRect().top <= line + 1) current = item;
+        }
+      }
       links.forEach((a) => a.removeAttribute('aria-current'));
-      const top = Array.from(visible).sort((a, b) => a.offsetTop - b.offsetTop)[0];
-      map.get(top)?.setAttribute('aria-current', 'true');
-    }, { rootMargin: '-45% 0px -50% 0px' });
+      current.a.setAttribute('aria-current', 'true');
+    };
 
-    map.forEach((_, sec) => io.observe(sec));
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(apply);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    apply();
+  }
+
+  function initHashLanding() {
+    const id = location.hash.replace(/^#/, '');
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    const jump = () => scrollToNavTarget(el, true);
+    jump();
+    requestAnimationFrame(jump);
   }
 
 
@@ -1469,9 +1773,9 @@ const CHAT_FAQ = [
   /* ══════════ 10ج. Modal حجز جلسة التقييم (متعدد الخطوات) ══════════ */
   function initBookingModal() {
     const modal = $('#bookingModal');
-    const openBtns = $$('[data-bk-open]');
     const form = $('#bookingForm');
-    if (!modal || !form || !openBtns.length) return;
+    if (!modal || !form) return;
+    const openSel = '[data-bk-open], [data-open-booking-modal]';
 
     const TOTAL = 5;
     const RIYADH = { lat: 24.7136, lng: 46.6753 };
@@ -1938,11 +2242,19 @@ const CHAT_FAQ = [
       if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus({ preventScroll: true });
     }
 
-    openBtns.forEach((btn) => {
-      btn.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+    document.addEventListener('click', (e) => {
+      const btn = e.target && e.target.closest(openSel);
+      if (!btn || !document.contains(btn)) return;
+      e.preventDefault();
+      openModal();
     });
     modal.addEventListener('click', (e) => {
       if (e.target && e.target.closest('[data-bk-close]')) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!open || e.key !== 'Escape') return;
+      e.preventDefault();
+      closeModal();
     });
 
     locateOpen?.addEventListener('click', () => {
@@ -2088,8 +2400,12 @@ const CHAT_FAQ = [
     initNav();
     initReveal();
     initAboutTimeline();
+    initAboutCoda();
     initSupportOrbit();
+    initHomeTrainingMotion();
+    initEcosystemMotion();
     initScrollSpy();
+    initHashLanding();
     initContactForm();
     initBookingModal();
     initStartJourney();
